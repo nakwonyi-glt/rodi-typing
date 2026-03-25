@@ -1,5 +1,5 @@
 // 손가락 타자 연습 - Service Worker v1.0
-const CACHE_NAME = 'rodi-typing-v1';
+const CACHE_NAME = 'rodi-typing-v2';
 const ASSETS = [
   '/',
   '/index.html',

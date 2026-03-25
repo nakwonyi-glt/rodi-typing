@@ -43,8 +43,8 @@ const KEYBOARDS = {
       { keys: [[0,0]], title: 'ㅣ (사람)', desc: '모음의 기본 키! 사람을 뜻해요 🙋\nㅣ 하나로 "이" 소리가 나요' },
       { keys: [[0,1]], title: '· (하늘)', desc: '모음의 핵심 키! 하늘을 뜻해요 ☁\n점(·)을 다른 키와 조합해서 모음을 만들어요' },
       { keys: [[0,2]], title: 'ㅡ (땅)', desc: '모음의 기본 키! 땅을 뜻해요 🌍\nㅡ 하나로 "으" 소리가 나요' },
-      { keys: [[0,1],[0,0]], title: 'ㅏ 만들기', desc: '· 누른 후 ㅣ 누르면 "ㅏ"\n예: 아버지 → ·+ㅣ = ㅏ' },
-      { keys: [[0,0],[0,1]], title: 'ㅓ 만들기', desc: 'ㅣ 누른 후 · 누르면 "ㅓ"\n예: 어머니 → ㅣ+· = ㅓ' },
+      { keys: [[0,0],[0,1]], title: 'ㅏ 만들기', desc: 'ㅣ 누른 후 · 누르면 "ㅏ"\n예: 아버지 → ㅣ+· = ㅏ' },
+      { keys: [[0,1],[0,0]], title: 'ㅓ 만들기', desc: '· 누른 후 ㅣ 누르면 "ㅓ"\n예: 어머니 → ·+ㅣ = ㅓ' },
       { keys: [[0,1],[0,2]], title: 'ㅗ 만들기', desc: '· 누른 후 ㅡ 누르면 "ㅗ"\n예: 오빠 → ·+ㅡ = ㅗ' },
       { keys: [[0,2],[0,1]], title: 'ㅜ 만들기', desc: 'ㅡ 누른 후 · 누르면 "ㅜ"\n예: 우유 → ㅡ+· = ㅜ' },
       { keys: [[1,0]], title: 'ㄱ / ㅋ', desc: '한 번 → ㄱ\n두 번 빠르게 → ㅋ\n예: 가족, 학교, 커피' },
@@ -59,8 +59,8 @@ const KEYBOARDS = {
       { keys: [[0,0]], title: 'ㅣ (Human)', desc: 'Basic vowel key! Represents "human" 🙋\nPress ㅣ alone → makes "ee" sound (이)' },
       { keys: [[0,1]], title: '· (Heavens)', desc: 'Core vowel key! Represents the sky ☁\nCombine · with other keys to make vowels' },
       { keys: [[0,2]], title: 'ㅡ (Earth)', desc: 'Basic vowel key! Represents the ground 🌍\nPress ㅡ alone → makes "eu" sound (으)' },
-      { keys: [[0,1],[0,0]], title: 'Making ㅏ', desc: 'Press · then ㅣ → ㅏ ("ah" sound)\nExample: 아버지 (father)' },
-      { keys: [[0,0],[0,1]], title: 'Making ㅓ', desc: 'Press ㅣ then · → ㅓ ("uh" sound)\nExample: 어머니 (mother)' },
+      { keys: [[0,0],[0,1]], title: 'Making ㅏ', desc: 'Press ㅣ then · → ㅏ ("ah" sound)\nExample: 아버지 (father)' },
+      { keys: [[0,1],[0,0]], title: 'Making ㅓ', desc: 'Press · then ㅣ → ㅓ ("uh" sound)\nExample: 어머니 (mother)' },
       { keys: [[0,1],[0,2]], title: 'Making ㅗ', desc: 'Press · then ㅡ → ㅗ ("oh" sound)\nExample: 오빠 (older brother)' },
       { keys: [[0,2],[0,1]], title: 'Making ㅜ', desc: 'Press ㅡ then · → ㅜ ("oo" sound)\nExample: 우유 (milk)' },
       { keys: [[1,0]], title: 'ㄱ / ㅋ', desc: 'Tap once → ㄱ (g/k sound)\nDouble-tap fast → ㅋ (k sound)\nExample: 가족 (family), 커피 (coffee)' },
@@ -72,14 +72,14 @@ const KEYBOARDS = {
       { keys: [[3,0]], title: 'ㅇ / ㅁ', desc: 'Tap once → ㅇ (silent/ng)\nDouble-tap fast → ㅁ (m sound)\nExample: 아이 (child), 마음 (heart)' },
     ],
     combos: [
-      { result: 'ㅏ', how: '·+ㅣ' },
-      { result: 'ㅓ', how: 'ㅣ+·' },
+      { result: 'ㅏ', how: 'ㅣ+·' },
+      { result: 'ㅓ', how: '·+ㅣ' },
       { result: 'ㅗ', how: '·+ㅡ' },
       { result: 'ㅜ', how: 'ㅡ+·' },
       { result: 'ㅡ', how: 'ㅡ' },
       { result: 'ㅣ', how: 'ㅣ' },
-      { result: 'ㅑ', how: '··+ㅣ' },
-      { result: 'ㅕ', how: 'ㅣ+··' },
+      { result: 'ㅑ', how: 'ㅣ+··' },
+      { result: 'ㅕ', how: '··+ㅣ' },
       { result: 'ㅛ', how: '··+ㅡ' },
       { result: 'ㅠ', how: 'ㅡ+··' },
       { result: 'ㅐ', how: 'ㅣ+·+ㅣ' },
@@ -1311,7 +1311,8 @@ function imeSpace() {
 let cjState = 'empty';
 
 function cjFlush() {
-  const map = { ho:'ㅡ', ho_dot:'ㅜ', i_pend:'ㅣ', i_dot:'ㅓ' };
+  // ㅏ = ㅣ+·, ㅓ = ·+ㅣ (점의 방향: 오른쪽→ㅏ, 왼쪽→ㅓ)
+  const map = { ho:'ㅡ', ho_dot:'ㅜ', i_pend:'ㅣ', i_dot:'ㅏ' };
   const v = map[cjState] || null;
   cjState = 'empty';
   return v;
@@ -1325,7 +1326,7 @@ function cjPendingChar() {
     case 'ho':     return 'ㅡ';
     case 'ho_dot': return 'ㅜ';
     case 'i_pend': return 'ㅣ';
-    case 'i_dot':  return 'ㅓ';
+    case 'i_dot':  return 'ㅏ';
     default:       return '';
   }
 }
@@ -1338,7 +1339,7 @@ function cjTap(key) {
     else if (cjState==='ho')     cjState = 'ho_dot';
     else if (cjState==='ho_dot') { imeInputVowel('ㅠ'); cjState='empty'; }
     else if (cjState==='i_pend') cjState = 'i_dot';
-    else if (cjState==='i_dot')  { imeInputVowel('ㅕ'); cjState='empty'; }
+    else if (cjState==='i_dot')  { imeInputVowel('ㅑ'); cjState='empty'; }  // ㅣ+··=ㅑ
     return;
   }
   if (key === 'ㅡ') {
@@ -1350,8 +1351,8 @@ function cjTap(key) {
   }
   if (key === 'ㅣ') {
     if      (cjState==='empty')  cjState = 'i_pend';
-    else if (cjState==='dot1')   { imeInputVowel('ㅏ'); cjState='empty'; }
-    else if (cjState==='dot2')   { imeInputVowel('ㅑ'); cjState='empty'; }
+    else if (cjState==='dot1')   { imeInputVowel('ㅓ'); cjState='empty'; }  // ·+ㅣ=ㅓ
+    else if (cjState==='dot2')   { imeInputVowel('ㅕ'); cjState='empty'; }  // ··+ㅣ=ㅕ
     else if (cjState==='i_pend') { imeInputVowel('ㅣ'); cjState='i_pend'; }
     else { const v=cjFlush(); if(v) imeInputVowel(v); cjState='i_pend'; }
     return;
