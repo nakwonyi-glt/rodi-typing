@@ -1,16 +1,35 @@
 {
   "name": "손가락 타자 연습",
-  "short_name": "손타자",
-  "description": "모바일 자판 타자 연습기 - 천지인, 베가, 나랏글, Qwerty",
-  "start_url": ".",
+  "short_name": "타자연습",
+  "description": "천지인·베가·나랏글·Qwerty 한국 모바일 자판 타자 연습기",
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
-  "background_color": "#4A6FA5",
-  "theme_color": "#4A6FA5",
+  "orientation": "portrait",
+  "background_color": "#0B1426",
+  "theme_color": "#112240",
+  "lang": "ko",
   "icons": [
     {
-      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👆</text></svg>",
+      "src": "icon.svg",
       "sizes": "any",
-      "type": "image/svg+xml"
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "categories": ["education", "utilities"],
+  "shortcuts": [
+    {
+      "name": "천지인 연습",
+      "short_name": "천지인",
+      "url": "/",
+      "icons": [{ "src": "icon.svg", "sizes": "any" }]
     }
   ]
 }
