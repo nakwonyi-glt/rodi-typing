@@ -946,6 +946,95 @@ html, body {
   background: linear-gradient(145deg, rgba(255,107,53,0.12), rgba(255,107,53,0.05));
 }
 
+/* ===== English Section on Home ===== */
+.home-english-section { padding: 0 20px 20px; }
+.english-card {
+  width: 100%; display: flex; align-items: center; justify-content: space-between;
+  background: linear-gradient(145deg, rgba(16,185,129,0.2), rgba(16,185,129,0.08));
+  border: 1px solid rgba(16,185,129,0.4); border-radius: 16px;
+  padding: 16px 20px; cursor: pointer; color: white; text-align: left;
+  font-family: inherit;
+  transition: background 0.15s;
+}
+.english-card:active { background: linear-gradient(145deg, rgba(16,185,129,0.3), rgba(16,185,129,0.15)); }
+.english-card-left { display: flex; align-items: center; gap: 14px; }
+.english-card-icon { font-size: 32px; }
+.english-card-title { font-size: 18px; font-weight: 700; }
+.english-card-sub { font-size: 13px; color: rgba(255,255,255,0.6); margin-top: 3px; }
+
+/* ===== English Menu ===== */
+.english-menu-screen .level-cards { display: flex; flex-direction: column; gap: 10px; padding: 16px; }
+.level-card {
+  display: flex; align-items: center; gap: 12px;
+  background: rgba(255,255,255,0.05); border: 2px solid transparent;
+  border-radius: 14px; padding: 14px 16px; cursor: pointer; transition: all 0.2s;
+}
+.level-card.active { border-color: #10B981; background: rgba(16,185,129,0.15); }
+.level-card:active { background: rgba(255,255,255,0.09); }
+.level-card-emoji { font-size: 20px; }
+.level-card-info .level-name { font-size: 16px; font-weight: 700; color: white; }
+.level-card-info .level-desc { font-size: 12px; color: rgba(255,255,255,0.5); }
+.level-card-count { margin-left: auto; font-size: 12px; color: rgba(255,255,255,0.4); white-space: nowrap; }
+
+/* ===== Sound Toggle ===== */
+.sound-toggle-btn {
+  background: rgba(255,255,255,0.1); border: none; border-radius: 50%;
+  width: 32px; height: 32px; font-size: 16px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.sound-toggle-btn:active { background: rgba(255,255,255,0.2); }
+
+/* ===== Game Difficulty Screen ===== */
+.difficulty-screen { display: flex; flex-direction: column; min-height: 100vh; gap: 16px; }
+.difficulty-screen .header { flex-shrink: 0; }
+.difficulty-cards { display: flex; flex-direction: column; gap: 12px; padding: 0 16px; }
+.difficulty-card {
+  display: flex; align-items: center; gap: 14px;
+  background: rgba(255,255,255,0.06); border: 2px solid transparent;
+  border-radius: 16px; padding: 18px 20px; cursor: pointer; transition: all 0.2s;
+}
+.difficulty-card.selected { border-color: #FF6B35; background: rgba(255,107,53,0.15); }
+.difficulty-card:active { background: rgba(255,255,255,0.1); }
+.difficulty-card .diff-icon { font-size: 28px; }
+.difficulty-card .diff-name { font-size: 17px; font-weight: 700; color: white; }
+.difficulty-card .diff-desc { font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 2px; }
+.highscore-section { background: rgba(255,255,255,0.05); border-radius: 14px; padding: 14px 16px; margin: 0 16px; }
+.highscore-title { font-size: 13px; color: rgba(255,255,255,0.5); margin-bottom: 8px; }
+.highscore-list { display: flex; gap: 10px; flex-wrap: wrap; }
+.hs-item { background: rgba(255,215,0,0.1); border-radius: 8px; padding: 6px 12px; font-size: 14px; font-weight: 700; color: #FFD700; }
+.btn-start-game {
+  background: linear-gradient(135deg, #FF6B35, #FF4500);
+  color: white; border: none; border-radius: 16px;
+  padding: 18px; font-size: 18px; font-weight: 700; cursor: pointer;
+  box-shadow: 0 4px 20px rgba(255,107,53,0.4);
+  margin: 0 16px 32px; font-family: inherit;
+  transition: transform 0.12s, opacity 0.12s;
+}
+.btn-start-game:active { transform: scale(0.97); opacity: 0.85; }
+
+/* ===== Ground Effect ===== */
+.game-ground {
+  position: absolute; bottom: 0; left: 0; right: 0; height: 8px; z-index: 10;
+}
+.ground-line {
+  height: 3px;
+  background: linear-gradient(90deg, transparent, rgba(255,100,80,0.6), rgba(255,200,0,0.8), rgba(255,100,80,0.6), transparent);
+  box-shadow: 0 0 10px rgba(255,150,0,0.5);
+}
+.game-ground.ground-hit .ground-line {
+  animation: groundHit 0.5s ease-out;
+}
+.game-ground.ground-destroyed .ground-line {
+  background: rgba(255,0,0,0.8);
+  box-shadow: 0 0 20px rgba(255,0,0,0.8);
+}
+@keyframes groundHit {
+  0%   { transform: scaleY(1); filter: brightness(1); }
+  30%  { transform: scaleY(5); filter: brightness(3); }
+  100% { transform: scaleY(1); filter: brightness(1); }
+}
+
 /* ===== Responsive ===== */
 @media (min-width: 480px) {
   .keyboard-grid { max-width: 400px; margin: 0 auto; }

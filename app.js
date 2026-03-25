@@ -220,8 +220,71 @@ const KEYBOARDS = {
       { keys: [[0,8],[0,9]], title: 'O, P', desc: 'O=ㅐ, P=ㅔ\n이중모음이에요' },
     ],
     combos: []
+  },
+
+  english: {
+    id: 'english',
+    name: 'English',
+    icon: '🔤',
+    tagline: 'English QWERTY Typing',
+    description: 'Practice English typing\nwith 5 vocabulary levels',
+    color: '#10B981',
+    bgLight: '#ECFDF5',
+    badgeText: 'English',
+    rows: [
+      [
+        { key: 'Q', sub: '' }, { key: 'W', sub: '' }, { key: 'E', sub: '' },
+        { key: 'R', sub: '' }, { key: 'T', sub: '' }, { key: 'Y', sub: '' },
+        { key: 'U', sub: '' }, { key: 'I', sub: '' }, { key: 'O', sub: '' },
+        { key: 'P', sub: '' },
+      ],
+      [
+        { key: 'A', sub: '' }, { key: 'S', sub: '' }, { key: 'D', sub: '' },
+        { key: 'F', sub: '' }, { key: 'G', sub: '' }, { key: 'H', sub: '' },
+        { key: 'J', sub: '' }, { key: 'K', sub: '' }, { key: 'L', sub: '' },
+      ],
+      [
+        { key: 'Z', sub: '' }, { key: 'X', sub: '' }, { key: 'C', sub: '' },
+        { key: 'V', sub: '' }, { key: 'B', sub: '' }, { key: 'N', sub: '' },
+        { key: 'M', sub: '' },
+      ],
+    ],
+    learnSteps: [
+      { keys: [[1,0],[1,1],[1,2],[1,3]], title: 'Home Row Left (ASDF)', desc: 'Place your left hand fingers here:\nA = pinky, S = ring, D = middle, F = index' },
+      { keys: [[1,4],[1,5],[1,6],[1,7],[1,8]], title: 'Home Row Right (HJKL)', desc: 'Place your right hand fingers here:\nJ = index, K = middle, L = ring\nH is also on the home row!' },
+      { keys: [[1,0],[1,1],[1,2],[1,3],[1,4],[1,5],[1,6],[1,7],[1,8]], title: 'Full Home Row', desc: 'The home row is A S D F G H J K L\nThis is where your fingers rest naturally!' },
+      { keys: [[0,0],[0,1],[0,2],[0,3],[0,4]], title: 'Top Row Left (QWERT)', desc: 'Top row left side: Q W E R T\nReach up from your left hand home position' },
+      { keys: [[0,5],[0,6],[0,7],[0,8],[0,9]], title: 'Top Row Right (YUIOP)', desc: 'Top row right side: Y U I O P\nReach up from your right hand home position' },
+      { keys: [[2,0],[2,1],[2,2],[2,3]], title: 'Bottom Row Left (ZXCV)', desc: 'Bottom row left: Z X C V\nReach down from your left hand' },
+      { keys: [[2,4],[2,5],[2,6]], title: 'Bottom Row Right (BNM)', desc: 'Bottom row right: B N M\nReach down from your right hand' },
+      { keys: [[0,4],[0,5]], title: 'T and Y Keys', desc: 'T is typed with left index finger\nY is typed with right index finger\nBoth are reached from the home row!' },
+      { keys: [[0,2],[0,3]], title: 'E and R Keys', desc: 'E is one of the most common letters!\nR is also very frequently used.\nLeft hand middle and index fingers.' },
+      { keys: [[0,7],[0,8],[0,9]], title: 'I, O, P Keys', desc: 'I, O, P are on the top row right side\nUse right hand ring and pinky fingers\nThese letters appear very often in English!' },
+    ],
+    combos: []
   }
 };
+
+// ================================================================
+// 영어 레벨 데이터
+// ================================================================
+const ENGLISH_LEVELS = [
+  { level:1, name:'기초', emoji:'⭐', desc:'짧고 쉬운 단어',
+    words:['go','do','cat','dog','run','eat','sit','see','sun','love','life','time','hand','food','home','play','tree','bird','fish','rain','joy','sky','sea','air','day','boy','girl','book','ball','ship'],
+    sentences:['i am happy.','the cat runs.','she eats rice.','we play games.','he reads books.','i love food.','the sun is hot.','dogs are kind.'] },
+  { level:2, name:'초급', emoji:'⭐⭐', desc:'일상적인 단어',
+    words:['happy','sorry','hello','water','apple','music','dance','sleep','dream','smile','think','learn','study','phone','house','school','friend','today','night','sunny','cloudy','windy','light','young','smart','brave','clean','fresh','funny','sweet'],
+    sentences:['i like music.','she smiles every day.','we study english.','my friend is kind.','the weather is nice.','i dream of travel.','he helps his family.','we share our lunch.'] },
+  { level:3, name:'중급', emoji:'⭐⭐⭐', desc:'조금 어려운 단어',
+    words:['beautiful','important','wonderful','practice','remember','together','discover','adventure','challenge','exciting','peaceful','creative','natural','special','perfect','popular','success','journey','amazing','grateful','freedom','inspire','balance','courage','patient','healthy','culture','history','science','learning'],
+    sentences:['practice makes perfect.','life is beautiful.','we discover new things.','every day is special.','she is very creative.','together we are strong.','knowledge is power.','stay positive always.'] },
+  { level:4, name:'고급', emoji:'⭐⭐⭐⭐', desc:'고급 영어 단어',
+    words:['extraordinary','sophisticated','determination','achievement','opportunity','inspiration','responsibility','perseverance','imagination','communication','environment','enthusiasm','magnificent','accomplish','collaborate','innovative','perspective','appreciate','understand','celebration'],
+    sentences:['actions speak louder than words.','every cloud has a silver lining.','the early bird catches the worm.','a friend in need is a friend indeed.','where there is a will there is a way.'] },
+  { level:5, name:'문장', emoji:'⭐⭐⭐⭐⭐', desc:'영어 문장 연습',
+    words:[],
+    sentences:['the quick brown fox jumps over the lazy dog.','to be or not to be that is the question.','all that glitters is not gold.','practice makes perfect in everything we do.','happiness comes from within the heart.','the sky is the limit when you believe in yourself.','a journey of a thousand miles begins with a single step.','in the middle of every difficulty lies opportunity.'] }
+];
 
 // ================================================================
 // 연습 문장 데이터
@@ -331,11 +394,109 @@ const state = {
   gameAnimFrame: null,
   gameSpawnInterval: 2500,
   gameFallSpeed: 0.025,
+  gameDifficulty: 'normal',
+
+  // English
+  englishInput: '',
+  englishLevel: 1,
 };
 
 function savePoints() {
   localStorage.setItem('rodi_points', state.points);
   localStorage.setItem('rodi_level', state.level);
+}
+
+// ================================================================
+// 사운드 시스템
+// ================================================================
+let audioCtx = null;
+let bgmInterval = null;
+let soundOn = true;
+
+function getAudio() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  return audioCtx;
+}
+
+function playTone(freq, dur, type, vol) {
+  type = type || 'sine';
+  vol = vol !== undefined ? vol : 0.3;
+  if (!soundOn) return;
+  try {
+    const ctx = getAudio();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.type = type; osc.frequency.value = freq;
+    gain.gain.setValueAtTime(vol, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + dur);
+    osc.start(); osc.stop(ctx.currentTime + dur);
+  } catch(e) {}
+}
+
+function playSound(type) {
+  switch(type) {
+    case 'pop':
+      playTone(880, 0.08, 'sine', 0.3);
+      setTimeout(function(){ playTone(1320, 0.06, 'sine', 0.2); }, 60);
+      break;
+    case 'miss':
+      playTone(150, 0.3, 'sawtooth', 0.4);
+      break;
+    case 'over':
+      [392, 330, 294, 220].forEach(function(f, i){ setTimeout(function(){ playTone(f, 0.25, 'sawtooth', 0.2); }, i*200); });
+      break;
+    case 'tap':
+      playTone(800, 0.04, 'sine', 0.1);
+      break;
+    case 'correct':
+      playTone(660, 0.1, 'sine', 0.2);
+      setTimeout(function(){ playTone(880, 0.1, 'sine', 0.15); }, 80);
+      break;
+  }
+}
+
+const BGM_PATTERN = [330, 294, 262, 294, 330, 330, 330, 294, 294, 294, 330, 392, 392];
+let bgmStep = 0;
+
+function startBGM() {
+  if (bgmInterval) return;
+  bgmStep = 0;
+  bgmInterval = setInterval(function(){
+    if (soundOn) playTone(BGM_PATTERN[bgmStep % BGM_PATTERN.length], 0.2, 'square', 0.07);
+    bgmStep++;
+  }, 300);
+}
+
+function stopBGM() {
+  if (bgmInterval) { clearInterval(bgmInterval); bgmInterval = null; }
+}
+
+function toggleSound() {
+  soundOn = !soundOn;
+  var btn = document.getElementById('sound-btn');
+  if (btn) btn.textContent = soundOn ? '🔊' : '🔇';
+  if (!soundOn) stopBGM();
+  else if (state.screen === 'game' && state.gameActive) startBGM();
+}
+
+// ================================================================
+// 하이 스코어
+// ================================================================
+function getHighScores(kbId, difficulty) {
+  return JSON.parse(localStorage.getItem('hs_' + kbId + '_' + difficulty) || '[]');
+}
+
+function addHighScore(kbId, difficulty, score) {
+  var scores = getHighScores(kbId, difficulty);
+  scores.push(score);
+  scores.sort(function(a, b){ return b - a; });
+  localStorage.setItem('hs_' + kbId + '_' + difficulty, JSON.stringify(scores.slice(0, 5)));
+}
+
+function isNewHighScore(kbId, difficulty, score) {
+  var scores = getHighScores(kbId, difficulty);
+  return scores.length === 0 || score > scores[0];
 }
 
 // ================================================================
@@ -351,6 +512,8 @@ function render() {
     test: renderTest,
     game: renderGame,
     result: renderResult,
+    englishMenu: renderEnglishMenu,
+    gameDifficulty: renderGameDifficulty,
   };
   app.innerHTML = (screens[state.screen] || renderHome)();
   attachListeners();
@@ -360,7 +523,7 @@ function render() {
 // 홈 화면
 // ================================================================
 function renderHome() {
-  const kbCards = Object.values(KEYBOARDS).map(kb => `
+  const kbCards = Object.values(KEYBOARDS).filter(kb => kb.id !== 'english').map(kb => `
     <button class="keyboard-card" onclick="selectKeyboard('${kb.id}')"
       style="background: linear-gradient(145deg, ${kb.color}CC, ${kb.color}88);
              box-shadow: 0 8px 24px ${kb.color}44;">
@@ -392,6 +555,19 @@ function renderHome() {
       </div>
       <div class="home-section-title">📱 자판 선택</div>
       <div class="keyboard-grid">${kbCards}</div>
+      <div class="home-english-section">
+        <div class="home-section-title">🔤 영어 타자 연습</div>
+        <button class="english-card" onclick="goEnglish()">
+          <div class="english-card-left">
+            <div class="english-card-icon">🔤</div>
+            <div>
+              <div class="english-card-title">English Typing</div>
+              <div class="english-card-sub">5단계 어휘 학습 + 산성비 게임</div>
+            </div>
+          </div>
+          <span style="color:#10B981">→</span>
+        </button>
+      </div>
     </div>
   `;
 }
@@ -404,6 +580,192 @@ function getLevelName(level) {
 function selectKeyboard(kbId) {
   state.selectedKeyboard = kbId;
   state.screen = 'menu';
+  render();
+}
+
+function goEnglish() {
+  state.screen = 'englishMenu';
+  render();
+}
+
+// ================================================================
+// 영어 메뉴 화면
+// ================================================================
+function renderEnglishMenu() {
+  const levelCards = ENGLISH_LEVELS.map(lv => {
+    const isActive = state.englishLevel === lv.level;
+    const wordCount = lv.level === 5 ? lv.sentences.length + ' 문장' : lv.words.length + ' 단어';
+    return `
+      <div class="level-card ${isActive ? 'active' : ''}" onclick="selectEnglishLevel(${lv.level})">
+        <div class="level-card-emoji">${lv.emoji}</div>
+        <div class="level-card-info">
+          <div class="level-name">Level ${lv.level} · ${lv.name}</div>
+          <div class="level-desc">${lv.desc}</div>
+        </div>
+        <div class="level-card-count">${wordCount}</div>
+      </div>
+    `;
+  }).join('');
+
+  return `
+    <div class="screen english-menu-screen">
+      <div class="header">
+        <button class="btn-back" onclick="goHome()">←</button>
+        <span class="header-title">🔤 영어 타자 연습</span>
+        <div class="points-badge">⭐ ${state.points.toLocaleString()}</div>
+      </div>
+
+      <div class="level-cards">
+        ${levelCards}
+      </div>
+
+      <div class="menu-modes" style="padding: 0 16px 20px;">
+        <button class="mode-btn" onclick="startEnglishMode('practice')" style="border-left: 4px solid #10B981;">
+          <span class="mode-icon">✏️</span>
+          <div class="mode-text">
+            <div class="mode-title">따라치기</div>
+            <div class="mode-desc">문장을 보고 따라 입력해요</div>
+          </div>
+          <span class="mode-arrow" style="color:#10B981">→</span>
+        </button>
+
+        <button class="mode-btn" onclick="startEnglishMode('test')" style="border-left: 4px solid #10B981;">
+          <span class="mode-icon">🏆</span>
+          <div class="mode-text">
+            <div class="mode-title">실력 테스트</div>
+            <div class="mode-desc">60초 동안 얼마나 칠 수 있나요?</div>
+          </div>
+          <span class="mode-arrow" style="color:#10B981">→</span>
+        </button>
+
+        <button class="mode-btn mode-btn-game" onclick="startEnglishMode('game')" style="border-left: 4px solid #FF6B35;">
+          <span class="mode-icon">🌧</span>
+          <div class="mode-text">
+            <div class="mode-title">산성비 게임</div>
+            <div class="mode-desc">떨어지는 단어를 빠르게 쳐서 없애요!</div>
+          </div>
+          <span class="mode-arrow" style="color:#FF6B35">→</span>
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+function selectEnglishLevel(level) {
+  state.englishLevel = level;
+  render();
+}
+
+function startEnglishMode(mode) {
+  state.selectedKeyboard = 'english';
+  state.selectedMode = mode;
+  const lvData = ENGLISH_LEVELS[state.englishLevel - 1];
+
+  if (mode === 'practice') {
+    const sentences = lvData.level === 5 ? [...lvData.sentences] : [...lvData.sentences];
+    state.practiceTexts = shuffleArray(sentences);
+    state.practiceIndex = 0;
+    state.practiceInput = '';
+    state.practiceStartTime = null;
+    state.practiceCorrect = 0;
+    state.practiceTotal = 0;
+    imeReset();
+    state.screen = 'practice';
+  } else if (mode === 'test') {
+    const words = lvData.level === 5 ? [...lvData.sentences] : [...lvData.words, ...lvData.words];
+    state.testWords = shuffleArray(words);
+    state.testWordIndex = 0;
+    state.testScore = 0;
+    state.testTimer = 60;
+    state.testInput = '';
+    if (state.testTimerInterval) clearInterval(state.testTimerInterval);
+    state.testTimerInterval = null;
+    imeReset();
+    state.screen = 'test';
+  } else if (mode === 'game') {
+    state.screen = 'gameDifficulty';
+  }
+  render();
+}
+
+// ================================================================
+// 난이도 선택 화면
+// ================================================================
+function renderGameDifficulty() {
+  const kbId = state.selectedKeyboard || 'cheonjiin';
+  const difficulties = [
+    { id: 'easy', icon: '🌱', name: '쉬움', desc: '천천히 떨어지는 단어, 긴 생성 간격' },
+    { id: 'normal', icon: '⚡', name: '보통', desc: '기본 속도, 적당한 난이도' },
+    { id: 'hard', icon: '🔥', name: '어려움', desc: '빠른 속도, 짧은 생성 간격' },
+  ];
+
+  const diffCards = difficulties.map(d => `
+    <div class="difficulty-card ${state.gameDifficulty === d.id ? 'selected' : ''}" onclick="selectDifficulty('${d.id}')">
+      <div class="diff-icon">${d.icon}</div>
+      <div>
+        <div class="diff-name">${d.name}</div>
+        <div class="diff-desc">${d.desc}</div>
+      </div>
+    </div>
+  `).join('');
+
+  const scores = getHighScores(kbId, state.gameDifficulty);
+  const topScores = scores.slice(0, 3);
+  const scoresHtml = topScores.length > 0
+    ? topScores.map((s, i) => `<div class="hs-item">${['🥇','🥈','🥉'][i]} ${s}</div>`).join('')
+    : '<div style="color:rgba(255,255,255,0.4);font-size:13px;">기록 없음</div>';
+
+  return `
+    <div class="difficulty-screen">
+      <div class="header">
+        <button class="btn-back" onclick="goMenuFromDifficulty()">←</button>
+        <span class="header-title">난이도 선택</span>
+        <div class="points-badge">⭐ ${state.points.toLocaleString()}</div>
+      </div>
+
+      <div class="difficulty-cards">
+        ${diffCards}
+      </div>
+
+      <div class="highscore-section">
+        <div class="highscore-title">🏆 최고 기록 (현재 난이도)</div>
+        <div class="highscore-list">${scoresHtml}</div>
+      </div>
+
+      <button class="btn-start-game" onclick="startGameFromDifficulty()">
+        🌧 게임 시작!
+      </button>
+    </div>
+  `;
+}
+
+function selectDifficulty(diff) {
+  state.gameDifficulty = diff;
+  render();
+}
+
+function goMenuFromDifficulty() {
+  if (state.selectedKeyboard === 'english') {
+    state.screen = 'englishMenu';
+  } else {
+    state.screen = 'menu';
+  }
+  render();
+}
+
+function startGameFromDifficulty() {
+  const kbId = state.selectedKeyboard;
+  state.gameActive = false;
+  state.gameWords = [];
+  state.gameScore = 0;
+  state.gameLives = 3;
+  state.gameLevel = 1;
+  state.gameWordIdCounter = 0;
+  state.gameLastSpawn = 0;
+  state.gameLastFrame = 0;
+  if (state.gameAnimFrame) { cancelAnimationFrame(state.gameAnimFrame); state.gameAnimFrame = null; }
+  imeReset();
+  state.screen = 'game';
   render();
 }
 
@@ -475,11 +837,11 @@ function renderMenu() {
 
 function startMode(mode) {
   state.selectedMode = mode;
-  state.screen = mode;
   const kb = KEYBOARDS[state.selectedKeyboard];
 
   if (mode === 'learn') {
     state.learnStep = 0;
+    state.screen = mode;
   } else if (mode === 'practice') {
     const data = PRACTICE_DATA[state.selectedKeyboard];
     state.practiceTexts = shuffleArray([...data.sentences]);
@@ -489,6 +851,7 @@ function startMode(mode) {
     state.practiceCorrect = 0;
     state.practiceTotal = 0;
     imeReset();
+    state.screen = mode;
   } else if (mode === 'test') {
     const data = PRACTICE_DATA[state.selectedKeyboard];
     state.testWords = shuffleArray([...data.words, ...data.words]);
@@ -499,19 +862,10 @@ function startMode(mode) {
     if (state.testTimerInterval) clearInterval(state.testTimerInterval);
     state.testTimerInterval = null;
     imeReset();
+    state.screen = mode;
   } else if (mode === 'game') {
-    state.gameActive = false;
-    state.gameWords = [];
-    state.gameScore = 0;
-    state.gameLives = 3;
-    state.gameLevel = 1;
-    state.gameWordIdCounter = 0;
-    state.gameLastSpawn = 0;
-    state.gameLastFrame = 0;
-    state.gameSpawnInterval = 2500;
-    state.gameFallSpeed = 0.025;
-    if (state.gameAnimFrame) { cancelAnimationFrame(state.gameAnimFrame); state.gameAnimFrame = null; }
-    imeReset();
+    // Go to difficulty selection screen
+    state.screen = 'gameDifficulty';
   }
   render();
 }
@@ -525,7 +879,7 @@ function renderLearn() {
   const step = steps[state.learnStep];
   const progress = Math.round(((state.learnStep + 1) / steps.length) * 100);
   const isLast = state.learnStep >= steps.length - 1;
-  const isQwerty = state.selectedKeyboard === 'qwerty';
+  const isQwerty = state.selectedKeyboard === 'qwerty' || state.selectedKeyboard === 'english';
 
   return `
     <div class="screen learn-screen">
@@ -697,6 +1051,7 @@ function imeReset() {
   ime = { committed:'', cho:null, jung:null, jong:null, jongFirst:null };
   cjState = 'empty';
   lastTap = { key:null, time:0 };
+  state.englishInput = '';
 }
 
 function imeCurrent() {
@@ -755,7 +1110,6 @@ function imeInputConsonant(c) {
 
 function imeBackspace() {
   if (cjState !== 'empty') {
-    // 천지인 상태 단계적 취소
     const prev = { dot2:'dot1', dot1:'empty', ho_dot:'ho', i_dot:'i_pend' };
     cjState = prev[cjState] || 'empty';
     return;
@@ -778,7 +1132,6 @@ function imeSpace() {
 }
 
 // ── 천지인 모음 상태 머신 ───────────────────────────
-// States: empty | dot1 | dot2 | ho | ho_dot | i_pend | i_dot
 let cjState = 'empty';
 
 function cjFlush() {
@@ -831,13 +1184,30 @@ function isDoubleTap(key) {
 
 // ── 가상 자판 탭 처리 ────────────────────────────────
 function virtualKeyTap(key) {
+  // English mode - handle first
+  if (state.selectedKeyboard === 'english') {
+    if (key === '⌫') {
+      state.englishInput = state.englishInput.slice(0, -1);
+    } else if (key === ' ') {
+      state.englishInput += ' ';
+    } else if (key.length === 1) {
+      state.englishInput += key.toLowerCase();
+    }
+    const dispEl = document.getElementById('ime-display');
+    if (dispEl) dispEl.textContent = state.englishInput;
+    if (state.screen === 'practice') updatePracticeDisplay(state.englishInput);
+    else if (state.screen === 'test') onVirtualTestInput(state.englishInput);
+    else if (state.screen === 'game') updateGameMatching(state.englishInput);
+    playSound('tap');
+    return;
+  }
+
   if (key === '⌫') {
     imeBackspace();
   } else if (key === ' ') {
     imeSpace();
   } else if (state.selectedKeyboard === 'cheonjiin') {
     if (DOUBLE_CON[key] && isDoubleTap(key)) {
-      // 쌍자음: 직전 자음 취소 후 쌍자음 입력
       imeBackspace();
       const v = cjFlush(); if (v) imeInputVowel(v);
       imeInputConsonant(DOUBLE_CON[key]);
@@ -853,7 +1223,6 @@ function virtualKeyTap(key) {
 
 function refreshInputDisplay() {
   const text = imeText();
-  // 조합 중 글자 포함한 전체 텍스트 표시
   const displayEl = document.getElementById('ime-display');
   if (displayEl) displayEl.textContent = text || '';
 
@@ -870,10 +1239,12 @@ function refreshInputDisplay() {
 // 따라치기 화면
 // ================================================================
 function buildTargetHtml(target, input) {
+  const targetLower = target.toLowerCase();
+  const inputLower = input.toLowerCase();
   return [...target].map((char, i) => {
     let cls = '';
     if (i < input.length) {
-      cls = input[i] === char ? 'correct' : 'wrong';
+      cls = inputLower[i] === targetLower[i] ? 'correct' : 'wrong';
     } else if (i === input.length) {
       cls = 'current';
     }
@@ -885,7 +1256,7 @@ function renderPractice() {
   const kb = KEYBOARDS[state.selectedKeyboard];
   const target = state.practiceTexts[state.practiceIndex] || '';
   const totalTexts = state.practiceTexts.length;
-  const isQwerty = state.selectedKeyboard === 'qwerty';
+  const isQwerty = state.selectedKeyboard === 'qwerty' || state.selectedKeyboard === 'english';
 
   return `
     <div class="screen practice-screen">
@@ -945,16 +1316,16 @@ function updatePracticeDisplay(value) {
   }
   state.practiceInput = value;
 
-  // Update target text coloring
   const targetEl = document.getElementById('target-text');
   if (targetEl) targetEl.innerHTML = buildTargetHtml(target, value);
 
-  // Update stats
   let wpm = 0, accuracy = 100;
   if (state.practiceStartTime && value.length > 0) {
     const elapsed = (Date.now() - state.practiceStartTime) / 60000;
     wpm = Math.round((value.length / 5) / Math.max(elapsed, 0.001));
-    const correct = [...value].filter((c, i) => c === target[i]).length;
+    const targetLower = target.toLowerCase();
+    const valueLower = value.toLowerCase();
+    const correct = [...value].filter((c, i) => valueLower[i] === targetLower[i]).length;
     accuracy = Math.round((correct / value.length) * 100);
   }
   const wpmEl = document.getElementById('stat-wpm');
@@ -965,11 +1336,12 @@ function updatePracticeDisplay(value) {
     accEl.style.color = accuracy >= 90 ? '#48BB78' : accuracy >= 70 ? '#F6AD55' : '#FC8181';
   }
 
-  // Show next button when complete
-  if (value === target) {
+  // Compare case-insensitive
+  if (value.toLowerCase() === target.toLowerCase()) {
     state.practiceCorrect++;
     const nextBtn = document.getElementById('next-btn');
     if (nextBtn) nextBtn.style.display = 'block';
+    playSound('correct');
   }
 }
 
@@ -1029,7 +1401,7 @@ function renderTest() {
   const word = state.testWords[state.testWordIndex] || '';
   const timer = state.testTimer;
   const isUrgent = timer <= 10;
-  const isQwerty = state.selectedKeyboard === 'qwerty';
+  const isQwerty = state.selectedKeyboard === 'qwerty' || state.selectedKeyboard === 'english';
 
   return `
     <div class="screen test-screen">
@@ -1082,7 +1454,6 @@ function renderTest() {
 }
 
 function onVirtualTestInput(text) {
-  // 첫 입력 시 타이머 시작
   if (!state.testTimerInterval && text.length > 0 && state.testTimer > 0) {
     state.testTimerInterval = setInterval(() => {
       state.testTimer--;
@@ -1102,12 +1473,16 @@ function onVirtualTestInput(text) {
   const word = state.testWords[state.testWordIndex];
   if (!word) return;
 
-  if (text === word) {
+  // Compare case-insensitive for English
+  const match = state.selectedKeyboard === 'english'
+    ? text.toLowerCase() === word.toLowerCase()
+    : text === word;
+
+  if (match) {
     state.testScore++;
     state.testWordIndex++;
     imeReset();
 
-    // DOM만 업데이트 (재렌더링 없이)
     const wordEl = document.getElementById('test-word-display');
     const dispEl = document.getElementById('ime-display');
     const scoreEl = document.getElementById('test-score-val');
@@ -1124,6 +1499,7 @@ function onVirtualTestInput(text) {
     if (scoreEl) scoreEl.textContent = state.testScore;
     if (triedEl) triedEl.textContent = state.testWordIndex;
     if (accEl)   accEl.textContent = Math.round((state.testScore / state.testWordIndex) * 100) + '%';
+    playSound('correct');
   }
 }
 
@@ -1132,8 +1508,7 @@ function stopTest() {
     clearInterval(state.testTimerInterval);
     state.testTimerInterval = null;
   }
-  state.screen = 'menu';
-  render();
+  goMenu();
 }
 
 function testFinish() {
@@ -1175,18 +1550,23 @@ function testFinish() {
 // ================================================================
 function renderGame() {
   const kb = KEYBOARDS[state.selectedKeyboard];
-  const isQwerty = state.selectedKeyboard === 'qwerty';
+  const isQwerty = state.selectedKeyboard === 'qwerty' || state.selectedKeyboard === 'english';
   return `
     <div class="screen game-screen">
       <div class="game-header">
         <button class="game-quit-btn" onclick="quitGame()">✕ 나가기</button>
         <div class="game-lives" id="game-lives">❤️❤️❤️</div>
         <div class="game-score-wrap">
+          <button class="sound-toggle-btn" onclick="toggleSound()" id="sound-btn">${soundOn ? '🔊' : '🔇'}</button>
           <span class="game-level-badge" id="game-level">LV.1</span>
           <span class="game-score-num" id="game-score">0</span>
         </div>
       </div>
-      <div class="game-area" id="game-area"></div>
+      <div class="game-area" id="game-area">
+        <div class="game-ground" id="game-ground">
+          <div class="ground-line"></div>
+        </div>
+      </div>
       <div class="game-input-bar">
         <div class="game-input-label">입력 중:</div>
         <div class="game-input-display" id="ime-display"></div>
@@ -1203,10 +1583,16 @@ function renderGame() {
 }
 
 function startGameLoop() {
+  // Apply difficulty settings
+  if (state.gameDifficulty === 'easy')   { state.gameSpawnInterval = 4000; state.gameFallSpeed = 0.015; }
+  if (state.gameDifficulty === 'normal') { state.gameSpawnInterval = 2500; state.gameFallSpeed = 0.025; }
+  if (state.gameDifficulty === 'hard')   { state.gameSpawnInterval = 1500; state.gameFallSpeed = 0.04;  }
+
   state.gameActive = true;
   state.gameLastFrame = performance.now();
   state.gameLastSpawn = performance.now();
   state.gameAnimFrame = requestAnimationFrame(gameLoop);
+  startBGM();
 }
 
 function gameLoop(timestamp) {
@@ -1215,7 +1601,6 @@ function gameLoop(timestamp) {
   const delta = timestamp - state.gameLastFrame;
   state.gameLastFrame = timestamp;
 
-  // 단어 생성
   if (timestamp - state.gameLastSpawn > state.gameSpawnInterval) {
     spawnGameWord();
     state.gameLastSpawn = timestamp;
@@ -1223,7 +1608,6 @@ function gameLoop(timestamp) {
     state.gameFallSpeed = Math.min(0.1, state.gameFallSpeed + 0.0003);
   }
 
-  // 단어 이동 + 바닥 충돌 체크
   const hit = [];
   state.gameWords.forEach(w => {
     w.y += state.gameFallSpeed * delta;
@@ -1240,15 +1624,23 @@ function gameLoop(timestamp) {
   if (state.gameActive) state.gameAnimFrame = requestAnimationFrame(gameLoop);
 }
 
+function getGameWordPool() {
+  if (state.selectedKeyboard === 'english') {
+    const lvData = ENGLISH_LEVELS[state.englishLevel - 1];
+    if (lvData.level === 5) return lvData.sentences;
+    return lvData.words.length > 0 ? lvData.words : lvData.sentences;
+  }
+  return PRACTICE_DATA[state.selectedKeyboard].words;
+}
+
 function spawnGameWord() {
-  const data = PRACTICE_DATA[state.selectedKeyboard];
-  const pool = data.words;
+  const pool = getGameWordPool();
   const word = pool[Math.floor(Math.random() * pool.length)];
   const area = document.getElementById('game-area');
   if (!area) return;
 
   const id = ++state.gameWordIdCounter;
-  const maxX = Math.max(20, area.offsetWidth - word.length * 26 - 30);
+  const maxX = Math.max(20, area.offsetWidth - word.length * 16 - 30);
   const x = Math.floor(Math.random() * maxX) + 10;
 
   state.gameWords.push({ id, word, x, y: -50 });
@@ -1257,7 +1649,7 @@ function spawnGameWord() {
   el.id = 'gw-' + id;
   el.className = 'game-word';
   el.textContent = word;
-  el.style.cssText = `left:${x}px;top:-50px`;
+  el.style.cssText = 'left:' + x + 'px;top:-50px';
   area.appendChild(el);
 }
 
@@ -1275,12 +1667,23 @@ function removeGameWord(id, scored) {
 }
 
 function loseGameLife() {
+  playSound('miss');
   state.gameLives = Math.max(0, state.gameLives - 1);
   const el = document.getElementById('game-lives');
   if (el) el.textContent = '❤️'.repeat(state.gameLives) + '🖤'.repeat(3 - state.gameLives);
   const area = document.getElementById('game-area');
   if (area) { area.classList.add('game-shake'); setTimeout(() => area.classList.remove('game-shake'), 400); }
-  if (state.gameLives <= 0) gameOver();
+
+  const ground = document.getElementById('game-ground');
+  if (ground) {
+    ground.classList.add('ground-hit');
+    setTimeout(() => ground.classList.remove('ground-hit'), 500);
+  }
+
+  if (state.gameLives <= 0) {
+    if (ground) ground.classList.add('ground-destroyed');
+    gameOver();
+  }
 }
 
 function updateGameMatching(input) {
@@ -1291,15 +1694,25 @@ function updateGameMatching(input) {
     });
     return;
   }
-  const target = state.gameWords.find(w => w.word.startsWith(input));
+
+  // Case-insensitive match for English
+  const isEnglish = state.selectedKeyboard === 'english';
+  const inputCmp = isEnglish ? input.toLowerCase() : input;
+  const target = state.gameWords.find(w => {
+    const wordCmp = isEnglish ? w.word.toLowerCase() : w.word;
+    return wordCmp.startsWith(inputCmp);
+  });
+
   state.gameWords.forEach(w => {
     const el = document.getElementById('gw-' + w.id);
     if (!el) return;
     if (target && w.id === target.id) {
       el.classList.add('targeted');
-      el.innerHTML = `<span class="typed-part">${input}</span>${w.word.slice(input.length)}`;
-      if (input === w.word) {
+      el.innerHTML = `<span class="typed-part">${w.word.slice(0, input.length)}</span>${w.word.slice(input.length)}`;
+      const wordCmp = isEnglish ? w.word.toLowerCase() : w.word;
+      if (inputCmp === wordCmp) {
         removeGameWord(w.id, true);
+        playSound('pop');
         imeReset();
         cjState = 'empty';
         state.gameScore++;
@@ -1325,14 +1738,19 @@ function updateGameMatching(input) {
 
 function quitGame() {
   stopAllTimers();
-  state.screen = 'menu';
+  state.screen = state.selectedKeyboard === 'english' ? 'englishMenu' : 'menu';
   render();
 }
 
 function gameOver() {
+  playSound('over');
   stopAllTimers();
   state.gameWords.forEach(w => { const el = document.getElementById('gw-' + w.id); if (el) el.remove(); });
   state.gameWords = [];
+
+  // Save high score
+  addHighScore(state.selectedKeyboard, state.gameDifficulty, state.gameScore);
+  const newRecord = isNewHighScore(state.selectedKeyboard, state.gameDifficulty, state.gameScore);
 
   const earned = state.gameScore * 5;
   state.points += earned;
@@ -1352,11 +1770,12 @@ function gameOver() {
     title: '산성비 종료!',
     emoji,
     grade,
-    msg: state.gameScore >= 10 ? '훌륭해요! 타자 실력이 좋은데요!' : '조금 더 연습하면 금방 늘어요!',
+    msg: (newRecord ? '🏆 최고 기록! ' : '') + (state.gameScore >= 10 ? '훌륭해요! 타자 실력이 좋은데요!' : '조금 더 연습하면 금방 늘어요!'),
     stats: [
       { val: state.gameScore, lbl: '처리한 단어' },
       { val: 'LV.' + state.gameLevel, lbl: '도달 레벨' },
-    ]
+    ],
+    newRecord
   };
   state.screen = 'result';
   render();
@@ -1366,7 +1785,7 @@ function gameOver() {
 // 결과 화면
 // ================================================================
 function renderResult() {
-  const { emoji, grade, msg, earned, stats, title } = state.resultData;
+  const { emoji, grade, msg, earned, stats, title, newRecord } = state.resultData;
   const kb = KEYBOARDS[state.selectedKeyboard];
 
   const statsHtml = stats.map(s => `
@@ -1381,6 +1800,7 @@ function renderResult() {
       <div class="result-header">
         <div class="result-emoji">${emoji}</div>
         <div class="result-grade">${grade}</div>
+        ${newRecord ? '<div style="background:linear-gradient(135deg,#FFD700,#FF8C00);color:#0B1426;font-weight:900;font-size:14px;padding:6px 18px;border-radius:20px;display:inline-block;margin-bottom:8px;">🏆 새 최고 기록!</div>' : ''}
         <div class="result-msg">${msg}</div>
       </div>
 
@@ -1398,7 +1818,7 @@ function renderResult() {
       </div>
 
       <div class="result-btns">
-        <button class="btn-result primary" onclick="startMode('${state.selectedMode}')">
+        <button class="btn-result primary" onclick="restartFromResult()">
           다시 하기 🔄
         </button>
         <button class="btn-result secondary" onclick="goMenu()">
@@ -1412,6 +1832,16 @@ function renderResult() {
   `;
 }
 
+function restartFromResult() {
+  const mode = state.selectedMode;
+  if (mode === 'game') {
+    state.screen = 'gameDifficulty';
+    render();
+  } else {
+    startMode(mode);
+  }
+}
+
 // ================================================================
 // 네비게이션
 // ================================================================
@@ -1419,6 +1849,7 @@ function stopAllTimers() {
   if (state.testTimerInterval) { clearInterval(state.testTimerInterval); state.testTimerInterval = null; }
   if (state.gameAnimFrame) { cancelAnimationFrame(state.gameAnimFrame); state.gameAnimFrame = null; }
   state.gameActive = false;
+  stopBGM();
 }
 
 function goHome() {
@@ -1429,7 +1860,11 @@ function goHome() {
 
 function goMenu() {
   stopAllTimers();
-  state.screen = 'menu';
+  if (state.selectedKeyboard === 'english') {
+    state.screen = 'englishMenu';
+  } else {
+    state.screen = 'menu';
+  }
   render();
 }
 
