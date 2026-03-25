@@ -183,7 +183,7 @@ const KEYBOARDS = {
       ],
       [
         { key: 'ㅈ', sub: 'ㅊ' },
-        { key: 'ㅐ', sub: 'ㅎ' },
+        { key: 'ㅇ', sub: 'ㅎ' },
         { key: 'ㅜ', sub: 'ㅠ' },
       ],
     ],
@@ -198,7 +198,7 @@ const KEYBOARDS = {
       { keys: [[2,1]], title: 'ㅂ / ㅍ', desc: '한 번 → ㅂ\n두 번 빠르게 → ㅍ\n예: 바다, 파도' },
       { keys: [[2,2]], title: 'ㅗ / ㅛ', desc: '한 번 → ㅗ\n두 번 빠르게 → ㅛ\n예: 오빠, 요리' },
       { keys: [[3,0]], title: 'ㅈ / ㅊ', desc: '한 번 → ㅈ\n두 번 빠르게 → ㅊ\n예: 자연, 차도' },
-      { keys: [[3,1]], title: 'ㅐ / ㅎ', desc: '한 번 → ㅐ\n두 번 빠르게 → ㅎ\n예: 개, 하늘' },
+      { keys: [[3,1]], title: 'ㅇ / ㅎ', desc: '한 번 → ㅇ\n두 번 빠르게 → ㅎ\n예: 아이, 하늘' },
       { keys: [[3,2]], title: 'ㅜ / ㅠ', desc: '한 번 → ㅜ\n두 번 빠르게 → ㅠ\n예: 우유, 유리' },
     ],
     learnSteps_en: [
@@ -212,7 +212,7 @@ const KEYBOARDS = {
       { keys: [[2,1]], title: 'ㅂ / ㅍ', desc: 'Tap once → ㅂ (b/p sound)\nDouble-tap fast → ㅍ (p sound)' },
       { keys: [[2,2]], title: 'ㅗ / ㅛ', desc: 'Tap once → ㅗ ("oh")\nDouble-tap fast → ㅛ ("yoh")' },
       { keys: [[3,0]], title: 'ㅈ / ㅊ', desc: 'Tap once → ㅈ (j sound)\nDouble-tap fast → ㅊ (ch sound)' },
-      { keys: [[3,1]], title: 'ㅐ / ㅎ', desc: 'Tap once → ㅐ ("ae")\nDouble-tap fast → ㅎ (h sound)' },
+      { keys: [[3,1]], title: 'ㅇ / ㅎ', desc: 'Tap once → ㅇ (silent/ng)\nDouble-tap fast → ㅎ (h sound)' },
       { keys: [[3,2]], title: 'ㅜ / ㅠ', desc: 'Tap once → ㅜ ("oo")\nDouble-tap fast → ㅠ ("yoo")' },
     ],
     combos: []
@@ -1196,7 +1196,7 @@ const DOUBLE_CON = { 'ㄱ':'ㅋ','ㄴ':'ㄹ','ㄷ':'ㅌ','ㅂ':'ㅍ','ㅅ':'ㅎ'
 // 베가 더블탭 → 보조 키
 const BEGA_SECONDARY = {
   'ㄱ':'ㅋ','ㄴ':'ㄹ','ㄷ':'ㅌ','ㅁ':'ㅅ','ㅂ':'ㅍ','ㅈ':'ㅊ',
-  'ㅣ':'ㅡ','ㅏ':'ㅑ','ㅓ':'ㅕ','ㅗ':'ㅛ','ㅜ':'ㅠ','ㅐ':'ㅎ'
+  'ㅣ':'ㅡ','ㅏ':'ㅑ','ㅓ':'ㅕ','ㅗ':'ㅛ','ㅜ':'ㅠ','ㅇ':'ㅎ'
 };
 // 나랏글 획추가 맵 (순환)
 const HOEK_CHUGA_MAP = {
@@ -1315,6 +1315,19 @@ function cjFlush() {
   const v = map[cjState] || null;
   cjState = 'empty';
   return v;
+}
+
+// 천지인 pending 상태를 화면에 표시할 임시 문자 반환
+function cjPendingChar() {
+  switch(cjState) {
+    case 'dot1':   return '·';
+    case 'dot2':   return '··';
+    case 'ho':     return 'ㅡ';
+    case 'ho_dot': return 'ㅜ';
+    case 'i_pend': return 'ㅣ';
+    case 'i_dot':  return 'ㅓ';
+    default:       return '';
+  }
 }
 
 function cjTap(key) {
@@ -1459,8 +1472,9 @@ function virtualKeyTap(key) {
 
 function refreshInputDisplay() {
   const text = imeText();
+  const pending = state.selectedKeyboard === 'cheonjiin' ? cjPendingChar() : '';
   const displayEl = document.getElementById('ime-display');
-  if (displayEl) displayEl.textContent = text || '';
+  if (displayEl) displayEl.textContent = (text || '') + pending;
 
   if (state.screen === 'practice') {
     updatePracticeDisplay(text);
