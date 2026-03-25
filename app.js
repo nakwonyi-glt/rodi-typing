@@ -317,7 +317,20 @@ const state = {
   learnStep: 0,
 
   // Result
-  resultData: {}
+  resultData: {},
+
+  // Game (산성비)
+  gameActive: false,
+  gameWords: [],
+  gameScore: 0,
+  gameLives: 3,
+  gameLevel: 1,
+  gameWordIdCounter: 0,
+  gameLastSpawn: 0,
+  gameLastFrame: 0,
+  gameAnimFrame: null,
+  gameSpawnInterval: 2500,
+  gameFallSpeed: 0.025,
 };
 
 function savePoints() {
@@ -336,6 +349,7 @@ function render() {
     learn: renderLearn,
     practice: renderPractice,
     test: renderTest,
+    game: renderGame,
     result: renderResult,
   };
   app.innerHTML = (screens[state.screen] || renderHome)();
@@ -444,6 +458,16 @@ function renderMenu() {
           </div>
           <span class="mode-arrow" style="color:${kb.color}">→</span>
         </button>
+
+        <button class="mode-btn mode-btn-game" onclick="startMode('game')"
+          style="border-left: 4px solid #FF6B35;">
+          <span class="mode-icon">🌧</span>
+          <div class="mode-text">
+            <div class="mode-title">산성비 게임</div>
+            <div class="mode-desc">떨어지는 단어를 빠르게 쳐서 없애요!</div>
+          </div>
+          <span class="mode-arrow" style="color:#FF6B35">→</span>
+        </button>
       </div>
     </div>
   `;
@@ -474,6 +498,19 @@ function startMode(mode) {
     state.testInput = '';
     if (state.testTimerInterval) clearInterval(state.testTimerInterval);
     state.testTimerInterval = null;
+    imeReset();
+  } else if (mode === 'game') {
+    state.gameActive = false;
+    state.gameWords = [];
+    state.gameScore = 0;
+    state.gameLives = 3;
+    state.gameLevel = 1;
+    state.gameWordIdCounter = 0;
+    state.gameLastSpawn = 0;
+    state.gameLastFrame = 0;
+    state.gameSpawnInterval = 2500;
+    state.gameFallSpeed = 0.025;
+    if (state.gameAnimFrame) { cancelAnimationFrame(state.gameAnimFrame); state.gameAnimFrame = null; }
     imeReset();
   }
   render();
@@ -824,6 +861,8 @@ function refreshInputDisplay() {
     updatePracticeDisplay(text);
   } else if (state.screen === 'test') {
     onVirtualTestInput(text);
+  } else if (state.screen === 'game') {
+    updateGameMatching(text);
   }
 }
 
@@ -1132,6 +1171,198 @@ function testFinish() {
 }
 
 // ================================================================
+// 산성비 게임
+// ================================================================
+function renderGame() {
+  const kb = KEYBOARDS[state.selectedKeyboard];
+  const isQwerty = state.selectedKeyboard === 'qwerty';
+  return `
+    <div class="screen game-screen">
+      <div class="game-header">
+        <button class="game-quit-btn" onclick="quitGame()">✕ 나가기</button>
+        <div class="game-lives" id="game-lives">❤️❤️❤️</div>
+        <div class="game-score-wrap">
+          <span class="game-level-badge" id="game-level">LV.1</span>
+          <span class="game-score-num" id="game-score">0</span>
+        </div>
+      </div>
+      <div class="game-area" id="game-area"></div>
+      <div class="game-input-bar">
+        <div class="game-input-label">입력 중:</div>
+        <div class="game-input-display" id="ime-display"></div>
+      </div>
+      <div class="vkb-wrap ${isQwerty ? 'qwerty-kb' : ''}">
+        ${renderKeyboard(kb, null, 'input')}
+        <div class="vkb-action-row">
+          <button class="vkb-action-key vkb-bs" data-vkey="⌫">⌫</button>
+          <button class="vkb-action-key vkb-space" data-vkey=" ">스페이스</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function startGameLoop() {
+  state.gameActive = true;
+  state.gameLastFrame = performance.now();
+  state.gameLastSpawn = performance.now();
+  state.gameAnimFrame = requestAnimationFrame(gameLoop);
+}
+
+function gameLoop(timestamp) {
+  if (!state.gameActive) return;
+
+  const delta = timestamp - state.gameLastFrame;
+  state.gameLastFrame = timestamp;
+
+  // 단어 생성
+  if (timestamp - state.gameLastSpawn > state.gameSpawnInterval) {
+    spawnGameWord();
+    state.gameLastSpawn = timestamp;
+    state.gameSpawnInterval = Math.max(1000, state.gameSpawnInterval - 25);
+    state.gameFallSpeed = Math.min(0.1, state.gameFallSpeed + 0.0003);
+  }
+
+  // 단어 이동 + 바닥 충돌 체크
+  const hit = [];
+  state.gameWords.forEach(w => {
+    w.y += state.gameFallSpeed * delta;
+    const el = document.getElementById('gw-' + w.id);
+    if (el) el.style.top = Math.round(w.y) + 'px';
+    const area = document.getElementById('game-area');
+    if (area && w.y > area.offsetHeight - 10) hit.push(w.id);
+  });
+  hit.forEach(id => {
+    removeGameWord(id, false);
+    loseGameLife();
+  });
+
+  if (state.gameActive) state.gameAnimFrame = requestAnimationFrame(gameLoop);
+}
+
+function spawnGameWord() {
+  const data = PRACTICE_DATA[state.selectedKeyboard];
+  const pool = data.words;
+  const word = pool[Math.floor(Math.random() * pool.length)];
+  const area = document.getElementById('game-area');
+  if (!area) return;
+
+  const id = ++state.gameWordIdCounter;
+  const maxX = Math.max(20, area.offsetWidth - word.length * 26 - 30);
+  const x = Math.floor(Math.random() * maxX) + 10;
+
+  state.gameWords.push({ id, word, x, y: -50 });
+
+  const el = document.createElement('div');
+  el.id = 'gw-' + id;
+  el.className = 'game-word';
+  el.textContent = word;
+  el.style.cssText = `left:${x}px;top:-50px`;
+  area.appendChild(el);
+}
+
+function removeGameWord(id, scored) {
+  state.gameWords = state.gameWords.filter(w => w.id !== id);
+  const el = document.getElementById('gw-' + id);
+  if (!el) return;
+  if (scored) {
+    el.classList.add('word-pop');
+    setTimeout(() => el.remove(), 350);
+  } else {
+    el.classList.add('word-miss');
+    setTimeout(() => el.remove(), 400);
+  }
+}
+
+function loseGameLife() {
+  state.gameLives = Math.max(0, state.gameLives - 1);
+  const el = document.getElementById('game-lives');
+  if (el) el.textContent = '❤️'.repeat(state.gameLives) + '🖤'.repeat(3 - state.gameLives);
+  const area = document.getElementById('game-area');
+  if (area) { area.classList.add('game-shake'); setTimeout(() => area.classList.remove('game-shake'), 400); }
+  if (state.gameLives <= 0) gameOver();
+}
+
+function updateGameMatching(input) {
+  if (!input) {
+    state.gameWords.forEach(w => {
+      const el = document.getElementById('gw-' + w.id);
+      if (el) { el.classList.remove('targeted'); el.textContent = w.word; }
+    });
+    return;
+  }
+  const target = state.gameWords.find(w => w.word.startsWith(input));
+  state.gameWords.forEach(w => {
+    const el = document.getElementById('gw-' + w.id);
+    if (!el) return;
+    if (target && w.id === target.id) {
+      el.classList.add('targeted');
+      el.innerHTML = `<span class="typed-part">${input}</span>${w.word.slice(input.length)}`;
+      if (input === w.word) {
+        removeGameWord(w.id, true);
+        imeReset();
+        cjState = 'empty';
+        state.gameScore++;
+        const newLevel = Math.floor(state.gameScore / 8) + 1;
+        if (newLevel > state.gameLevel) {
+          state.gameLevel = newLevel;
+          const lvEl = document.getElementById('game-level');
+          if (lvEl) lvEl.textContent = 'LV.' + state.gameLevel;
+        }
+        const scEl = document.getElementById('game-score');
+        if (scEl) scEl.textContent = state.gameScore;
+        const dispEl = document.getElementById('ime-display');
+        if (dispEl) { dispEl.textContent = ''; dispEl.classList.add('correct-flash'); setTimeout(() => dispEl.classList.remove('correct-flash'), 300); }
+        state.points += 5;
+        savePoints();
+      }
+    } else {
+      el.classList.remove('targeted');
+      el.textContent = w.word;
+    }
+  });
+}
+
+function quitGame() {
+  stopAllTimers();
+  state.screen = 'menu';
+  render();
+}
+
+function gameOver() {
+  stopAllTimers();
+  state.gameWords.forEach(w => { const el = document.getElementById('gw-' + w.id); if (el) el.remove(); });
+  state.gameWords = [];
+
+  const earned = state.gameScore * 5;
+  state.points += earned;
+  savePoints();
+
+  let grade, emoji;
+  if (state.gameScore >= 30)      { grade = 'S';  emoji = '👑'; }
+  else if (state.gameScore >= 20) { grade = 'A+'; emoji = '🏆'; }
+  else if (state.gameScore >= 15) { grade = 'A';  emoji = '🥇'; }
+  else if (state.gameScore >= 10) { grade = 'B';  emoji = '🥈'; }
+  else if (state.gameScore >= 5)  { grade = 'C';  emoji = '🥉'; }
+  else                            { grade = 'D';  emoji = '💪'; }
+
+  state.resultData = {
+    mode: 'game',
+    earned,
+    title: '산성비 종료!',
+    emoji,
+    grade,
+    msg: state.gameScore >= 10 ? '훌륭해요! 타자 실력이 좋은데요!' : '조금 더 연습하면 금방 늘어요!',
+    stats: [
+      { val: state.gameScore, lbl: '처리한 단어' },
+      { val: 'LV.' + state.gameLevel, lbl: '도달 레벨' },
+    ]
+  };
+  state.screen = 'result';
+  render();
+}
+
+// ================================================================
 // 결과 화면
 // ================================================================
 function renderResult() {
@@ -1184,20 +1415,20 @@ function renderResult() {
 // ================================================================
 // 네비게이션
 // ================================================================
+function stopAllTimers() {
+  if (state.testTimerInterval) { clearInterval(state.testTimerInterval); state.testTimerInterval = null; }
+  if (state.gameAnimFrame) { cancelAnimationFrame(state.gameAnimFrame); state.gameAnimFrame = null; }
+  state.gameActive = false;
+}
+
 function goHome() {
-  if (state.testTimerInterval) {
-    clearInterval(state.testTimerInterval);
-    state.testTimerInterval = null;
-  }
+  stopAllTimers();
   state.screen = 'home';
   render();
 }
 
 function goMenu() {
-  if (state.testTimerInterval) {
-    clearInterval(state.testTimerInterval);
-    state.testTimerInterval = null;
-  }
+  stopAllTimers();
   state.screen = 'menu';
   render();
 }
@@ -1216,7 +1447,7 @@ function attachListeners() {
     });
   }
 
-  // 따라치기 / 실력 테스트 - 가상 자판 입력
+  // 따라치기 / 실력 테스트 / 산성비 게임 - 가상 자판 입력
   const vkbWrap = document.querySelector('.vkb-wrap');
   if (vkbWrap) {
     vkbWrap.addEventListener('click', (e) => {
@@ -1224,6 +1455,11 @@ function attachListeners() {
       if (!key) return;
       if (key.dataset.vkey !== undefined) virtualKeyTap(key.dataset.vkey);
     });
+  }
+
+  // 산성비 게임 루프 시작
+  if (state.screen === 'game' && !state.gameActive) {
+    startGameLoop();
   }
 }
 

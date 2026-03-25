@@ -776,6 +776,176 @@ html, body {
   color: rgba(255,255,255,0.8);
 }
 
+/* ===== 산성비 게임 ===== */
+.game-screen {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  background: linear-gradient(180deg, #050a1a 0%, #0a1428 50%, #050a1a 100%);
+}
+
+.game-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: rgba(0,0,0,0.5);
+  flex-shrink: 0;
+  gap: 8px;
+}
+
+.game-quit-btn {
+  background: rgba(255,100,80,0.2);
+  border: 1px solid rgba(255,100,80,0.4);
+  color: #ff6e50;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.game-lives {
+  font-size: 18px;
+  letter-spacing: 2px;
+  flex: 1;
+  text-align: center;
+}
+
+.game-score-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.game-level-badge {
+  background: rgba(255,255,255,0.15);
+  color: #aac4ff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 10px;
+}
+
+.game-score-num {
+  color: #FFD700;
+  font-size: 22px;
+  font-weight: 800;
+  min-width: 36px;
+  text-align: right;
+}
+
+.game-area {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+}
+
+/* 별/파티클 배경 느낌 */
+.game-area::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 30% 20%, rgba(30,60,150,0.15) 0%, transparent 60%),
+              radial-gradient(ellipse at 70% 70%, rgba(100,30,150,0.1) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.game-word {
+  position: absolute;
+  background: linear-gradient(135deg, rgba(30,80,200,0.85), rgba(20,50,150,0.85));
+  color: #e0eaff;
+  padding: 7px 16px;
+  border-radius: 25px;
+  font-size: 17px;
+  font-weight: 700;
+  border: 1px solid rgba(100,160,255,0.4);
+  white-space: nowrap;
+  user-select: none;
+  pointer-events: none;
+  box-shadow: 0 2px 12px rgba(50,100,255,0.25);
+  will-change: top;
+}
+
+.game-word.targeted {
+  background: linear-gradient(135deg, rgba(220,120,0,0.9), rgba(180,80,0,0.9));
+  border-color: rgba(255,200,80,0.7);
+  box-shadow: 0 0 16px rgba(255,180,0,0.4);
+  color: #fff;
+}
+
+.game-word .typed-part {
+  color: #FFD700;
+}
+
+.game-word.word-pop {
+  animation: wordPop 0.35s ease-out forwards;
+  pointer-events: none;
+}
+
+.game-word.word-miss {
+  animation: wordMiss 0.4s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes wordPop {
+  0%   { transform: scale(1);   opacity: 1; }
+  50%  { transform: scale(1.4); opacity: 0.8; }
+  100% { transform: scale(0);   opacity: 0; }
+}
+
+@keyframes wordMiss {
+  0%   { opacity: 1; transform: translateY(0); background: rgba(200,30,30,0.9); }
+  100% { opacity: 0; transform: translateY(30px); }
+}
+
+@keyframes gameShake {
+  0%,100% { transform: translateX(0); }
+  20%     { transform: translateX(-6px); }
+  40%     { transform: translateX(6px); }
+  60%     { transform: translateX(-4px); }
+  80%     { transform: translateX(4px); }
+}
+
+.game-shake { animation: gameShake 0.4s ease-out; }
+
+.game-input-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: rgba(0,0,0,0.4);
+  flex-shrink: 0;
+}
+
+.game-input-label {
+  color: rgba(255,255,255,0.4);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.game-input-display {
+  flex: 1;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 10px;
+  padding: 6px 12px;
+  font-size: 18px;
+  font-weight: 700;
+  color: white;
+  min-height: 36px;
+  text-align: center;
+  letter-spacing: 2px;
+}
+
+/* 메뉴 게임 버튼 강조 */
+.mode-btn-game {
+  background: linear-gradient(145deg, rgba(255,107,53,0.12), rgba(255,107,53,0.05));
+}
+
 /* ===== Responsive ===== */
 @media (min-width: 480px) {
   .keyboard-grid { max-width: 400px; margin: 0 auto; }
