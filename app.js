@@ -17,55 +17,39 @@ const KEYBOARDS = {
     badgeText: '가장 많이 써요',
     rows: [
       [
-        { key: 'ㄱ', sub: 'ㄲ' },
-        { key: 'ㄴ', sub: '' },
-        { key: 'ㄷ', sub: 'ㄸ' },
-      ],
-      [
-        { key: 'ㄹ', sub: '' },
-        { key: 'ㅁ', sub: '' },
-        { key: 'ㅂ', sub: 'ㅃ' },
-      ],
-      [
-        { key: 'ㅅ', sub: 'ㅆ' },
-        { key: 'ㅇ', sub: '' },
-        { key: 'ㅈ', sub: 'ㅉ' },
-      ],
-      [
+        { key: 'ㅣ', sub: '' },
         { key: '·', sub: '' },
         { key: 'ㅡ', sub: '' },
-        { key: 'ㅣ', sub: '' },
+      ],
+      [
+        { key: 'ㄱ', sub: 'ㅋ' },
+        { key: 'ㄴ', sub: 'ㄹ' },
+        { key: 'ㄷ', sub: 'ㅌ' },
+      ],
+      [
+        { key: 'ㅂ', sub: 'ㅍ' },
+        { key: 'ㅅ', sub: 'ㅎ' },
+        { key: 'ㅈ', sub: 'ㅊ' },
+      ],
+      [
+        { key: 'ㅇ', sub: 'ㅁ' },
       ],
     ],
     learnSteps: [
-      { keys: [[0,0]], title: 'ㄱ (기역)', desc: '한 번 누르면 ㄱ\n두 번 누르면 ㄲ (쌍기역)' },
-      { keys: [[0,1]], title: 'ㄴ (니은)', desc: 'ㄴ을 누르면 니은이 입력돼요' },
-      { keys: [[0,2]], title: 'ㄷ (디귿)', desc: '한 번 누르면 ㄷ\n두 번 누르면 ㄸ (쌍디귿)' },
-      { keys: [[1,0]], title: 'ㄹ (리을)', desc: 'ㄹ을 누르면 리을이 입력돼요' },
-      { keys: [[1,1]], title: 'ㅁ (미음)', desc: 'ㅁ을 누르면 미음이 입력돼요' },
-      { keys: [[1,2]], title: 'ㅂ (비읍)', desc: '한 번 누르면 ㅂ\n두 번 누르면 ㅃ (쌍비읍)' },
-      { keys: [[2,0]], title: 'ㅅ (시옷)', desc: '한 번 누르면 ㅅ\n두 번 누르면 ㅆ (쌍시옷)' },
-      { keys: [[2,1]], title: 'ㅇ (이응)', desc: '자음 앞에선 소리 없음\n받침으로 사용해요' },
-      { keys: [[2,2]], title: 'ㅈ (지읒)', desc: '한 번 누르면 ㅈ\n두 번 누르면 ㅉ (쌍지읒)' },
-      { keys: [[3,0]], title: '· (하늘)', desc: '모음을 만드는 핵심 키!\n하늘을 뜻해요 ☁' },
-      { keys: [[3,1]], title: 'ㅡ (땅)', desc: '모음을 만드는 핵심 키!\n땅을 뜻해요 🌍' },
-      { keys: [[3,2]], title: 'ㅣ (사람)', desc: '모음을 만드는 핵심 키!\n사람을 뜻해요 🙋' },
-      {
-        keys: [[3,0],[3,2]], title: 'ㅏ 만들기',
-        desc: '· 누른 후 ㅣ 누르면\n"ㅏ" 가 돼요!\n예: 아·이 → 아이'
-      },
-      {
-        keys: [[3,2],[3,0]], title: 'ㅓ 만들기',
-        desc: 'ㅣ 누른 후 · 누르면\n"ㅓ" 가 돼요!\n예: 어·머니 → 어머니'
-      },
-      {
-        keys: [[3,0],[3,1]], title: 'ㅗ 만들기',
-        desc: '· 누른 후 ㅡ 누르면\n"ㅗ" 가 돼요!\n예: 오·빠 → 오빠'
-      },
-      {
-        keys: [[3,1],[3,0]], title: 'ㅜ 만들기',
-        desc: 'ㅡ 누른 후 · 누르면\n"ㅜ" 가 돼요!\n예: 우·유 → 우유'
-      },
+      { keys: [[0,0]], title: 'ㅣ (사람)', desc: '모음의 기본 키! 사람을 뜻해요 🙋\nㅣ 하나로 "이" 소리가 나요' },
+      { keys: [[0,1]], title: '· (하늘)', desc: '모음의 핵심 키! 하늘을 뜻해요 ☁\n점(·)을 다른 키와 조합해서 모음을 만들어요' },
+      { keys: [[0,2]], title: 'ㅡ (땅)', desc: '모음의 기본 키! 땅을 뜻해요 🌍\nㅡ 하나로 "으" 소리가 나요' },
+      { keys: [[0,1],[0,0]], title: 'ㅏ 만들기', desc: '· 누른 후 ㅣ 누르면 "ㅏ"\n예: 아버지 → ·+ㅣ = ㅏ' },
+      { keys: [[0,0],[0,1]], title: 'ㅓ 만들기', desc: 'ㅣ 누른 후 · 누르면 "ㅓ"\n예: 어머니 → ㅣ+· = ㅓ' },
+      { keys: [[0,1],[0,2]], title: 'ㅗ 만들기', desc: '· 누른 후 ㅡ 누르면 "ㅗ"\n예: 오빠 → ·+ㅡ = ㅗ' },
+      { keys: [[0,2],[0,1]], title: 'ㅜ 만들기', desc: 'ㅡ 누른 후 · 누르면 "ㅜ"\n예: 우유 → ㅡ+· = ㅜ' },
+      { keys: [[1,0]], title: 'ㄱ / ㅋ', desc: '한 번 → ㄱ\n두 번 빠르게 → ㅋ\n예: 가족, 학교, 커피' },
+      { keys: [[1,1]], title: 'ㄴ / ㄹ', desc: '한 번 → ㄴ\n두 번 빠르게 → ㄹ\n예: 나무, 라디오' },
+      { keys: [[1,2]], title: 'ㄷ / ㅌ', desc: '한 번 → ㄷ\n두 번 빠르게 → ㅌ\n예: 다리, 타다' },
+      { keys: [[2,0]], title: 'ㅂ / ㅍ', desc: '한 번 → ㅂ\n두 번 빠르게 → ㅍ\n예: 바다, 파도' },
+      { keys: [[2,1]], title: 'ㅅ / ㅎ', desc: '한 번 → ㅅ\n두 번 빠르게 → ㅎ\n예: 사랑, 하늘' },
+      { keys: [[2,2]], title: 'ㅈ / ㅊ', desc: '한 번 → ㅈ\n두 번 빠르게 → ㅊ\n예: 자연, 차도' },
+      { keys: [[3,0]], title: 'ㅇ / ㅁ', desc: '한 번 → ㅇ (이응)\n두 번 빠르게 → ㅁ (미음)\n예: 아이, 마음' },
     ],
     combos: [
       { result: 'ㅏ', how: '·+ㅣ' },
@@ -94,43 +78,39 @@ const KEYBOARDS = {
     badgeText: 'LG 폰 자판',
     rows: [
       [
-        { key: 'ㅗ', sub: 'ㅛ' },
-        { key: 'ㅓ', sub: 'ㅕ' },
-        { key: 'ㅏ', sub: 'ㅑ' },
-      ],
-      [
-        { key: 'ㅜ', sub: 'ㅠ' },
-        { key: 'ㅡ', sub: '' },
-        { key: 'ㅣ', sub: 'ㅐ/ㅔ' },
-      ],
-      [
-        { key: 'ㄱ', sub: 'ㄲ' },
+        { key: 'ㄱ', sub: '' },
         { key: 'ㄴ', sub: '' },
-        { key: 'ㄷ', sub: 'ㄸ' },
+        { key: 'ㅏ', sub: 'ㅓ' },
+      ],
+      [
         { key: 'ㄹ', sub: '' },
-      ],
-      [
         { key: 'ㅁ', sub: '' },
-        { key: 'ㅂ', sub: 'ㅃ' },
-        { key: 'ㅅ', sub: 'ㅆ' },
-        { key: 'ㅇ', sub: '' },
+        { key: 'ㅗ', sub: 'ㅜ' },
       ],
       [
-        { key: 'ㅈ', sub: 'ㅉ' },
-        { key: 'ㅊ', sub: '' },
-        { key: 'ㅎ', sub: '' },
+        { key: 'ㅅ', sub: '' },
+        { key: 'ㅇ', sub: '' },
+        { key: 'ㅣ', sub: '' },
+      ],
+      [
+        { key: '획추가', sub: '' },
+        { key: 'ㅡ', sub: '' },
+        { key: '쌍자음', sub: '' },
       ],
     ],
     learnSteps: [
-      { keys: [[0,0]], title: 'ㅗ (오)', desc: '위쪽 첫 번째 줄은 모두 모음이에요\nㅗ를 누르면 "오" 소리가 나요' },
-      { keys: [[0,1]], title: 'ㅓ (어)', desc: 'ㅓ를 누르면 "어" 소리가 나요' },
-      { keys: [[0,2]], title: 'ㅏ (아)', desc: 'ㅏ를 누르면 "아" 소리가 나요' },
-      { keys: [[1,0]], title: 'ㅜ (우)', desc: 'ㅜ를 누르면 "우" 소리가 나요' },
-      { keys: [[1,1]], title: 'ㅡ (으)', desc: 'ㅡ를 누르면 "으" 소리가 나요' },
-      { keys: [[1,2]], title: 'ㅣ (이)', desc: 'ㅣ를 누르면 "이" 소리가 나요' },
-      { keys: [[2,0]], title: 'ㄱ ~ ㄹ', desc: '세 번째 줄부터는 자음이에요\n왼쪽부터 ㄱ, ㄴ, ㄷ, ㄹ 순서예요' },
-      { keys: [[3,0],[3,1],[3,2],[3,3]], title: 'ㅁ ~ ㅇ', desc: 'ㅁ, ㅂ, ㅅ, ㅇ 순서예요' },
-      { keys: [[4,0],[4,1],[4,2]], title: 'ㅈ, ㅊ, ㅎ', desc: 'ㅈ, ㅊ, ㅎ이에요\n나랏글은 자음과 모음이 따로 있어서\n찾기 쉬워요!' },
+      { keys: [[0,0]], title: 'ㄱ', desc: 'ㄱ 자음\n획추가 누르면 → ㅋ' },
+      { keys: [[0,1]], title: 'ㄴ', desc: 'ㄴ 자음\n획추가 → ㄷ, 한 번 더 → ㅌ' },
+      { keys: [[0,2]], title: 'ㅏ / ㅓ', desc: '한 번 누르면 → ㅏ\n한 번 더 누르면 → ㅓ' },
+      { keys: [[1,0]], title: 'ㄹ', desc: 'ㄹ 자음\n예: 라면, 라디오' },
+      { keys: [[1,1]], title: 'ㅁ', desc: 'ㅁ 자음\n획추가 → ㅂ, 한 번 더 → ㅍ' },
+      { keys: [[1,2]], title: 'ㅗ / ㅜ', desc: '한 번 누르면 → ㅗ\n한 번 더 누르면 → ㅜ' },
+      { keys: [[2,0]], title: 'ㅅ', desc: 'ㅅ 자음\n획추가 → ㅈ, 한 번 더 → ㅊ' },
+      { keys: [[2,1]], title: 'ㅇ', desc: 'ㅇ 자음 (이응)\n획추가 누르면 → ㅎ' },
+      { keys: [[2,2]], title: 'ㅣ', desc: 'ㅣ 모음\n예: 이, 기린' },
+      { keys: [[3,0]], title: '획추가', desc: '자음에 획을 추가해요!\nㄱ→ㅋ, ㄴ→ㄷ→ㅌ, ㅁ→ㅂ→ㅍ\nㅅ→ㅈ→ㅊ, ㅇ→ㅎ' },
+      { keys: [[3,1]], title: 'ㅡ', desc: 'ㅡ 모음\n예: 으, 그림' },
+      { keys: [[3,2]], title: '쌍자음', desc: '쌍자음을 만들어요!\nㄱ→ㄲ, ㄷ→ㄸ, ㅂ→ㅃ, ㅅ→ㅆ, ㅈ→ㅉ' },
     ],
     combos: []
   },
@@ -146,39 +126,39 @@ const KEYBOARDS = {
     badgeText: '팬택 자판',
     rows: [
       [
-        { key: 'ㅗ', sub: 'ㅛ' },
+        { key: 'ㄱ', sub: 'ㅋ' },
+        { key: 'ㅣ', sub: 'ㅡ' },
         { key: 'ㅏ', sub: 'ㅑ' },
-        { key: 'ㅣ', sub: 'ㅐ' },
       ],
       [
-        { key: 'ㅜ', sub: 'ㅠ' },
+        { key: 'ㄷ', sub: 'ㅌ' },
+        { key: 'ㄴ', sub: 'ㄹ' },
         { key: 'ㅓ', sub: 'ㅕ' },
-        { key: 'ㅡ', sub: 'ㅔ' },
       ],
       [
-        { key: 'ㄱ', sub: 'ㄲ' },
-        { key: 'ㄴ', sub: '' },
-        { key: 'ㄷ', sub: 'ㄸ' },
-        { key: 'ㄹ', sub: '' },
+        { key: 'ㅁ', sub: 'ㅅ' },
+        { key: 'ㅂ', sub: 'ㅍ' },
+        { key: 'ㅗ', sub: 'ㅛ' },
       ],
       [
-        { key: 'ㅁ', sub: '' },
-        { key: 'ㅂ', sub: 'ㅃ' },
-        { key: 'ㅅ', sub: 'ㅆ' },
-        { key: 'ㅇ', sub: '' },
-      ],
-      [
-        { key: 'ㅈ', sub: 'ㅉ' },
-        { key: 'ㅊ', sub: '' },
-        { key: 'ㅎ', sub: '' },
+        { key: 'ㅈ', sub: 'ㅊ' },
+        { key: 'ㅐ', sub: 'ㅎ' },
+        { key: 'ㅜ', sub: 'ㅠ' },
       ],
     ],
     learnSteps: [
-      { keys: [[0,0]], title: 'ㅗ·ㅏ·ㅣ (위쪽 모음)', desc: '위쪽 두 줄이 모두 모음이에요\n오른쪽 모음: ㅗ, ㅏ, ㅣ' },
-      { keys: [[1,0],[1,1],[1,2]], title: 'ㅜ·ㅓ·ㅡ (아래쪽 모음)', desc: '아래쪽 모음: ㅜ, ㅓ, ㅡ\n6개의 기본 모음을 찾아보세요!' },
-      { keys: [[2,0],[2,1],[2,2],[2,3]], title: 'ㄱ·ㄴ·ㄷ·ㄹ', desc: '자음은 세 번째 줄부터 시작해요' },
-      { keys: [[3,0],[3,1],[3,2],[3,3]], title: 'ㅁ·ㅂ·ㅅ·ㅇ', desc: '베가 자판의 자음 배열이에요' },
-      { keys: [[4,0],[4,1],[4,2]], title: 'ㅈ·ㅊ·ㅎ', desc: '마지막 자음들이에요\n베가 자판 완성!' },
+      { keys: [[0,0]], title: 'ㄱ / ㅋ', desc: '한 번 → ㄱ\n두 번 빠르게 → ㅋ\n예: 가족, 커피' },
+      { keys: [[0,1]], title: 'ㅣ / ㅡ', desc: '한 번 → ㅣ\n두 번 빠르게 → ㅡ\n예: 이, 그림' },
+      { keys: [[0,2]], title: 'ㅏ / ㅑ', desc: '한 번 → ㅏ\n두 번 빠르게 → ㅑ\n예: 아버지, 야구' },
+      { keys: [[1,0]], title: 'ㄷ / ㅌ', desc: '한 번 → ㄷ\n두 번 빠르게 → ㅌ\n예: 다리, 타다' },
+      { keys: [[1,1]], title: 'ㄴ / ㄹ', desc: '한 번 → ㄴ\n두 번 빠르게 → ㄹ\n예: 나무, 라디오' },
+      { keys: [[1,2]], title: 'ㅓ / ㅕ', desc: '한 번 → ㅓ\n두 번 빠르게 → ㅕ\n예: 어머니, 여행' },
+      { keys: [[2,0]], title: 'ㅁ / ㅅ', desc: '한 번 → ㅁ\n두 번 빠르게 → ㅅ\n예: 마음, 사랑' },
+      { keys: [[2,1]], title: 'ㅂ / ㅍ', desc: '한 번 → ㅂ\n두 번 빠르게 → ㅍ\n예: 바다, 파도' },
+      { keys: [[2,2]], title: 'ㅗ / ㅛ', desc: '한 번 → ㅗ\n두 번 빠르게 → ㅛ\n예: 오빠, 요리' },
+      { keys: [[3,0]], title: 'ㅈ / ㅊ', desc: '한 번 → ㅈ\n두 번 빠르게 → ㅊ\n예: 자연, 차도' },
+      { keys: [[3,1]], title: 'ㅐ / ㅎ', desc: '한 번 → ㅐ\n두 번 빠르게 → ㅎ\n예: 개, 하늘' },
+      { keys: [[3,2]], title: 'ㅜ / ㅠ', desc: '한 번 → ㅜ\n두 번 빠르게 → ㅠ\n예: 우유, 유리' },
     ],
     combos: []
   },
@@ -1033,7 +1013,25 @@ const VOWEL_COMBINE = {
   'ㅜ+ㅓ':'ㅝ','ㅜ+ㅔ':'ㅞ','ㅜ+ㅣ':'ㅟ',
   'ㅡ+ㅣ':'ㅢ'
 };
-const DOUBLE_CON = { 'ㄱ':'ㄲ','ㄷ':'ㄸ','ㅂ':'ㅃ','ㅅ':'ㅆ','ㅈ':'ㅉ' };
+// 천지인 더블탭 → 보조 자음
+const DOUBLE_CON = { 'ㄱ':'ㅋ','ㄴ':'ㄹ','ㄷ':'ㅌ','ㅂ':'ㅍ','ㅅ':'ㅎ','ㅈ':'ㅊ','ㅇ':'ㅁ' };
+// 베가 더블탭 → 보조 키
+const BEGA_SECONDARY = {
+  'ㄱ':'ㅋ','ㄴ':'ㄹ','ㄷ':'ㅌ','ㅁ':'ㅅ','ㅂ':'ㅍ','ㅈ':'ㅊ',
+  'ㅣ':'ㅡ','ㅏ':'ㅑ','ㅓ':'ㅕ','ㅗ':'ㅛ','ㅜ':'ㅠ','ㅐ':'ㅎ'
+};
+// 나랏글 획추가 맵 (순환)
+const HOEK_CHUGA_MAP = {
+  'ㄱ':'ㅋ','ㅋ':'ㄱ',
+  'ㄴ':'ㄷ','ㄷ':'ㅌ','ㅌ':'ㄴ',
+  'ㅁ':'ㅂ','ㅂ':'ㅍ','ㅍ':'ㅁ',
+  'ㅅ':'ㅈ','ㅈ':'ㅊ','ㅊ':'ㅅ',
+  'ㅇ':'ㅎ','ㅎ':'ㅇ'
+};
+// 나랏글 쌍자음 맵
+const SSANG_MAP = { 'ㄱ':'ㄲ','ㄷ':'ㄸ','ㅂ':'ㅃ','ㅅ':'ㅆ','ㅈ':'ㅉ' };
+// 나랏글 모음 토글 (같은 키 재탭)
+const NARATGEUL_VOWEL_TOGGLE = { 'ㅏ':'ㅓ','ㅓ':'ㅏ','ㅗ':'ㅜ','ㅜ':'ㅗ' };
 const VOWEL_SET  = new Set(JUNG_LIST);
 
 function makeSyllable(cho, jung, jong) {
@@ -1182,6 +1180,39 @@ function isDoubleTap(key) {
   return dbl;
 }
 
+// ── 나랏글 특수키 처리 ──────────────────────────────
+function naratgeulHoekChuga() {
+  // 현재 IME에서 마지막 자음에 획 추가
+  if (ime.jong && !JONG_SPLIT[ime.jong]) {
+    const next = HOEK_CHUGA_MAP[ime.jong];
+    if (next) {
+      if (JONG_IDX[next] !== undefined) {
+        ime.jong = next; ime.jongFirst = next;
+      } else {
+        // 종성으로 안 되면 분리
+        ime.jong = null; ime.jongFirst = null;
+        imeCommit();
+        ime.cho = next;
+      }
+    }
+  } else if (ime.cho && !ime.jung) {
+    const next = HOEK_CHUGA_MAP[ime.cho];
+    if (next) ime.cho = next;
+  }
+}
+
+function naratgeulSsangJaeeum() {
+  if (ime.jong && !JONG_SPLIT[ime.jong]) {
+    const next = SSANG_MAP[ime.jong];
+    if (next && JONG_IDX[next] !== undefined) {
+      ime.jong = next; ime.jongFirst = next;
+    }
+  } else if (ime.cho && !ime.jung) {
+    const next = SSANG_MAP[ime.cho];
+    if (next) ime.cho = next;
+  }
+}
+
 // ── 가상 자판 탭 처리 ────────────────────────────────
 function virtualKeyTap(key) {
   // English mode - handle first
@@ -1213,6 +1244,33 @@ function virtualKeyTap(key) {
       imeInputConsonant(DOUBLE_CON[key]);
     } else {
       cjTap(key);
+    }
+  } else if (state.selectedKeyboard === 'naratgeul') {
+    if (key === '획추가') {
+      naratgeulHoekChuga();
+    } else if (key === '쌍자음') {
+      naratgeulSsangJaeeum();
+    } else if (NARATGEUL_VOWEL_TOGGLE[key]) {
+      // 같은 키 재탭: 현재 jung이 이 모음이면 토글
+      if (ime.jung === key && !ime.jong) {
+        ime.jung = NARATGEUL_VOWEL_TOGGLE[key];
+      } else {
+        imeInputVowel(key);
+      }
+    } else if (VOWEL_SET.has(key)) {
+      imeInputVowel(key);
+    } else {
+      imeInputConsonant(key);
+    }
+  } else if (state.selectedKeyboard === 'bega') {
+    const sec = BEGA_SECONDARY[key];
+    if (sec && isDoubleTap(key)) {
+      imeBackspace();
+      if (VOWEL_SET.has(sec)) imeInputVowel(sec);
+      else imeInputConsonant(sec);
+    } else {
+      if (VOWEL_SET.has(key)) imeInputVowel(key);
+      else imeInputConsonant(key);
     }
   } else {
     if (VOWEL_SET.has(key)) imeInputVowel(key);
