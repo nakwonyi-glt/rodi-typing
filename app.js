@@ -10,6 +10,7 @@ const KEYBOARDS = {
     id: 'cheonjiin',
     name: '천지인',
     icon: '🌤',
+    subSide: true,
     tagline: '삼성 갤럭시 기본 자판',
     tagline_en: 'Samsung Galaxy Default Keyboard',
     description: '하늘(·), 땅(ㅡ), 사람(ㅣ)으로\n모음을 만드는 자판이에요',
@@ -155,6 +156,7 @@ const KEYBOARDS = {
     id: 'bega',
     name: '베가',
     icon: '⭐',
+    subSide: true,
     tagline: '팬택 베가 자판',
     tagline_en: 'Pantech Vega Keyboard',
     description: '팬택 베가 스마트폰 자판\n직관적인 배열이 특징이에요',
@@ -334,6 +336,27 @@ const ENGLISH_LEVELS = [
 // ================================================================
 // 연습 문장 데이터
 // ================================================================
+// 한국어 → 영어 번역 (외국인 학습자용)
+const KO_EN = {
+  // 단어
+  '아이': 'child', '어머니': 'mother', '아버지': 'father',
+  '사랑': 'love', '행복': 'happiness', '건강': 'health',
+  '감사': 'gratitude', '안녕': 'hi / bye', '바람': 'wind',
+  '구름': 'cloud', '하늘': 'sky', '바다': 'sea',
+  '산길': 'mountain path', '봄날': 'spring day', '여름': 'summer', '겨울': 'winter',
+  // 문장
+  '안녕하세요': 'Hello!',
+  '감사합니다': 'Thank you!',
+  '오늘 날씨가 좋아요': 'The weather is nice today',
+  '밥은 드셨나요': 'Have you eaten yet?',
+  '잘 부탁드립니다': 'Please take care of me',
+  '오늘도 건강하세요': 'Stay healthy today too',
+  '사랑합니다': 'I love you',
+  '행복한 하루 되세요': 'Have a happy day',
+  '가족이 소중해요': 'Family is precious',
+  '즐거운 하루 보내세요': 'Have a wonderful day',
+};
+
 const PRACTICE_DATA = {
   cheonjiin: {
     words: ['아이', '어머니', '아버지', '사랑', '행복', '건강', '감사', '안녕', '바람', '구름', '하늘', '바다', '산길', '봄날', '여름', '겨울'],
@@ -1064,10 +1087,10 @@ function renderKeyboard(kb, highlightKeys, mode) {
         const attr = mode === 'input'
           ? `data-vkey="${key.key}"`
           : `data-row="${ri}" data-col="${ci}"`;
-        return `<button class="kb-key ${isHighlighted ? 'highlight' : ''}" ${attr} ${hlStyle}>
-          ${key.key}
-          ${key.sub ? `<span class="key-sub">${key.sub}</span>` : ''}
-        </button>`;
+        const innerHtml = (kb.subSide && key.sub)
+          ? `<span class="key-main">${key.key}</span><span class="key-sep">·</span><span class="key-sub-side">${key.sub}</span>`
+          : `${key.key}${key.sub ? `<span class="key-sub">${key.sub}</span>` : ''}`;
+        return `<button class="kb-key ${isHighlighted ? 'highlight' : ''} ${kb.subSide && key.sub ? 'key-side' : ''}" ${attr} ${hlStyle}>${innerHtml}</button>`;
       }).join('')}
     </div>
   `).join('');
@@ -1483,6 +1506,7 @@ function renderPractice() {
       <div class="practice-target-box">
         <div class="practice-label">${L.practiceLabel(state.practiceIndex + 1, totalTexts)}</div>
         <div class="target-text" id="target-text">${buildTargetHtml(target, '')}</div>
+        ${state.lang === 'en' && KO_EN[target] ? `<div class="target-translation">${KO_EN[target]}</div>` : ''}
       </div>
 
       <div class="practice-stats">
@@ -1634,6 +1658,7 @@ function renderTest() {
 
       <div class="test-word-box">
         <div class="test-word" id="test-word-display">${word}</div>
+        <div class="test-word-trans" id="test-word-trans" style="${state.lang==='en'?'':'display:none'}">${KO_EN[word] || ''}</div>
         <div class="test-word-hint">${L.typeBelow}</div>
       </div>
 
@@ -1707,6 +1732,8 @@ function onVirtualTestInput(text) {
 
     const nextWord = state.testWords[state.testWordIndex] || '';
     if (wordEl) wordEl.textContent = nextWord;
+    const transEl = document.getElementById('test-word-trans');
+    if (transEl && state.lang === 'en') transEl.textContent = KO_EN[nextWord] || '';
     if (dispEl) {
       dispEl.textContent = '';
       dispEl.classList.add('correct-flash');
@@ -1865,7 +1892,8 @@ function spawnGameWord() {
   const el = document.createElement('div');
   el.id = 'gw-' + id;
   el.className = 'game-word';
-  el.textContent = word;
+  const trans = (state.lang === 'en' && KO_EN[word]) ? `<span class="gw-trans">${KO_EN[word]}</span>` : '';
+  el.innerHTML = word + trans;
   el.style.cssText = 'left:' + x + 'px;top:-50px';
   area.appendChild(el);
 }
@@ -1925,7 +1953,8 @@ function updateGameMatching(input) {
     if (!el) return;
     if (target && w.id === target.id) {
       el.classList.add('targeted');
-      el.innerHTML = `<span class="typed-part">${w.word.slice(0, input.length)}</span>${w.word.slice(input.length)}`;
+      const trans2 = (state.lang === 'en' && KO_EN[w.word]) ? `<span class="gw-trans">${KO_EN[w.word]}</span>` : '';
+      el.innerHTML = `<span class="typed-part">${w.word.slice(0, input.length)}</span>${w.word.slice(input.length)}${trans2}`;
       const wordCmp = isEnglish ? w.word.toLowerCase() : w.word;
       if (inputCmp === wordCmp) {
         removeGameWord(w.id, true);
