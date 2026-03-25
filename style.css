@@ -72,10 +72,28 @@ html, body {
   box-shadow: 0 3px 10px rgba(246,201,14,0.35);
 }
 
+/* ===== LANG TOGGLE ===== */
+.lang-toggle-btn {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  letter-spacing: 0.3px;
+}
+.lang-toggle-btn:active { opacity: 0.7; }
+
 /* ===== HOME SCREEN ===== */
 .home-hero {
   padding: 40px 24px 28px;
   text-align: center;
+  position: relative;
   background: linear-gradient(180deg, rgba(59,130,246,0.08) 0%, transparent 100%);
   border-bottom: 1px solid rgba(59,130,246,0.1);
 }

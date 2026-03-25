@@ -11,10 +11,13 @@ const KEYBOARDS = {
     name: '천지인',
     icon: '🌤',
     tagline: '삼성 갤럭시 기본 자판',
+    tagline_en: 'Samsung Galaxy Default Keyboard',
     description: '하늘(·), 땅(ㅡ), 사람(ㅣ)으로\n모음을 만드는 자판이에요',
+    description_en: 'Build vowels by combining\nHeavens(·), Earth(ㅡ), Human(ㅣ)',
     color: '#3B82F6',
     bgLight: '#EFF6FF',
     badgeText: '가장 많이 써요',
+    badgeText_en: 'Most Popular',
     rows: [
       [
         { key: 'ㅣ', sub: '' },
@@ -51,6 +54,22 @@ const KEYBOARDS = {
       { keys: [[2,2]], title: 'ㅈ / ㅊ', desc: '한 번 → ㅈ\n두 번 빠르게 → ㅊ\n예: 자연, 차도' },
       { keys: [[3,0]], title: 'ㅇ / ㅁ', desc: '한 번 → ㅇ (이응)\n두 번 빠르게 → ㅁ (미음)\n예: 아이, 마음' },
     ],
+    learnSteps_en: [
+      { keys: [[0,0]], title: 'ㅣ (Human)', desc: 'Basic vowel key! Represents "human" 🙋\nPress ㅣ alone → makes "ee" sound (이)' },
+      { keys: [[0,1]], title: '· (Heavens)', desc: 'Core vowel key! Represents the sky ☁\nCombine · with other keys to make vowels' },
+      { keys: [[0,2]], title: 'ㅡ (Earth)', desc: 'Basic vowel key! Represents the ground 🌍\nPress ㅡ alone → makes "eu" sound (으)' },
+      { keys: [[0,1],[0,0]], title: 'Making ㅏ', desc: 'Press · then ㅣ → ㅏ ("ah" sound)\nExample: 아버지 (father)' },
+      { keys: [[0,0],[0,1]], title: 'Making ㅓ', desc: 'Press ㅣ then · → ㅓ ("uh" sound)\nExample: 어머니 (mother)' },
+      { keys: [[0,1],[0,2]], title: 'Making ㅗ', desc: 'Press · then ㅡ → ㅗ ("oh" sound)\nExample: 오빠 (older brother)' },
+      { keys: [[0,2],[0,1]], title: 'Making ㅜ', desc: 'Press ㅡ then · → ㅜ ("oo" sound)\nExample: 우유 (milk)' },
+      { keys: [[1,0]], title: 'ㄱ / ㅋ', desc: 'Tap once → ㄱ (g/k sound)\nDouble-tap fast → ㅋ (k sound)\nExample: 가족 (family), 커피 (coffee)' },
+      { keys: [[1,1]], title: 'ㄴ / ㄹ', desc: 'Tap once → ㄴ (n sound)\nDouble-tap fast → ㄹ (r/l sound)\nExample: 나무 (tree), 라디오 (radio)' },
+      { keys: [[1,2]], title: 'ㄷ / ㅌ', desc: 'Tap once → ㄷ (d/t sound)\nDouble-tap fast → ㅌ (t sound)\nExample: 다리 (bridge), 타다 (to ride)' },
+      { keys: [[2,0]], title: 'ㅂ / ㅍ', desc: 'Tap once → ㅂ (b/p sound)\nDouble-tap fast → ㅍ (p sound)\nExample: 바다 (sea), 파도 (wave)' },
+      { keys: [[2,1]], title: 'ㅅ / ㅎ', desc: 'Tap once → ㅅ (s sound)\nDouble-tap fast → ㅎ (h sound)\nExample: 사랑 (love), 하늘 (sky)' },
+      { keys: [[2,2]], title: 'ㅈ / ㅊ', desc: 'Tap once → ㅈ (j sound)\nDouble-tap fast → ㅊ (ch sound)\nExample: 자연 (nature), 차도 (road)' },
+      { keys: [[3,0]], title: 'ㅇ / ㅁ', desc: 'Tap once → ㅇ (silent/ng)\nDouble-tap fast → ㅁ (m sound)\nExample: 아이 (child), 마음 (heart)' },
+    ],
     combos: [
       { result: 'ㅏ', how: '·+ㅣ' },
       { result: 'ㅓ', how: 'ㅣ+·' },
@@ -72,10 +91,13 @@ const KEYBOARDS = {
     name: '나랏글',
     icon: '📱',
     tagline: 'LG 폰 자판',
+    tagline_en: 'LG Phone Keyboard',
     description: '자음과 모음이 분리된 자판\nLG 스마트폰에서 사용했어요',
+    description_en: 'Consonants and vowels on separate sides\nUsed on LG smartphones',
     color: '#EF4444',
     bgLight: '#FEF2F2',
     badgeText: 'LG 폰 자판',
+    badgeText_en: 'LG Phone',
     rows: [
       [
         { key: 'ㄱ', sub: '' },
@@ -112,6 +134,20 @@ const KEYBOARDS = {
       { keys: [[3,1]], title: 'ㅡ', desc: 'ㅡ 모음\n예: 으, 그림' },
       { keys: [[3,2]], title: '쌍자음', desc: '쌍자음을 만들어요!\nㄱ→ㄲ, ㄷ→ㄸ, ㅂ→ㅃ, ㅅ→ㅆ, ㅈ→ㅉ' },
     ],
+    learnSteps_en: [
+      { keys: [[0,0]], title: 'ㄱ (g/k)', desc: 'Basic consonant ㄱ\nTap "Stroke+" → ㅋ (k sound)' },
+      { keys: [[0,1]], title: 'ㄴ (n)', desc: 'Basic consonant ㄴ\nStroke+ → ㄷ, once more → ㅌ' },
+      { keys: [[0,2]], title: 'ㅏ / ㅓ', desc: 'Tap once → ㅏ ("ah")\nTap again → ㅓ ("uh")' },
+      { keys: [[1,0]], title: 'ㄹ (r/l)', desc: 'Consonant ㄹ\nExample: 라면 (ramen)' },
+      { keys: [[1,1]], title: 'ㅁ (m)', desc: 'Consonant ㅁ\nStroke+ → ㅂ, once more → ㅍ' },
+      { keys: [[1,2]], title: 'ㅗ / ㅜ', desc: 'Tap once → ㅗ ("oh")\nTap again → ㅜ ("oo")' },
+      { keys: [[2,0]], title: 'ㅅ (s)', desc: 'Consonant ㅅ\nStroke+ → ㅈ, once more → ㅊ' },
+      { keys: [[2,1]], title: 'ㅇ (ng/silent)', desc: 'Silent consonant ㅇ\nStroke+ → ㅎ (h sound)' },
+      { keys: [[2,2]], title: 'ㅣ (ee)', desc: 'Vowel ㅣ — "ee" sound\nExample: 이 (tooth/two)' },
+      { keys: [[3,0]], title: 'Stroke+ (획추가)', desc: 'Adds a stroke to the last consonant!\nㄱ→ㅋ, ㄴ→ㄷ→ㅌ, ㅁ→ㅂ→ㅍ\nㅅ→ㅈ→ㅊ, ㅇ→ㅎ' },
+      { keys: [[3,1]], title: 'ㅡ (eu)', desc: 'Vowel ㅡ — "eu" sound\nExample: 으, 그림 (drawing)' },
+      { keys: [[3,2]], title: 'Double (쌍자음)', desc: 'Makes double consonants!\nㄱ→ㄲ, ㄷ→ㄸ, ㅂ→ㅃ, ㅅ→ㅆ, ㅈ→ㅉ' },
+    ],
     combos: []
   },
 
@@ -120,10 +156,13 @@ const KEYBOARDS = {
     name: '베가',
     icon: '⭐',
     tagline: '팬택 베가 자판',
+    tagline_en: 'Pantech Vega Keyboard',
     description: '팬택 베가 스마트폰 자판\n직관적인 배열이 특징이에요',
+    description_en: 'Pantech Vega smartphone keyboard\nIntuitive 4×3 layout with double-tap',
     color: '#8B5CF6',
     bgLight: '#F5F3FF',
     badgeText: '팬택 자판',
+    badgeText_en: 'Pantech Vega',
     rows: [
       [
         { key: 'ㄱ', sub: 'ㅋ' },
@@ -160,6 +199,20 @@ const KEYBOARDS = {
       { keys: [[3,1]], title: 'ㅐ / ㅎ', desc: '한 번 → ㅐ\n두 번 빠르게 → ㅎ\n예: 개, 하늘' },
       { keys: [[3,2]], title: 'ㅜ / ㅠ', desc: '한 번 → ㅜ\n두 번 빠르게 → ㅠ\n예: 우유, 유리' },
     ],
+    learnSteps_en: [
+      { keys: [[0,0]], title: 'ㄱ / ㅋ', desc: 'Tap once → ㄱ (g/k sound)\nDouble-tap fast → ㅋ (k sound)' },
+      { keys: [[0,1]], title: 'ㅣ / ㅡ', desc: 'Tap once → ㅣ ("ee")\nDouble-tap fast → ㅡ ("eu")' },
+      { keys: [[0,2]], title: 'ㅏ / ㅑ', desc: 'Tap once → ㅏ ("ah")\nDouble-tap fast → ㅑ ("yah")' },
+      { keys: [[1,0]], title: 'ㄷ / ㅌ', desc: 'Tap once → ㄷ (d/t sound)\nDouble-tap fast → ㅌ (t sound)' },
+      { keys: [[1,1]], title: 'ㄴ / ㄹ', desc: 'Tap once → ㄴ (n sound)\nDouble-tap fast → ㄹ (r/l sound)' },
+      { keys: [[1,2]], title: 'ㅓ / ㅕ', desc: 'Tap once → ㅓ ("uh")\nDouble-tap fast → ㅕ ("yuh")' },
+      { keys: [[2,0]], title: 'ㅁ / ㅅ', desc: 'Tap once → ㅁ (m sound)\nDouble-tap fast → ㅅ (s sound)' },
+      { keys: [[2,1]], title: 'ㅂ / ㅍ', desc: 'Tap once → ㅂ (b/p sound)\nDouble-tap fast → ㅍ (p sound)' },
+      { keys: [[2,2]], title: 'ㅗ / ㅛ', desc: 'Tap once → ㅗ ("oh")\nDouble-tap fast → ㅛ ("yoh")' },
+      { keys: [[3,0]], title: 'ㅈ / ㅊ', desc: 'Tap once → ㅈ (j sound)\nDouble-tap fast → ㅊ (ch sound)' },
+      { keys: [[3,1]], title: 'ㅐ / ㅎ', desc: 'Tap once → ㅐ ("ae")\nDouble-tap fast → ㅎ (h sound)' },
+      { keys: [[3,2]], title: 'ㅜ / ㅠ', desc: 'Tap once → ㅜ ("oo")\nDouble-tap fast → ㅠ ("yoo")' },
+    ],
     combos: []
   },
 
@@ -168,10 +221,13 @@ const KEYBOARDS = {
     name: 'Qwerty',
     icon: '⌨️',
     tagline: '영문 QWERTY 자판',
+    tagline_en: 'Korean QWERTY Layout',
     description: '컴퓨터와 동일한 자판 배열\n각 키에 한글이 매핑돼요',
+    description_en: 'Same layout as a PC keyboard\nEach key maps to a Korean character',
     color: '#10B981',
     bgLight: '#ECFDF5',
     badgeText: '컴퓨터와 동일',
+    badgeText_en: 'Same as PC',
     rows: [
       [
         { key: 'ㅂ', sub: 'Q' }, { key: 'ㅈ', sub: 'W' }, { key: 'ㄷ', sub: 'E' },
@@ -240,6 +296,15 @@ const KEYBOARDS = {
       { keys: [[0,4],[0,5]], title: 'T and Y Keys', desc: 'T is typed with left index finger\nY is typed with right index finger\nBoth are reached from the home row!' },
       { keys: [[0,2],[0,3]], title: 'E and R Keys', desc: 'E is one of the most common letters!\nR is also very frequently used.\nLeft hand middle and index fingers.' },
       { keys: [[0,7],[0,8],[0,9]], title: 'I, O, P Keys', desc: 'I, O, P are on the top row right side\nUse right hand ring and pinky fingers\nThese letters appear very often in English!' },
+    ],
+    learnSteps_en: [
+      { keys: [[0,3],[0,4],[1,0],[1,1],[1,2],[1,3],[2,0]], title: 'Consonant Keys', desc: 'ㄱ(R), ㅅ(T), ㅁ(A), ㄴ(S), ㅇ(D)\nㄹ(F), ㅋ(Z) — consonants on the left side' },
+      { keys: [[0,5],[0,6],[0,7],[1,7],[1,8]], title: 'Vowel Keys', desc: 'ㅛ(Y), ㅕ(U), ㅑ(I), ㅏ(K), ㅣ(L)\nVowels are on the right side' },
+      { keys: [[0,0],[0,1],[0,2]], title: 'ㅂ ㅈ ㄷ (Q W E)', desc: 'ㅂ(Q), ㅈ(W), ㄷ(E)\nMemorize these top-left keys!' },
+      { keys: [[0,3],[0,4]], title: 'ㄱ ㅅ (R T)', desc: 'ㄱ(R), ㅅ(T)\nMost frequently used consonants' },
+      { keys: [[1,4],[1,5],[1,6]], title: 'ㅎ ㅗ ㅓ (G H J)', desc: 'ㅎ(G), ㅗ(H), ㅓ(J)\nH and J are the most common vowels!' },
+      { keys: [[1,7],[1,8]], title: 'ㅏ ㅣ (K L)', desc: 'ㅏ(K), ㅣ(L)\nㅏ and ㅣ are extremely common vowels' },
+      { keys: [[0,8],[0,9]], title: 'ㅐ ㅔ (O P)', desc: 'ㅐ(O), ㅔ(P)\nThese are compound vowels' },
     ],
     combos: []
   }
@@ -331,12 +396,92 @@ const PRACTICE_DATA = {
 };
 
 // ================================================================
+// 번역 (Translations)
+// ================================================================
+const T = {
+  ko: {
+    appTitle: '손가락 타자 연습', appSub: '자판을 배우고, 연습하고, 실력을 키워요!',
+    points: '포인트', myLevel: '내 등급',
+    selectKeyboard: '📱 자판 선택', englishSection: '🔤 영어 타자 연습',
+    englishSub: '5단계 어휘 학습 + 산성비 게임',
+    levels: ['입문','초급','중급','고급','달인'],
+    modeLearn: '자판 익히기', modeLearnDesc: '자판 위치를 하나씩 배워봐요',
+    modePractice: '따라치기', modePracticeDesc: '화면 글자를 보고 따라 입력해요',
+    modeTest: '실력 테스트', modeTestDesc: '60초 동안 얼마나 칠 수 있나요?',
+    modeGame: '산성비 게임', modeGameDesc: '떨어지는 단어를 빠르게 쳐서 없애요!',
+    practiceLabel: (i,n) => `따라 입력하세요 (${i}/${n})`,
+    wpm: '타수', accuracy: '정확도', done: '완료', nextSentence: '✅ 다음 문장 →', space: '스페이스',
+    timeLeft: '남은 시간 (초)', typeBelow: '아래 자판으로 입력하세요',
+    correct: '맞은 단어', tried: '시도',
+    typing: '입력 중:', quit: '✕ 나가기',
+    difficulty: '난이도 선택', startGame: '🌧 게임 시작!',
+    noRecord: '기록 없음', bestRecord: '🏆 최고 기록 (현재 난이도)',
+    diffNames: { easy:'쉬움', normal:'보통', hard:'어려움' },
+    diffDescs: { easy:'천천히 떨어지는 단어, 긴 생성 간격', normal:'기본 속도, 적당한 난이도', hard:'빠른 속도, 짧은 생성 간격' },
+    prev: '← 이전', next: '다음 →', complete: '완료! 🎉',
+    newRecord: '🏆 새 최고 기록!',
+    pointsEarned: (n,t) => `포인트 획득! (누적: ${t.toLocaleString()}점)`,
+    tryAgain: '다시 하기 🔄', otherMode: '다른 모드 선택', goHome: '홈으로 🏠',
+    headerLearn: '자판 익히기', headerPractice: '따라치기',
+    headerTest: '실력 테스트', headerGame: '산성비 게임',
+    headerKeyboard: '자판 선택', headerEnglish: '🔤 영어 타자 연습',
+    completedSentences: '완료 문장',
+    learnComplete: '자판 익히기 완료!', learnMsg: '자판 위치를 모두 익혔어요!\n이제 따라치기로 연습해 보세요',
+    practiceComplete: '따라치기 완료!',
+    practiceMsg: (acc) => acc>=80 ? '훌륭해요! 정확도가 높아요' : '꾸준히 연습하면 실력이 늘어요!',
+    testComplete: '테스트 완료!',
+    testMsg: (score) => score>=10 ? '대단해요! 실력이 많이 늘었어요!' : '꾸준히 연습하면 금방 늘어요!',
+    gameComplete: '산성비 종료!',
+    gameMsg: (rec,score) => (rec?'🏆 최고 기록! ':'')+(score>=10?'훌륭해요! 타자 실력이 좋은데요!':'조금 더 연습하면 금방 늘어요!'),
+    processedWords: '처리한 단어',
+  },
+  en: {
+    appTitle: 'Korean Typing Trainer', appSub: 'Learn, practice, and master Korean mobile keyboards!',
+    points: 'Points', myLevel: 'My Level',
+    selectKeyboard: '📱 Select Keyboard', englishSection: '🔤 English Typing',
+    englishSub: '5 vocabulary levels + Acid Rain game',
+    levels: ['Novice','Basic','Intermediate','Advanced','Master'],
+    modeLearn: 'Learn Keys', modeLearnDesc: 'Learn each key position step by step',
+    modePractice: 'Copy Typing', modePracticeDesc: 'Type what you see on screen',
+    modeTest: 'Speed Test', modeTestDesc: 'How much can you type in 60 seconds?',
+    modeGame: 'Acid Rain', modeGameDesc: 'Type falling words before they hit the ground!',
+    practiceLabel: (i,n) => `Type the text below (${i}/${n})`,
+    wpm: 'Speed', accuracy: 'Accuracy', done: 'Done', nextSentence: '✅ Next →', space: 'Space',
+    timeLeft: 'Time Left (sec)', typeBelow: 'Type using the keyboard below',
+    correct: 'Correct', tried: 'Tried',
+    typing: 'Typing:', quit: '✕ Quit',
+    difficulty: 'Select Difficulty', startGame: '🌧 Start Game!',
+    noRecord: 'No record yet', bestRecord: '🏆 Best Score (current difficulty)',
+    diffNames: { easy:'Easy', normal:'Normal', hard:'Hard' },
+    diffDescs: { easy:'Slow words, long spawn interval', normal:'Default speed, balanced', hard:'Fast speed, short spawn interval' },
+    prev: '← Prev', next: 'Next →', complete: 'Done! 🎉',
+    newRecord: '🏆 New Record!',
+    pointsEarned: (n,t) => `Points earned! (Total: ${t.toLocaleString()})`,
+    tryAgain: 'Try Again 🔄', otherMode: 'Other Modes', goHome: 'Home 🏠',
+    headerLearn: 'Learn Keys', headerPractice: 'Copy Typing',
+    headerTest: 'Speed Test', headerGame: 'Acid Rain',
+    headerKeyboard: 'Select Keyboard', headerEnglish: '🔤 English Typing',
+    completedSentences: 'Sentences',
+    learnComplete: 'Key Learning Complete!', learnMsg: "You've learned all key positions!\nNow try Copy Typing to practice!",
+    practiceComplete: 'Copy Typing Done!',
+    practiceMsg: (acc) => acc>=80 ? 'Excellent accuracy!' : 'Keep practicing to improve!',
+    testComplete: 'Speed Test Done!',
+    testMsg: (score) => score>=10 ? 'Amazing! Your skills have improved!' : 'Keep practicing, you\'ll get better fast!',
+    gameComplete: 'Acid Rain Over!',
+    gameMsg: (rec,score) => (rec?'🏆 New Record! ':'')+(score>=10?'Great job! Excellent typing skills!':'A bit more practice and you\'ll fly!'),
+    processedWords: 'Words Cleared',
+  }
+};
+function tl() { return T[state.lang] || T.ko; }
+
+// ================================================================
 // 상태 (State)
 // ================================================================
 const state = {
   screen: 'home',
   selectedKeyboard: null,
   selectedMode: null,
+  lang: localStorage.getItem('rodi_lang') || 'ko',
   points: parseInt(localStorage.getItem('rodi_points') || '0'),
   level: parseInt(localStorage.getItem('rodi_level') || '1'),
 
@@ -503,14 +648,16 @@ function render() {
 // 홈 화면
 // ================================================================
 function renderHome() {
+  const L = tl();
+  const isEn = state.lang === 'en';
   const kbCards = Object.values(KEYBOARDS).filter(kb => kb.id !== 'english').map(kb => `
     <button class="keyboard-card" onclick="selectKeyboard('${kb.id}')"
       style="background: linear-gradient(145deg, ${kb.color}CC, ${kb.color}88);
              box-shadow: 0 8px 24px ${kb.color}44;">
       <div class="card-icon">${kb.icon}</div>
       <div class="card-name">${kb.name}</div>
-      <div class="card-tagline">${kb.tagline}</div>
-      <span class="card-badge">${kb.badgeText}</span>
+      <div class="card-tagline">${isEn ? (kb.tagline_en||kb.tagline) : kb.tagline}</div>
+      <span class="card-badge">${isEn ? (kb.badgeText_en||kb.badgeText) : kb.badgeText}</span>
     </button>
   `).join('');
 
@@ -519,30 +666,31 @@ function renderHome() {
   return `
     <div class="screen home-screen">
       <div class="home-hero">
+        <button class="lang-toggle-btn" onclick="toggleLang()">${isEn ? '🇰🇷 한국어' : '🇺🇸 English'}</button>
         <div class="home-logo">👆</div>
-        <div class="home-title">손가락 <span>타자 연습</span></div>
-        <div class="home-sub">자판을 배우고, 연습하고, 실력을 키워요!</div>
+        <div class="home-title">${isEn ? 'Korean <span>Typing Trainer</span>' : '손가락 <span>타자 연습</span>'}</div>
+        <div class="home-sub">${L.appSub}</div>
         <div class="home-stats">
           <div class="stat-box">
             <div class="stat-value">${state.points.toLocaleString()}</div>
-            <div class="stat-label">포인트</div>
+            <div class="stat-label">${L.points}</div>
           </div>
           <div class="stat-box">
             <div class="stat-value">${levelName}</div>
-            <div class="stat-label">내 등급</div>
+            <div class="stat-label">${L.myLevel}</div>
           </div>
         </div>
       </div>
-      <div class="home-section-title">📱 자판 선택</div>
+      <div class="home-section-title">${L.selectKeyboard}</div>
       <div class="keyboard-grid">${kbCards}</div>
       <div class="home-english-section">
-        <div class="home-section-title">🔤 영어 타자 연습</div>
+        <div class="home-section-title">${L.englishSection}</div>
         <button class="english-card" onclick="goEnglish()">
           <div class="english-card-left">
             <div class="english-card-icon">🔤</div>
             <div>
               <div class="english-card-title">English Typing</div>
-              <div class="english-card-sub">5단계 어휘 학습 + 산성비 게임</div>
+              <div class="english-card-sub">${L.englishSub}</div>
             </div>
           </div>
           <span style="color:#10B981">→</span>
@@ -553,8 +701,8 @@ function renderHome() {
 }
 
 function getLevelName(level) {
-  const names = ['입문', '초급', '중급', '고급', '달인'];
-  return names[Math.min(level - 1, names.length - 1)];
+  const L = tl();
+  return L.levels[Math.min(level - 1, L.levels.length - 1)];
 }
 
 function selectKeyboard(kbId) {
@@ -673,18 +821,19 @@ function startEnglishMode(mode) {
 // ================================================================
 function renderGameDifficulty() {
   const kbId = state.selectedKeyboard || 'cheonjiin';
+  const L = tl();
   const difficulties = [
-    { id: 'easy', icon: '🌱', name: '쉬움', desc: '천천히 떨어지는 단어, 긴 생성 간격' },
-    { id: 'normal', icon: '⚡', name: '보통', desc: '기본 속도, 적당한 난이도' },
-    { id: 'hard', icon: '🔥', name: '어려움', desc: '빠른 속도, 짧은 생성 간격' },
+    { id: 'easy', icon: '🌱' },
+    { id: 'normal', icon: '⚡' },
+    { id: 'hard', icon: '🔥' },
   ];
 
   const diffCards = difficulties.map(d => `
     <div class="difficulty-card ${state.gameDifficulty === d.id ? 'selected' : ''}" onclick="selectDifficulty('${d.id}')">
       <div class="diff-icon">${d.icon}</div>
       <div>
-        <div class="diff-name">${d.name}</div>
-        <div class="diff-desc">${d.desc}</div>
+        <div class="diff-name">${L.diffNames[d.id]}</div>
+        <div class="diff-desc">${L.diffDescs[d.id]}</div>
       </div>
     </div>
   `).join('');
@@ -693,13 +842,13 @@ function renderGameDifficulty() {
   const topScores = scores.slice(0, 3);
   const scoresHtml = topScores.length > 0
     ? topScores.map((s, i) => `<div class="hs-item">${['🥇','🥈','🥉'][i]} ${s}</div>`).join('')
-    : '<div style="color:rgba(255,255,255,0.4);font-size:13px;">기록 없음</div>';
+    : `<div style="color:rgba(255,255,255,0.4);font-size:13px;">${L.noRecord}</div>`;
 
   return `
     <div class="difficulty-screen">
       <div class="header">
         <button class="btn-back" onclick="goMenuFromDifficulty()">←</button>
-        <span class="header-title">난이도 선택</span>
+        <span class="header-title">${L.difficulty}</span>
         <div class="points-badge">⭐ ${state.points.toLocaleString()}</div>
       </div>
 
@@ -708,12 +857,12 @@ function renderGameDifficulty() {
       </div>
 
       <div class="highscore-section">
-        <div class="highscore-title">🏆 최고 기록 (현재 난이도)</div>
+        <div class="highscore-title">${L.bestRecord}</div>
         <div class="highscore-list">${scoresHtml}</div>
       </div>
 
       <button class="btn-start-game" onclick="startGameFromDifficulty()">
-        🌧 게임 시작!
+        ${L.startGame}
       </button>
     </div>
   `;
@@ -754,11 +903,14 @@ function startGameFromDifficulty() {
 // ================================================================
 function renderMenu() {
   const kb = KEYBOARDS[state.selectedKeyboard];
+  const L = tl();
+  const isEn = state.lang === 'en';
+  const kbSuffix = isEn ? '' : ' 자판';
   return `
     <div class="screen menu-screen">
       <div class="header">
         <button class="btn-back" onclick="goHome()">←</button>
-        <span class="header-title">자판 선택</span>
+        <span class="header-title">${L.headerKeyboard}</span>
         <div class="points-badge">⭐ ${state.points.toLocaleString()}</div>
       </div>
 
@@ -766,8 +918,8 @@ function renderMenu() {
         style="background: linear-gradient(145deg, ${kb.color}33, ${kb.color}11);
                border: 1px solid ${kb.color}44;">
         <div class="menu-kb-icon">${kb.icon}</div>
-        <div class="menu-kb-name" style="color:${kb.color}">${kb.name} 자판</div>
-        <div class="menu-kb-desc">${kb.description}</div>
+        <div class="menu-kb-name" style="color:${kb.color}">${kb.name}${kbSuffix}</div>
+        <div class="menu-kb-desc">${isEn ? (kb.description_en||kb.description) : kb.description}</div>
       </div>
 
       <div class="menu-modes">
@@ -775,8 +927,8 @@ function renderMenu() {
           style="border-left: 4px solid ${kb.color};">
           <span class="mode-icon">📖</span>
           <div class="mode-text">
-            <div class="mode-title">자판 익히기</div>
-            <div class="mode-desc">자판 위치를 하나씩 배워봐요</div>
+            <div class="mode-title">${L.modeLearn}</div>
+            <div class="mode-desc">${L.modeLearnDesc}</div>
           </div>
           <span class="mode-arrow" style="color:${kb.color}">→</span>
         </button>
@@ -785,8 +937,8 @@ function renderMenu() {
           style="border-left: 4px solid ${kb.color};">
           <span class="mode-icon">✏️</span>
           <div class="mode-text">
-            <div class="mode-title">따라치기</div>
-            <div class="mode-desc">화면 글자를 보고 따라 입력해요</div>
+            <div class="mode-title">${L.modePractice}</div>
+            <div class="mode-desc">${L.modePracticeDesc}</div>
           </div>
           <span class="mode-arrow" style="color:${kb.color}">→</span>
         </button>
@@ -795,8 +947,8 @@ function renderMenu() {
           style="border-left: 4px solid ${kb.color};">
           <span class="mode-icon">🏆</span>
           <div class="mode-text">
-            <div class="mode-title">실력 테스트</div>
-            <div class="mode-desc">60초 동안 얼마나 칠 수 있나요?</div>
+            <div class="mode-title">${L.modeTest}</div>
+            <div class="mode-desc">${L.modeTestDesc}</div>
           </div>
           <span class="mode-arrow" style="color:${kb.color}">→</span>
         </button>
@@ -805,8 +957,8 @@ function renderMenu() {
           style="border-left: 4px solid #FF6B35;">
           <span class="mode-icon">🌧</span>
           <div class="mode-text">
-            <div class="mode-title">산성비 게임</div>
-            <div class="mode-desc">떨어지는 단어를 빠르게 쳐서 없애요!</div>
+            <div class="mode-title">${L.modeGame}</div>
+            <div class="mode-desc">${L.modeGameDesc}</div>
           </div>
           <span class="mode-arrow" style="color:#FF6B35">→</span>
         </button>
@@ -855,7 +1007,9 @@ function startMode(mode) {
 // ================================================================
 function renderLearn() {
   const kb = KEYBOARDS[state.selectedKeyboard];
-  const steps = kb.learnSteps;
+  const L = tl();
+  const isEn = state.lang === 'en';
+  const steps = (isEn && kb.learnSteps_en) ? kb.learnSteps_en : kb.learnSteps;
   const step = steps[state.learnStep];
   const progress = Math.round(((state.learnStep + 1) / steps.length) * 100);
   const isLast = state.learnStep >= steps.length - 1;
@@ -865,7 +1019,7 @@ function renderLearn() {
     <div class="screen learn-screen">
       <div class="header">
         <button class="btn-back" onclick="goMenu()">←</button>
-        <span class="header-title">${kb.icon} 자판 익히기</span>
+        <span class="header-title">${kb.icon} ${L.headerLearn}</span>
         <div class="points-badge">⭐ ${state.points.toLocaleString()}</div>
       </div>
 
@@ -889,10 +1043,10 @@ function renderLearn() {
       ${kb.combos.length > 0 && state.learnStep >= kb.learnSteps.length - 6 ? renderCombos(kb) : ''}
 
       <div class="learn-nav">
-        ${state.learnStep > 0 ? `<button class="btn-nav secondary" onclick="learnPrev()">← 이전</button>` : '<div style="flex:1"></div>'}
+        ${state.learnStep > 0 ? `<button class="btn-nav secondary" onclick="learnPrev()">${L.prev}</button>` : '<div style="flex:1"></div>'}
         ${isLast
-          ? `<button class="btn-nav primary" style="background:${kb.color}" onclick="learnFinish()">완료! 🎉</button>`
-          : `<button class="btn-nav primary" style="background:${kb.color}" onclick="learnNext()">다음 →</button>`
+          ? `<button class="btn-nav primary" style="background:${kb.color}" onclick="learnFinish()">${L.complete}</button>`
+          : `<button class="btn-nav primary" style="background:${kb.color}" onclick="learnNext()">${L.next}</button>`
         }
       </div>
     </div>
@@ -971,13 +1125,14 @@ function learnFinish() {
   const earned = 20;
   state.points += earned;
   savePoints();
+  const L = tl();
   state.resultData = {
     mode: 'learn',
     earned,
-    title: '자판 익히기 완료!',
+    title: L.learnComplete,
     emoji: '🎓',
     grade: '수료',
-    msg: '자판 위치를 모두 익혔어요!\n이제 따라치기로 연습해 보세요',
+    msg: L.learnMsg,
     stats: []
   };
   state.screen = 'result';
@@ -1312,6 +1467,7 @@ function buildTargetHtml(target, input) {
 
 function renderPractice() {
   const kb = KEYBOARDS[state.selectedKeyboard];
+  const L = tl();
   const target = state.practiceTexts[state.practiceIndex] || '';
   const totalTexts = state.practiceTexts.length;
   const isQwerty = state.selectedKeyboard === 'qwerty' || state.selectedKeyboard === 'english';
@@ -1320,27 +1476,27 @@ function renderPractice() {
     <div class="screen practice-screen">
       <div class="header">
         <button class="btn-back" onclick="goMenu()">←</button>
-        <span class="header-title">✏️ 따라치기</span>
+        <span class="header-title">✏️ ${L.headerPractice}</span>
         <div class="points-badge">⭐ ${state.points.toLocaleString()}</div>
       </div>
 
       <div class="practice-target-box">
-        <div class="practice-label">따라 입력하세요 (${state.practiceIndex + 1}/${totalTexts})</div>
+        <div class="practice-label">${L.practiceLabel(state.practiceIndex + 1, totalTexts)}</div>
         <div class="target-text" id="target-text">${buildTargetHtml(target, '')}</div>
       </div>
 
       <div class="practice-stats">
         <div class="stat-chip">
           <div class="value" id="stat-wpm" style="color:${kb.color}">0</div>
-          <div class="label">타수</div>
+          <div class="label">${L.wpm}</div>
         </div>
         <div class="stat-chip">
           <div class="value" id="stat-acc" style="color:#48BB78">100%</div>
-          <div class="label">정확도</div>
+          <div class="label">${L.accuracy}</div>
         </div>
         <div class="stat-chip">
           <div class="value" style="color:#667EEA">${state.practiceIndex}</div>
-          <div class="label">완료</div>
+          <div class="label">${L.done}</div>
         </div>
       </div>
 
@@ -1351,14 +1507,14 @@ function renderPractice() {
       </div>
 
       <button id="next-btn" class="practice-next-btn" style="background:${kb.color};display:none" onclick="practiceNext()">
-        ✅ 다음 문장 →
+        ${L.nextSentence}
       </button>
 
       <div class="vkb-wrap ${isQwerty ? 'qwerty-kb' : ''}">
         ${renderKeyboard(kb, null, 'input')}
         <div class="vkb-action-row">
           <button class="vkb-action-key vkb-bs" data-vkey="⌫">⌫</button>
-          <button class="vkb-action-key vkb-space" data-vkey=" ">스페이스</button>
+          <button class="vkb-action-key vkb-space" data-vkey=" ">${L.space}</button>
         </div>
       </div>
     </div>
@@ -1435,16 +1591,17 @@ function practiceFinish() {
   else if (accuracy >= 60) { grade = 'C'; emoji = '🥉'; }
   else { grade = 'D'; emoji = '💪'; }
 
+  const L_p = tl();
   state.resultData = {
     mode: 'practice',
     earned,
-    title: '따라치기 완료!',
+    title: L_p.practiceComplete,
     emoji,
     grade,
-    msg: accuracy >= 80 ? '훌륭해요! 정확도가 높아요' : '꾸준히 연습하면 실력이 늘어요!',
+    msg: L_p.practiceMsg(accuracy),
     stats: [
-      { val: total, lbl: '완료 문장' },
-      { val: `${accuracy}%`, lbl: '정확도' },
+      { val: total, lbl: L_p.completedSentences },
+      { val: `${accuracy}%`, lbl: L_p.accuracy },
     ]
   };
   state.screen = 'result';
@@ -1456,6 +1613,7 @@ function practiceFinish() {
 // ================================================================
 function renderTest() {
   const kb = KEYBOARDS[state.selectedKeyboard];
+  const L = tl();
   const word = state.testWords[state.testWordIndex] || '';
   const timer = state.testTimer;
   const isUrgent = timer <= 10;
@@ -1465,18 +1623,18 @@ function renderTest() {
     <div class="screen test-screen">
       <div class="header">
         <button class="btn-back" onclick="stopTest()">←</button>
-        <span class="header-title">🏆 실력 테스트</span>
+        <span class="header-title">🏆 ${L.headerTest}</span>
         <div class="points-badge">⭐ ${state.points.toLocaleString()}</div>
       </div>
 
       <div class="test-timer-box">
         <div class="test-timer ${isUrgent ? 'urgent' : ''}" style="${!isUrgent ? `color:${kb.color}` : ''}" id="test-timer-num">${timer}</div>
-        <div class="test-timer-label">남은 시간 (초)</div>
+        <div class="test-timer-label">${L.timeLeft}</div>
       </div>
 
       <div class="test-word-box">
         <div class="test-word" id="test-word-display">${word}</div>
-        <div class="test-word-hint">아래 자판으로 입력하세요</div>
+        <div class="test-word-hint">${L.typeBelow}</div>
       </div>
 
       <div class="ime-display-box ime-display-test">
@@ -1488,15 +1646,15 @@ function renderTest() {
       <div class="test-score-row">
         <div class="stat-chip">
           <div class="value" id="test-score-val" style="color:${kb.color}">${state.testScore}</div>
-          <div class="label">맞은 단어</div>
+          <div class="label">${L.correct}</div>
         </div>
         <div class="stat-chip">
           <div class="value" id="test-tried-val" style="color:#718096">${state.testWordIndex}</div>
-          <div class="label">시도</div>
+          <div class="label">${L.tried}</div>
         </div>
         <div class="stat-chip">
           <div class="value" id="test-acc-val" style="color:#48BB78">0%</div>
-          <div class="label">정확도</div>
+          <div class="label">${L.accuracy}</div>
         </div>
       </div>
 
@@ -1504,7 +1662,7 @@ function renderTest() {
         ${renderKeyboard(kb, null, 'input')}
         <div class="vkb-action-row">
           <button class="vkb-action-key vkb-bs" data-vkey="⌫">⌫</button>
-          <button class="vkb-action-key vkb-space" data-vkey=" ">스페이스</button>
+          <button class="vkb-action-key vkb-space" data-vkey=" ">${L.space}</button>
         </div>
       </div>
     </div>
@@ -1587,16 +1745,17 @@ function testFinish() {
   else if (score >= 4) { grade = 'C'; emoji = '🥉'; }
   else { grade = 'D'; emoji = '💪'; }
 
+  const L_t = tl();
   state.resultData = {
     mode: 'test',
     earned,
-    title: '테스트 완료!',
+    title: L_t.testComplete,
     emoji,
     grade,
-    msg: score >= 10 ? '대단해요! 실력이 많이 늘었어요!' : '꾸준히 연습하면 금방 늘어요!',
+    msg: L_t.testMsg(score),
     stats: [
-      { val: score, lbl: '맞은 단어' },
-      { val: `${accuracy}%`, lbl: '정확도' },
+      { val: score, lbl: L_t.correct },
+      { val: `${accuracy}%`, lbl: L_t.accuracy },
     ]
   };
   state.screen = 'result';
@@ -1612,7 +1771,7 @@ function renderGame() {
   return `
     <div class="screen game-screen">
       <div class="game-header">
-        <button class="game-quit-btn" onclick="quitGame()">✕ 나가기</button>
+        <button class="game-quit-btn" onclick="quitGame()">${tl().quit}</button>
         <div class="game-lives" id="game-lives">❤️❤️❤️</div>
         <div class="game-score-wrap">
           <button class="sound-toggle-btn" onclick="toggleSound()" id="sound-btn">${soundOn ? '🔊' : '🔇'}</button>
@@ -1626,14 +1785,14 @@ function renderGame() {
         </div>
       </div>
       <div class="game-input-bar">
-        <div class="game-input-label">입력 중:</div>
+        <div class="game-input-label">${tl().typing}</div>
         <div class="game-input-display" id="ime-display"></div>
       </div>
       <div class="vkb-wrap ${isQwerty ? 'qwerty-kb' : ''}">
         ${renderKeyboard(kb, null, 'input')}
         <div class="vkb-action-row">
           <button class="vkb-action-key vkb-bs" data-vkey="⌫">⌫</button>
-          <button class="vkb-action-key vkb-space" data-vkey=" ">스페이스</button>
+          <button class="vkb-action-key vkb-space" data-vkey=" ">${tl().space}</button>
         </div>
       </div>
     </div>
@@ -1822,16 +1981,17 @@ function gameOver() {
   else if (state.gameScore >= 5)  { grade = 'C';  emoji = '🥉'; }
   else                            { grade = 'D';  emoji = '💪'; }
 
+  const L_g = tl();
   state.resultData = {
     mode: 'game',
     earned,
-    title: '산성비 종료!',
+    title: L_g.gameComplete,
     emoji,
     grade,
-    msg: (newRecord ? '🏆 최고 기록! ' : '') + (state.gameScore >= 10 ? '훌륭해요! 타자 실력이 좋은데요!' : '조금 더 연습하면 금방 늘어요!'),
+    msg: L_g.gameMsg(newRecord, state.gameScore),
     stats: [
-      { val: state.gameScore, lbl: '처리한 단어' },
-      { val: 'LV.' + state.gameLevel, lbl: '도달 레벨' },
+      { val: state.gameScore, lbl: L_g.processedWords },
+      { val: 'LV.' + state.gameLevel, lbl: state.lang === 'en' ? 'Level Reached' : '도달 레벨' },
     ],
     newRecord
   };
@@ -1845,6 +2005,7 @@ function gameOver() {
 function renderResult() {
   const { emoji, grade, msg, earned, stats, title, newRecord } = state.resultData;
   const kb = KEYBOARDS[state.selectedKeyboard];
+  const L = tl();
 
   const statsHtml = stats.map(s => `
     <div class="result-stat">
@@ -1858,7 +2019,7 @@ function renderResult() {
       <div class="result-header">
         <div class="result-emoji">${emoji}</div>
         <div class="result-grade">${grade}</div>
-        ${newRecord ? '<div style="background:linear-gradient(135deg,#FFD700,#FF8C00);color:#0B1426;font-weight:900;font-size:14px;padding:6px 18px;border-radius:20px;display:inline-block;margin-bottom:8px;">🏆 새 최고 기록!</div>' : ''}
+        ${newRecord ? `<div style="background:linear-gradient(135deg,#FFD700,#FF8C00);color:#0B1426;font-weight:900;font-size:14px;padding:6px 18px;border-radius:20px;display:inline-block;margin-bottom:8px;">${L.newRecord}</div>` : ''}
         <div class="result-msg">${msg}</div>
       </div>
 
@@ -1871,19 +2032,19 @@ function renderResult() {
       <div class="result-card">
         <div class="result-points-earn">
           <div class="points-earn-num">+${earned}</div>
-          <div class="points-earn-label">포인트 획득! (누적: ${state.points.toLocaleString()}점)</div>
+          <div class="points-earn-label">${L.pointsEarned(earned, state.points)}</div>
         </div>
       </div>
 
       <div class="result-btns">
         <button class="btn-result primary" onclick="restartFromResult()">
-          다시 하기 🔄
+          ${L.tryAgain}
         </button>
         <button class="btn-result secondary" onclick="goMenu()">
-          다른 모드 선택
+          ${L.otherMode}
         </button>
         <button class="btn-result secondary" onclick="goHome()">
-          홈으로 🏠
+          ${L.goHome}
         </button>
       </div>
     </div>
@@ -1908,6 +2069,12 @@ function stopAllTimers() {
   if (state.gameAnimFrame) { cancelAnimationFrame(state.gameAnimFrame); state.gameAnimFrame = null; }
   state.gameActive = false;
   stopBGM();
+}
+
+function toggleLang() {
+  state.lang = state.lang === 'ko' ? 'en' : 'ko';
+  localStorage.setItem('rodi_lang', state.lang);
+  render();
 }
 
 function goHome() {
