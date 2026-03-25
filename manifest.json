@@ -1,0 +1,16 @@
+{
+  "name": "손가락 타자 연습",
+  "short_name": "손타자",
+  "description": "모바일 자판 타자 연습기 - 천지인, 베가, 나랏글, Qwerty",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#4A6FA5",
+  "theme_color": "#4A6FA5",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👆</text></svg>",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
