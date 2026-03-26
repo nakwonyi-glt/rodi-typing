@@ -13,12 +13,15 @@ const KEYBOARDS = {
     subSide: true,
     tagline: '삼성 갤럭시 기본 자판',
     tagline_en: 'Samsung Galaxy Default Keyboard',
+    tagline_ja: 'サムスン ギャラクシー標準キーボード',
     description: '하늘(·), 땅(ㅡ), 사람(ㅣ)으로\n모음을 만드는 자판이에요',
     description_en: 'Build vowels by combining\nHeavens(·), Earth(ㅡ), Human(ㅣ)',
+    description_ja: '天(·)・地(ㅡ)・人(ㅣ)を組み合わせて\n母音を作るキーボードです',
     color: '#3B82F6',
     bgLight: '#EFF6FF',
     badgeText: '가장 많이 써요',
     badgeText_en: 'Most Popular',
+    badgeText_ja: '最も人気',
     rows: [
       [
         { key: 'ㅣ', sub: '' },
@@ -93,12 +96,15 @@ const KEYBOARDS = {
     icon: '📱',
     tagline: 'LG 폰 자판',
     tagline_en: 'LG Phone Keyboard',
+    tagline_ja: 'LG スマホ キーボード',
     description: '자음과 모음이 분리된 자판\nLG 스마트폰에서 사용했어요',
     description_en: 'Consonants and vowels on separate sides\nUsed on LG smartphones',
+    description_ja: '子音と母音が分かれたキーボード\nLGスマートフォンで使用されていました',
     color: '#EF4444',
     bgLight: '#FEF2F2',
     badgeText: 'LG 폰 자판',
     badgeText_en: 'LG Phone',
+    badgeText_ja: 'LG スマホ',
     rows: [
       [
         { key: 'ㄱ', sub: '' },
@@ -159,12 +165,15 @@ const KEYBOARDS = {
     subSide: true,
     tagline: '팬택 베가 자판',
     tagline_en: 'Pantech Vega Keyboard',
+    tagline_ja: 'パンテック ベガ キーボード',
     description: '팬택 베가 스마트폰 자판\n직관적인 배열이 특징이에요',
     description_en: 'Pantech Vega smartphone keyboard\nIntuitive 4×3 layout with double-tap',
+    description_ja: 'パンテック ベガ スマートフォンのキーボード\n直感的な配列が特徴です',
     color: '#8B5CF6',
     bgLight: '#F5F3FF',
     badgeText: '팬택 자판',
     badgeText_en: 'Pantech Vega',
+    badgeText_ja: 'パンテック',
     rows: [
       [
         { key: 'ㄱ', sub: 'ㅋ' },
@@ -224,12 +233,15 @@ const KEYBOARDS = {
     icon: '⌨️',
     tagline: '영문 QWERTY 자판',
     tagline_en: 'Korean QWERTY Layout',
+    tagline_ja: '韓国語 QWERTY レイアウト',
     description: '컴퓨터와 동일한 자판 배열\n각 키에 한글이 매핑돼요',
     description_en: 'Same layout as a PC keyboard\nEach key maps to a Korean character',
+    description_ja: 'PCと同じキーボード配列\n各キーに韓国語が割り当てられています',
     color: '#10B981',
     bgLight: '#ECFDF5',
     badgeText: '컴퓨터와 동일',
     badgeText_en: 'Same as PC',
+    badgeText_ja: 'PC と同じ',
     rows: [
       [
         { key: 'ㅂ', sub: 'Q' }, { key: 'ㅈ', sub: 'W' }, { key: 'ㄷ', sub: 'E' },
@@ -725,14 +737,15 @@ function render() {
 function renderHome() {
   const L = tl();
   const isEn = state.lang === 'en';
+  const isJa = state.lang === 'ja';
   const kbCards = Object.values(KEYBOARDS).filter(kb => kb.id !== 'english').map(kb => `
     <button class="keyboard-card" onclick="selectKeyboard('${kb.id}')"
       style="background: linear-gradient(145deg, ${kb.color}CC, ${kb.color}88);
              box-shadow: 0 8px 24px ${kb.color}44;">
       <div class="card-icon">${kb.icon}</div>
       <div class="card-name">${kb.name}</div>
-      <div class="card-tagline">${isEn ? (kb.tagline_en||kb.tagline) : kb.tagline}</div>
-      <span class="card-badge">${isEn ? (kb.badgeText_en||kb.badgeText) : kb.badgeText}</span>
+      <div class="card-tagline">${isJa ? (kb.tagline_ja||kb.tagline) : isEn ? (kb.tagline_en||kb.tagline) : kb.tagline}</div>
+      <span class="card-badge">${isJa ? (kb.badgeText_ja||kb.badgeText) : isEn ? (kb.badgeText_en||kb.badgeText) : kb.badgeText}</span>
     </button>
   `).join('');
 
@@ -1428,13 +1441,18 @@ function cjTap(key) {
   imeInputConsonant(key);
 }
 
-// ── 더블탭 (쌍자음) ─────────────────────────────────
-let lastTap = { key:null, time:0 };
-function isDoubleTap(key) {
+// ── 멀티탭 감지 (1탭=기본, 2탭=보조, 3탭=쌍자음) ────
+let tapTracker = { key: null, count: 0, time: 0 };
+function getTapCount(key) {
   const now = Date.now();
-  const dbl = key === lastTap.key && now - lastTap.time < 400;
-  lastTap = { key, time: now };
-  return dbl;
+  if (key === tapTracker.key && now - tapTracker.time < 400) {
+    tapTracker.count++;
+  } else {
+    tapTracker.count = 1;
+  }
+  tapTracker.key = key;
+  tapTracker.time = now;
+  return tapTracker.count;
 }
 
 // ── 나랏글 특수키 처리 ──────────────────────────────
@@ -1497,10 +1515,19 @@ function virtualKeyTap(key) {
   } else if (key === '쌍자음') {
     naratgeulSsangJaeeum(); // 모든 자판 공통 쌍자음 처리
   } else if (state.selectedKeyboard === 'cheonjiin') {
-    if (DOUBLE_CON[key] && isDoubleTap(key)) {
-      imeBackspace();
-      const v = cjFlush(); if (v) imeInputVowel(v);
-      imeInputConsonant(DOUBLE_CON[key]);
+    if (DOUBLE_CON[key]) {
+      const count = getTapCount(key);
+      if (count === 3 && SSANG_MAP[key]) {
+        imeBackspace();
+        const v = cjFlush(); if (v) imeInputVowel(v);
+        imeInputConsonant(SSANG_MAP[key]);
+      } else if (count === 2) {
+        imeBackspace();
+        const v = cjFlush(); if (v) imeInputVowel(v);
+        imeInputConsonant(DOUBLE_CON[key]);
+      } else {
+        cjTap(key);
+      }
     } else {
       cjTap(key);
     }
@@ -1523,10 +1550,19 @@ function virtualKeyTap(key) {
     }
   } else if (state.selectedKeyboard === 'bega') {
     const sec = BEGA_SECONDARY[key];
-    if (sec && isDoubleTap(key)) {
-      imeBackspace();
-      if (VOWEL_SET.has(sec)) imeInputVowel(sec);
-      else imeInputConsonant(sec);
+    if (sec) {
+      const count = getTapCount(key);
+      if (count === 3 && !VOWEL_SET.has(key) && SSANG_MAP[key]) {
+        imeBackspace();
+        imeInputConsonant(SSANG_MAP[key]);
+      } else if (count === 2) {
+        imeBackspace();
+        if (VOWEL_SET.has(sec)) imeInputVowel(sec);
+        else imeInputConsonant(sec);
+      } else {
+        if (VOWEL_SET.has(key)) imeInputVowel(key);
+        else imeInputConsonant(key);
+      }
     } else {
       if (VOWEL_SET.has(key)) imeInputVowel(key);
       else imeInputConsonant(key);
