@@ -338,24 +338,40 @@ const ENGLISH_LEVELS = [
 // ================================================================
 // 한국어 → 영어 번역 (외국인 학습자용)
 const KO_EN = {
-  // 단어
   '아이': 'child', '어머니': 'mother', '아버지': 'father',
   '사랑': 'love', '행복': 'happiness', '건강': 'health',
   '감사': 'gratitude', '안녕': 'hi / bye', '바람': 'wind',
   '구름': 'cloud', '하늘': 'sky', '바다': 'sea',
   '산길': 'mountain path', '봄날': 'spring day', '여름': 'summer', '겨울': 'winter',
-  // 문장
-  '안녕하세요': 'Hello!',
-  '감사합니다': 'Thank you!',
+  '안녕하세요': 'Hello!', '감사합니다': 'Thank you!',
   '오늘 날씨가 좋아요': 'The weather is nice today',
   '밥은 드셨나요': 'Have you eaten yet?',
   '잘 부탁드립니다': 'Please take care of me',
   '오늘도 건강하세요': 'Stay healthy today too',
-  '사랑합니다': 'I love you',
-  '행복한 하루 되세요': 'Have a happy day',
+  '사랑합니다': 'I love you', '행복한 하루 되세요': 'Have a happy day',
   '가족이 소중해요': 'Family is precious',
   '즐거운 하루 보내세요': 'Have a wonderful day',
 };
+const KO_JA = {
+  '아이': 'こども（子供）', '어머니': 'おかあさん（お母さん）', '아버지': 'おとうさん（お父さん）',
+  '사랑': 'あい（愛）', '행복': 'しあわせ（幸せ）', '건강': 'けんこう（健康）',
+  '감사': 'かんしゃ（感謝）', '안녕': 'こんにちは／さようなら', '바람': 'かぜ（風）',
+  '구름': 'くも（雲）', '하늘': 'そら（空）', '바다': 'うみ（海）',
+  '산길': 'やまみち（山道）', '봄날': 'はるのひ（春の日）', '여름': 'なつ（夏）', '겨울': 'ふゆ（冬）',
+  '안녕하세요': 'こんにちは！', '감사합니다': 'ありがとうございます！',
+  '오늘 날씨가 좋아요': '今日はいい天気ですね',
+  '밥은 드셨나요': 'ご飯はもう食べましたか',
+  '잘 부탁드립니다': 'どうぞよろしくお願いします',
+  '오늘도 건강하세요': '今日も健康でいてください',
+  '사랑합니다': '愛しています', '행복한 하루 되세요': '幸せな一日を！',
+  '가족이 소중해요': '家族は大切です',
+  '즐거운 하루 보내세요': '素敵な一日をお過ごしください',
+};
+function getTranslation(word) {
+  if (state.lang === 'en') return KO_EN[word] || '';
+  if (state.lang === 'ja') return KO_JA[word] || '';
+  return '';
+}
 
 const PRACTICE_DATA = {
   cheonjiin: {
@@ -493,6 +509,42 @@ const T = {
     gameComplete: 'Acid Rain Over!',
     gameMsg: (rec,score) => (rec?'🏆 New Record! ':'')+(score>=10?'Great job! Excellent typing skills!':'A bit more practice and you\'ll fly!'),
     processedWords: 'Words Cleared',
+  }
+  ,ja: {
+    appTitle: '指タイピング練習', appSub: 'キーボードを学び、練習し、上達しよう！',
+    points: 'ポイント', myLevel: '自分のレベル',
+    selectKeyboard: '📱 キーボード選択', englishSection: '🔤 英語タイピング',
+    englishSub: '5段階語彙学習 + 酸性雨ゲーム',
+    levels: ['初心者','初級','中級','上級','達人'],
+    modeLearn: 'キー学習', modeLearnDesc: 'キーの位置を一つずつ覚えましょう',
+    modePractice: '写し打ち', modePracticeDesc: '画面の文字を見て入力しましょう',
+    modeTest: '実力テスト', modeTestDesc: '60秒間どれだけ打てるか？',
+    modeGame: '酸性雨ゲーム', modeGameDesc: '落ちてくる単語を素早く打って消そう！',
+    practiceLabel: (i,n) => `入力してください (${i}/${n})`,
+    wpm: '打数', accuracy: '正確度', done: '完了', nextSentence: '✅ 次の文 →', space: 'スペース',
+    timeLeft: '残り時間（秒）', typeBelow: '下のキーボードで入力してください',
+    correct: '正解', tried: '試行',
+    typing: '入力中：', quit: '✕ 終了',
+    difficulty: '難易度選択', startGame: '🌧 ゲーム開始！',
+    noRecord: '記録なし', bestRecord: '🏆 最高記録（現在の難易度）',
+    diffNames: { easy:'簡単', normal:'普通', hard:'難しい' },
+    diffDescs: { easy:'ゆっくりな単語、長い生成間隔', normal:'デフォルト速度、バランス良し', hard:'速い速度、短い生成間隔' },
+    prev: '← 前へ', next: '次へ →', complete: '完了！🎉',
+    newRecord: '🏆 新記録！',
+    pointsEarned: (n,t) => `ポイント獲得！（合計：${t.toLocaleString()}点）`,
+    tryAgain: 'もう一度 🔄', otherMode: '他のモード', goHome: 'ホームへ 🏠',
+    headerLearn: 'キー学習', headerPractice: '写し打ち',
+    headerTest: '実力テスト', headerGame: '酸性雨ゲーム',
+    headerKeyboard: 'キーボード選択', headerEnglish: '🔤 英語タイピング',
+    completedSentences: '完了文',
+    learnComplete: 'キー学習完了！', learnMsg: 'すべてのキー位置を覚えました！\n次は写し打ちで練習しましょう',
+    practiceComplete: '写し打ち完了！',
+    practiceMsg: (acc) => acc>=80 ? '素晴らしい！正確度が高いです' : '継続して練習すれば上達します！',
+    testComplete: 'テスト完了！',
+    testMsg: (score) => score>=10 ? 'すごい！実力がついています！' : '練習を続ければすぐに上達します！',
+    gameComplete: '酸性雨終了！',
+    gameMsg: (rec,score) => (rec?'🏆 新記録！ ':'')+(score>=10?'素晴らしい！タイピングが上手ですね！':'もう少し練習すればすぐに上達します！'),
+    processedWords: '処理した単語',
   }
 };
 function tl() { return T[state.lang] || T.ko; }
@@ -689,9 +741,9 @@ function renderHome() {
   return `
     <div class="screen home-screen">
       <div class="home-hero">
-        <button class="lang-toggle-btn" onclick="toggleLang()">${isEn ? '🇰🇷 한국어' : '🇺🇸 English'}</button>
+        <button class="lang-toggle-btn" onclick="toggleLang()">${state.lang==='ko'?'🇺🇸 English':state.lang==='en'?'🇯🇵 日本語':'🇰🇷 한국어'}</button>
         <div class="home-logo">👆</div>
-        <div class="home-title">${isEn ? 'Korean <span>Typing Trainer</span>' : '손가락 <span>타자 연습</span>'}</div>
+        <div class="home-title">${state.lang==='en'?'Korean <span>Typing Trainer</span>':state.lang==='ja'?'指 <span>タイピング練習</span>':'손가락 <span>타자 연습</span>'}</div>
         <div class="home-sub">${L.appSub}</div>
         <div class="home-stats">
           <div class="stat-box">
@@ -1352,11 +1404,18 @@ function cjTap(key) {
     return;
   }
   if (key === 'ㅣ') {
-    if      (cjState==='empty')  cjState = 'i_pend';
-    else if (cjState==='dot1')   { imeInputVowel('ㅓ'); cjState='empty'; }  // ·+ㅣ=ㅓ
-    else if (cjState==='dot2')   { imeInputVowel('ㅕ'); cjState='empty'; }  // ··+ㅣ=ㅕ
-    else if (cjState==='i_pend') { imeInputVowel('ㅣ'); cjState='i_pend'; }
-    else { const v=cjFlush(); if(v) imeInputVowel(v); cjState='i_pend'; }
+    if      (cjState==='dot1')   { imeInputVowel('ㅓ'); cjState='empty'; return; }  // ·+ㅣ=ㅓ
+    if      (cjState==='dot2')   { imeInputVowel('ㅕ'); cjState='empty'; return; }  // ··+ㅣ=ㅕ
+    if      (cjState==='i_pend') { imeInputVowel('ㅣ'); cjState='i_pend'; return; }
+    // 그 외 상태: 먼저 pending flush
+    const v = cjFlush(); if (v) imeInputVowel(v);
+    // flush가 없었을 때만 (= 자음+모음 조합 중) jung+ㅣ 합성 시도
+    // v가 있으면 flush로 새 음절 시작한 것 → 합성 안 함 (아이→얘 버그 방지)
+    if (!v && ime.cho && ime.jung && !ime.jong && VOWEL_COMBINE[ime.jung + '+ㅣ']) {
+      imeInputVowel('ㅣ'); cjState = 'empty';
+    } else {
+      cjState = 'i_pend';
+    }
     return;
   }
   // 자음: 먼저 대기 중인 모음 flush
@@ -1473,11 +1532,51 @@ function virtualKeyTap(key) {
   refreshInputDisplay();
 }
 
+// 천지인 display용: ㅇ+순수모음 음절 → raw 모음 자모로, pending 모음은 초성과 조합해서 표시
+function cjDisplayText() {
+  // committed 텍스트: ㅇ+모음+받침없음 → raw 모음 자모
+  const committed = [...ime.committed].map(ch => {
+    const code = ch.charCodeAt(0);
+    if (code >= 0xAC00 && code <= 0xD7A3) {
+      const idx = code - 0xAC00;
+      const cho = Math.floor(idx / (21 * 28));
+      const jung = Math.floor((idx % (21 * 28)) / 28);
+      const jong = idx % 28;
+      if (cho === 11 && jong === 0) return JUNG_LIST[jung];
+    }
+    return ch;
+  }).join('');
+
+  // pending 모음 (ho/i_pend/i_dot/ho_dot)
+  const pendingVowelMap = { ho:'ㅡ', ho_dot:'ㅜ', i_pend:'ㅣ', i_dot:'ㅏ' };
+  const pv = pendingVowelMap[cjState];
+
+  let cur;
+  if (pv) {
+    if (ime.cho && !ime.jung) {
+      // 초성 + pending 모음 → 조합 표시 (예: ㄱ+pending ㅏ → 가)
+      cur = makeSyllable(ime.cho, pv, null);
+    } else if (ime.cho && ime.jung) {
+      // 현재 음절 완성 + 새 pending 모음 → 현재 음절 + raw 모음
+      const base = (ime.cho === 'ㅇ' && !ime.jong) ? ime.jung : imeCurrent();
+      cur = base + pv;
+    } else {
+      // 초성 없음 → raw 모음만 (ㅇ 안 붙임)
+      cur = pv;
+    }
+  } else {
+    // dot1/dot2 또는 empty: 현재 음절 + dot 기호
+    const base = (ime.cho === 'ㅇ' && ime.jung && !ime.jong) ? ime.jung : imeCurrent();
+    cur = base + cjPendingChar();
+  }
+
+  return committed + cur;
+}
+
 function refreshInputDisplay() {
-  const text = imeText();
-  const pending = state.selectedKeyboard === 'cheonjiin' ? cjPendingChar() : '';
+  const text = state.selectedKeyboard === 'cheonjiin' ? cjDisplayText() : imeText();
   const displayEl = document.getElementById('ime-display');
-  if (displayEl) displayEl.textContent = (text || '') + pending;
+  if (displayEl) displayEl.textContent = text || '';
 
   if (state.screen === 'practice') {
     updatePracticeDisplay(text);
@@ -1523,7 +1622,7 @@ function renderPractice() {
       <div class="practice-target-box">
         <div class="practice-label">${L.practiceLabel(state.practiceIndex + 1, totalTexts)}</div>
         <div class="target-text" id="target-text">${buildTargetHtml(target, '')}</div>
-        ${state.lang === 'en' && KO_EN[target] ? `<div class="target-translation">${KO_EN[target]}</div>` : ''}
+        ${getTranslation(target) ? `<div class="target-translation">${getTranslation(target)}</div>` : ''}
       </div>
 
       <div class="practice-stats">
@@ -1675,7 +1774,7 @@ function renderTest() {
 
       <div class="test-word-box">
         <div class="test-word" id="test-word-display">${word}</div>
-        <div class="test-word-trans" id="test-word-trans" style="${state.lang==='en'?'':'display:none'}">${KO_EN[word] || ''}</div>
+        <div class="test-word-trans" id="test-word-trans" style="${state.lang!=='ko'?'':'display:none'}">${getTranslation(word)}</div>
         <div class="test-word-hint">${L.typeBelow}</div>
       </div>
 
@@ -1750,7 +1849,7 @@ function onVirtualTestInput(text) {
     const nextWord = state.testWords[state.testWordIndex] || '';
     if (wordEl) wordEl.textContent = nextWord;
     const transEl = document.getElementById('test-word-trans');
-    if (transEl && state.lang === 'en') transEl.textContent = KO_EN[nextWord] || '';
+    if (transEl && state.lang !== 'ko') transEl.textContent = getTranslation(nextWord);
     if (dispEl) {
       dispEl.textContent = '';
       dispEl.classList.add('correct-flash');
@@ -1909,7 +2008,7 @@ function spawnGameWord() {
   const el = document.createElement('div');
   el.id = 'gw-' + id;
   el.className = 'game-word';
-  const trans = (state.lang === 'en' && KO_EN[word]) ? `<span class="gw-trans">${KO_EN[word]}</span>` : '';
+  const trans = getTranslation(word) ? `<span class="gw-trans">${getTranslation(word)}</span>` : '';
   el.innerHTML = word + trans;
   el.style.cssText = 'left:' + x + 'px;top:-50px';
   area.appendChild(el);
@@ -1970,7 +2069,7 @@ function updateGameMatching(input) {
     if (!el) return;
     if (target && w.id === target.id) {
       el.classList.add('targeted');
-      const trans2 = (state.lang === 'en' && KO_EN[w.word]) ? `<span class="gw-trans">${KO_EN[w.word]}</span>` : '';
+      const trans2 = getTranslation(w.word) ? `<span class="gw-trans">${getTranslation(w.word)}</span>` : '';
       el.innerHTML = `<span class="typed-part">${w.word.slice(0, input.length)}</span>${w.word.slice(input.length)}${trans2}`;
       const wordCmp = isEnglish ? w.word.toLowerCase() : w.word;
       if (inputCmp === wordCmp) {
@@ -2037,7 +2136,7 @@ function gameOver() {
     msg: L_g.gameMsg(newRecord, state.gameScore),
     stats: [
       { val: state.gameScore, lbl: L_g.processedWords },
-      { val: 'LV.' + state.gameLevel, lbl: state.lang === 'en' ? 'Level Reached' : '도달 레벨' },
+      { val: 'LV.' + state.gameLevel, lbl: state.lang==='en'?'Level Reached':state.lang==='ja'?'到達レベル':'도달 레벨' },
     ],
     newRecord
   };
@@ -2118,7 +2217,7 @@ function stopAllTimers() {
 }
 
 function toggleLang() {
-  state.lang = state.lang === 'ko' ? 'en' : 'ko';
+  state.lang = state.lang === 'ko' ? 'en' : state.lang === 'en' ? 'ja' : 'ko';
   localStorage.setItem('rodi_lang', state.lang);
   render();
 }
