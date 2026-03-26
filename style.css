@@ -710,6 +710,14 @@ html, body {
   font-size: 18px;
 }
 
+.vkb-ssang {
+  width: 60px;
+  flex-shrink: 0;
+  font-size: 11px;
+  color: rgba(255,255,255,0.7);
+  background: rgba(255,255,255,0.08);
+}
+
 .vkb-space {
   flex: 1;
   font-size: 12px;

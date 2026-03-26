@@ -1490,6 +1490,8 @@ function virtualKeyTap(key) {
     imeBackspace();
   } else if (key === ' ') {
     imeSpace();
+  } else if (key === '쌍자음') {
+    naratgeulSsangJaeeum(); // 모든 자판 공통 쌍자음 처리
   } else if (state.selectedKeyboard === 'cheonjiin') {
     if (DOUBLE_CON[key] && isDoubleTap(key)) {
       imeBackspace();
@@ -1655,6 +1657,7 @@ function renderPractice() {
         <div class="vkb-action-row">
           <button class="vkb-action-key vkb-bs" data-vkey="⌫">⌫</button>
           <button class="vkb-action-key vkb-space" data-vkey=" ">${L.space}</button>
+          ${kb.id !== 'naratgeul' && kb.id !== 'english' ? `<button class="vkb-action-key vkb-ssang" data-vkey="쌍자음">ㄲ쌍</button>` : ''}
         </div>
       </div>
     </div>
@@ -1804,6 +1807,7 @@ function renderTest() {
         <div class="vkb-action-row">
           <button class="vkb-action-key vkb-bs" data-vkey="⌫">⌫</button>
           <button class="vkb-action-key vkb-space" data-vkey=" ">${L.space}</button>
+          ${kb.id !== 'naratgeul' && kb.id !== 'english' ? `<button class="vkb-action-key vkb-ssang" data-vkey="쌍자음">ㄲ쌍</button>` : ''}
         </div>
       </div>
     </div>
@@ -1936,6 +1940,7 @@ function renderGame() {
         <div class="vkb-action-row">
           <button class="vkb-action-key vkb-bs" data-vkey="⌫">⌫</button>
           <button class="vkb-action-key vkb-space" data-vkey=" ">${tl().space}</button>
+          ${kb.id !== 'naratgeul' && kb.id !== 'english' ? `<button class="vkb-action-key vkb-ssang" data-vkey="쌍자음">ㄲ쌍</button>` : ''}
         </div>
       </div>
     </div>
