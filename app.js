@@ -627,6 +627,7 @@ let soundOn = true;
 
 function getAudio() {
   if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  if (audioCtx.state === 'suspended') audioCtx.resume();
   return audioCtx;
 }
 
@@ -646,6 +647,49 @@ function playTone(freq, dur, type, vol) {
   } catch(e) {}
 }
 
+// 타자기 소리: 노이즈 버스트 + 저음 임팩트
+function playTypewriterClick(pitch, vol) {
+  pitch = pitch || 1.0;
+  vol = vol !== undefined ? vol : 1.0;
+  if (!soundOn) return;
+  try {
+    const ctx = getAudio();
+    const now = ctx.currentTime;
+
+    // 1) 노이즈 버스트 (클릭 질감)
+    const bufLen = Math.floor(ctx.sampleRate * 0.045);
+    const buf = ctx.createBuffer(1, bufLen, ctx.sampleRate);
+    const data = buf.getChannelData(0);
+    for (let i = 0; i < bufLen; i++) {
+      data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / bufLen, 2.5);
+    }
+    const noise = ctx.createBufferSource();
+    noise.buffer = buf;
+
+    const bpf = ctx.createBiquadFilter();
+    bpf.type = 'bandpass';
+    bpf.frequency.value = 1800 * pitch;
+    bpf.Q.value = 0.8;
+
+    const noiseGain = ctx.createGain();
+    noiseGain.gain.setValueAtTime(0.55 * vol, now);
+
+    noise.connect(bpf); bpf.connect(noiseGain); noiseGain.connect(ctx.destination);
+    noise.start(now); noise.stop(now + 0.045);
+
+    // 2) 저음 임팩트 (타닥 느낌)
+    const osc = ctx.createOscillator();
+    const oscGain = ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(160 * pitch, now);
+    osc.frequency.exponentialRampToValueAtTime(60, now + 0.035);
+    oscGain.gain.setValueAtTime(0.3 * vol, now);
+    oscGain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+    osc.connect(oscGain); oscGain.connect(ctx.destination);
+    osc.start(now); osc.stop(now + 0.05);
+  } catch(e) {}
+}
+
 function playSound(type) {
   switch(type) {
     case 'pop':
@@ -659,7 +703,13 @@ function playSound(type) {
       [392, 330, 294, 220].forEach(function(f, i){ setTimeout(function(){ playTone(f, 0.25, 'sawtooth', 0.2); }, i*200); });
       break;
     case 'tap':
-      playTone(800, 0.04, 'sine', 0.1);
+      playTypewriterClick(1.0, 0.9);
+      break;
+    case 'bs':
+      playTypewriterClick(0.75, 0.7); // 백스페이스: 조금 낮고 부드럽게
+      break;
+    case 'space':
+      playTypewriterClick(0.6, 0.8); // 스페이스: 묵직하게
       break;
     case 'correct':
       playTone(660, 0.1, 'sine', 0.2);
@@ -1555,7 +1605,9 @@ function virtualKeyTap(key) {
     if (state.screen === 'practice') updatePracticeDisplay(state.englishInput);
     else if (state.screen === 'test') onVirtualTestInput(state.englishInput);
     else if (state.screen === 'game') updateGameMatching(state.englishInput);
-    playSound('tap');
+    if (key === '⌫') playSound('bs');
+    else if (key === ' ') playSound('space');
+    else playSound('tap');
     return;
   }
 
@@ -1623,6 +1675,9 @@ function virtualKeyTap(key) {
     else imeInputConsonant(key);
   }
   refreshInputDisplay();
+  if (key === '⌫') playSound('bs');
+  else if (key === ' ') playSound('space');
+  else playSound('tap');
 }
 
 // 천지인 display용: ㅇ+순수모음 음절 → raw 모음 자모로, pending 모음은 초성과 조합해서 표시
