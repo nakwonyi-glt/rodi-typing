@@ -788,8 +788,50 @@ function renderHome() {
           <span style="color:#10B981">→</span>
         </button>
       </div>
+      ${renderInstallBanner()}
     </div>
   `;
+}
+
+// ── PWA 설치 배너 ────────────────────────────────────
+let deferredInstallPrompt = null;
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredInstallPrompt = e;
+});
+
+function renderInstallBanner() {
+  const isInstalled = window.matchMedia('(display-mode: standalone)').matches
+    || window.navigator.standalone === true;
+  if (isInstalled) return '';
+
+  const isIos = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  const isSafari = /safari/i.test(navigator.userAgent) && !/chrome/i.test(navigator.userAgent);
+
+  if (isIos && isSafari) {
+    const msg = state.lang === 'ja'
+      ? '📲 ホーム画面に追加: Safari → 共有ボタン → 「ホーム画面に追加」'
+      : state.lang === 'en'
+      ? '📲 Add to Home Screen: Safari → Share → "Add to Home Screen"'
+      : '📲 홈 화면에 추가: Safari → 공유 버튼(□↑) → "홈 화면에 추가"';
+    return `<div class="install-banner ios-banner">${msg}</div>`;
+  }
+
+  if (deferredInstallPrompt) {
+    const label = state.lang === 'ja' ? '📲 アプリとしてインストール'
+      : state.lang === 'en' ? '📲 Install as App'
+      : '📲 앱으로 설치';
+    return `<button class="install-banner install-btn" onclick="triggerInstall()">${label}</button>`;
+  }
+  return '';
+}
+
+async function triggerInstall() {
+  if (!deferredInstallPrompt) return;
+  deferredInstallPrompt.prompt();
+  const { outcome } = await deferredInstallPrompt.userChoice;
+  if (outcome === 'accepted') deferredInstallPrompt = null;
+  render();
 }
 
 function getLevelName(level) {
