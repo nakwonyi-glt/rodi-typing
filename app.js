@@ -2290,6 +2290,12 @@ function attachListeners() {
   // 자판 익히기 - 학습 모드 키 탭
   const kbVisual = document.querySelector('.keyboard-visual');
   if (kbVisual) {
+    kbVisual.addEventListener('touchstart', (e) => {
+      const key = e.target.closest('.kb-key');
+      if (!key) return;
+      e.preventDefault();
+      keyTap(parseInt(key.dataset.row), parseInt(key.dataset.col));
+    }, { passive: false });
     kbVisual.addEventListener('click', (e) => {
       const key = e.target.closest('.kb-key');
       if (!key) return;
@@ -2300,6 +2306,15 @@ function attachListeners() {
   // 따라치기 / 실력 테스트 / 산성비 게임 - 가상 자판 입력
   const vkbWrap = document.querySelector('.vkb-wrap');
   if (vkbWrap) {
+    // iOS: touchstart로 300ms 딜레이 제거
+    vkbWrap.addEventListener('touchstart', (e) => {
+      const key = e.target.closest('.kb-key, .vkb-action-key');
+      if (!key || key.dataset.vkey === undefined) return;
+      e.preventDefault(); // click 이벤트 중복 방지
+      if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+      virtualKeyTap(key.dataset.vkey);
+    }, { passive: false });
+    // non-touch 환경용 click 핸들러
     vkbWrap.addEventListener('click', (e) => {
       const key = e.target.closest('.kb-key, .vkb-action-key');
       if (!key) return;
