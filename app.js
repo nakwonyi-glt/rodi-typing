@@ -1189,7 +1189,9 @@ const JONG_MERGE = {
 const VOWEL_COMBINE = {
   'ㅗ+ㅏ':'ㅘ','ㅗ+ㅐ':'ㅙ','ㅗ+ㅣ':'ㅚ',
   'ㅜ+ㅓ':'ㅝ','ㅜ+ㅔ':'ㅞ','ㅜ+ㅣ':'ㅟ',
-  'ㅡ+ㅣ':'ㅢ'
+  'ㅡ+ㅣ':'ㅢ',
+  'ㅏ+ㅣ':'ㅐ',  // 천지인: ㅣ+·+ㅣ = ㅐ
+  'ㅓ+ㅣ':'ㅔ',  // 천지인/베가: ·+ㅣ+ㅣ = ㅔ
 };
 // 천지인 더블탭 → 보조 자음
 const DOUBLE_CON = { 'ㄱ':'ㅋ','ㄴ':'ㄹ','ㄷ':'ㅌ','ㅂ':'ㅍ','ㅅ':'ㅎ','ㅈ':'ㅊ','ㅇ':'ㅁ' };
@@ -1303,8 +1305,8 @@ function imeBackspace() {
 }
 
 function imeSpace() {
+  const v = cjFlush(); if (v) imeInputVowel(v);
   imeCommit(); ime.committed += ' ';
-  cjState = 'empty';
 }
 
 // ── 천지인 모음 상태 머신 ───────────────────────────
