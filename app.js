@@ -741,7 +741,11 @@ function renderHome() {
   return `
     <div class="screen home-screen">
       <div class="home-hero">
-        <button class="lang-toggle-btn" onclick="toggleLang()">${state.lang==='ko'?'🇺🇸 English':state.lang==='en'?'🇯🇵 日本語':'🇰🇷 한국어'}</button>
+        <div class="lang-btn-group">
+          <button class="lang-btn ${state.lang==='ko'?'active':''}" onclick="setLang('ko')">🇰🇷</button>
+          <button class="lang-btn ${state.lang==='en'?'active':''}" onclick="setLang('en')">🇺🇸</button>
+          <button class="lang-btn ${state.lang==='ja'?'active':''}" onclick="setLang('ja')">🇯🇵</button>
+        </div>
         <div class="home-logo">👆</div>
         <div class="home-title">${state.lang==='en'?'Korean <span>Typing Trainer</span>':state.lang==='ja'?'指 <span>タイピング練習</span>':'손가락 <span>타자 연습</span>'}</div>
         <div class="home-sub">${L.appSub}</div>
@@ -2221,8 +2225,8 @@ function stopAllTimers() {
   stopBGM();
 }
 
-function toggleLang() {
-  state.lang = state.lang === 'ko' ? 'en' : state.lang === 'en' ? 'ja' : 'ko';
+function setLang(lang) {
+  state.lang = lang;
   localStorage.setItem('rodi_lang', state.lang);
   render();
 }
