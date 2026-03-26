@@ -1011,7 +1011,7 @@ function renderMenu() {
                border: 1px solid ${kb.color}44;">
         <div class="menu-kb-icon">${kb.icon}</div>
         <div class="menu-kb-name" style="color:${kb.color}">${kb.name}${kbSuffix}</div>
-        <div class="menu-kb-desc">${isEn ? (kb.description_en||kb.description) : kb.description}</div>
+        <div class="menu-kb-desc">${state.lang==='en' ? (kb.description_en||kb.description) : state.lang==='ja' ? (kb.description_ja||kb.description) : kb.description}</div>
       </div>
 
       <div class="menu-modes">
@@ -1292,10 +1292,10 @@ function makeSyllable(cho, jung, jong) {
   return String.fromCharCode(0xAC00 + (c * 21 + j) * 28 + jj);
 }
 
-let ime = { committed:'', cho:null, jung:null, jong:null, jongFirst:null };
+let ime = { committed:'', committedDisplay:'', cho:null, jung:null, jong:null, jongFirst:null, autoO:false };
 
 function imeReset() {
-  ime = { committed:'', cho:null, jung:null, jong:null, jongFirst:null };
+  ime = { committed:'', committedDisplay:'', cho:null, jung:null, jong:null, jongFirst:null, autoO:false };
   cjState = 'empty';
   lastTap = { key:null, time:0 };
   state.englishInput = '';
@@ -1311,19 +1311,27 @@ function imeText() { return ime.committed + imeCurrent(); }
 
 function imeCommit() {
   const cur = imeCurrent();
-  if (cur) ime.committed += cur;
-  ime.cho = null; ime.jung = null; ime.jong = null; ime.jongFirst = null;
+  if (cur) {
+    ime.committed += cur;
+    // committedDisplay: auto-added ㅇ+vowel (no jong) → raw vowel jamo
+    if (ime.autoO && ime.cho === 'ㅇ' && ime.jung && !ime.jong) {
+      ime.committedDisplay += ime.jung;
+    } else {
+      ime.committedDisplay += cur;
+    }
+  }
+  ime.cho = null; ime.jung = null; ime.jong = null; ime.jongFirst = null; ime.autoO = false;
 }
 
 function imeInputVowel(v) {
   if (!ime.cho && !ime.jung) {
-    ime.cho = 'ㅇ'; ime.jung = v;
+    ime.cho = 'ㅇ'; ime.jung = v; ime.autoO = true;
   } else if (ime.cho && !ime.jung) {
     ime.jung = v;
   } else if (ime.cho && ime.jung && !ime.jong) {
     const combined = VOWEL_COMBINE[ime.jung + '+' + v];
     if (combined) { ime.jung = combined; }
-    else { imeCommit(); ime.cho = 'ㅇ'; ime.jung = v; }
+    else { imeCommit(); ime.cho = 'ㅇ'; ime.jung = v; ime.autoO = true; }
   } else if (ime.jong) {
     const split = JONG_SPLIT[ime.jong];
     if (split) {
@@ -1341,17 +1349,17 @@ function imeInputVowel(v) {
 
 function imeInputConsonant(c) {
   if (!ime.cho && !ime.jung) {
-    ime.cho = c;
+    ime.cho = c; ime.autoO = false;
   } else if (ime.cho && !ime.jung) {
-    imeCommit(); ime.cho = c;
+    imeCommit(); ime.cho = c; ime.autoO = false;
   } else if (ime.cho && ime.jung && !ime.jong) {
     if (JONG_IDX[c] !== undefined) {
       ime.jong = c; ime.jongFirst = c;
-    } else { imeCommit(); ime.cho = c; }
+    } else { imeCommit(); ime.cho = c; ime.autoO = false; }
   } else if (ime.jong) {
     const merged = JONG_MERGE[(ime.jongFirst||ime.jong) + '+' + c];
     if (merged) { ime.jong = merged; }
-    else { imeCommit(); ime.cho = c; }
+    else { imeCommit(); ime.cho = c; ime.autoO = false; }
   }
 }
 
@@ -1367,15 +1375,16 @@ function imeBackspace() {
   } else if (ime.jung) {
     ime.jung = null;
   } else if (ime.cho) {
-    ime.cho = null;
+    ime.cho = null; ime.autoO = false;
   } else if (ime.committed.length > 0) {
     ime.committed = ime.committed.slice(0, -1);
+    ime.committedDisplay = ime.committedDisplay.slice(0, -1);
   }
 }
 
 function imeSpace() {
   const v = cjFlush(); if (v) imeInputVowel(v);
-  imeCommit(); ime.committed += ' ';
+  imeCommit(); ime.committed += ' '; ime.committedDisplay += ' ';
 }
 
 // ── 천지인 모음 상태 머신 ───────────────────────────
@@ -1445,7 +1454,7 @@ function cjTap(key) {
 let tapTracker = { key: null, count: 0, time: 0 };
 function getTapCount(key) {
   const now = Date.now();
-  if (key === tapTracker.key && now - tapTracker.time < 400) {
+  if (key === tapTracker.key && now - tapTracker.time < 700) {
     tapTracker.count++;
   } else {
     tapTracker.count = 1;
@@ -1576,43 +1585,37 @@ function virtualKeyTap(key) {
 
 // 천지인 display용: ㅇ+순수모음 음절 → raw 모음 자모로, pending 모음은 초성과 조합해서 표시
 function cjDisplayText() {
-  // committed 텍스트: ㅇ+모음+받침없음 → raw 모음 자모
-  const committed = [...ime.committed].map(ch => {
-    const code = ch.charCodeAt(0);
-    if (code >= 0xAC00 && code <= 0xD7A3) {
-      const idx = code - 0xAC00;
-      const cho = Math.floor(idx / (21 * 28));
-      const jung = Math.floor((idx % (21 * 28)) / 28);
-      const jong = idx % 28;
-      if (cho === 11 && jong === 0) return JUNG_LIST[jung];
-    }
-    return ch;
-  }).join('');
-
-  // pending 모음 (ho/i_pend/i_dot/ho_dot)
   const pendingVowelMap = { ho:'ㅡ', ho_dot:'ㅜ', i_pend:'ㅣ', i_dot:'ㅏ' };
   const pv = pendingVowelMap[cjState];
 
   let cur;
   if (pv) {
-    if (ime.cho && !ime.jung) {
-      // 초성 + pending 모음 → 조합 표시 (예: ㄱ+pending ㅏ → 가)
+    if (ime.jong) {
+      // 종성 있음 → pending 모음 오면 종성 분리 미리보기 (넥+pending ㅏ → 네가)
+      const split = JONG_SPLIT[ime.jong];
+      if (split) {
+        cur = makeSyllable(ime.cho, ime.jung, split[0]) + makeSyllable(split[1], pv, null);
+      } else {
+        cur = makeSyllable(ime.cho, ime.jung, null) + makeSyllable(ime.jong, pv, null);
+      }
+    } else if (ime.cho && !ime.jung) {
+      // 초성만 있음 → 조합 표시 (ㄱ+pending ㅏ → 가)
       cur = makeSyllable(ime.cho, pv, null);
     } else if (ime.cho && ime.jung) {
-      // 현재 음절 완성 + 새 pending 모음 → 현재 음절 + raw 모음
-      const base = (ime.cho === 'ㅇ' && !ime.jong) ? ime.jung : imeCurrent();
+      // 초성+중성 → 음절 표시 + pending 모음 (auto-ㅇ면 raw 모음 표시)
+      const base = (ime.autoO && ime.cho === 'ㅇ') ? ime.jung : imeCurrent();
       cur = base + pv;
     } else {
       // 초성 없음 → raw 모음만 (ㅇ 안 붙임)
       cur = pv;
     }
   } else {
-    // dot1/dot2 또는 empty: 현재 음절 + dot 기호
-    const base = (ime.cho === 'ㅇ' && ime.jung && !ime.jong) ? ime.jung : imeCurrent();
+    // dot1/dot2/empty: 현재 음절 + dot 기호
+    const base = (ime.autoO && ime.cho === 'ㅇ' && ime.jung && !ime.jong) ? ime.jung : imeCurrent();
     cur = base + cjPendingChar();
   }
 
-  return committed + cur;
+  return ime.committedDisplay + cur;
 }
 
 function refreshInputDisplay() {
