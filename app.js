@@ -1216,7 +1216,7 @@ const VOWEL_SET  = new Set(JUNG_LIST);
 
 function makeSyllable(cho, jung, jong) {
   if (!jung) return cho || '';
-  const c = CHO_IDX[cho] ?? 11;
+  const c = CHO_IDX[cho] != null ? CHO_IDX[cho] : 11;
   const j = JUNG_IDX[jung];
   if (j === undefined) return (cho||'') + jung;
   const jj = jong ? (JONG_IDX[jong] || 0) : 0;
