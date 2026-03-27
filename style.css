@@ -482,12 +482,12 @@ html, body {
 }
 
 .qwerty-kb .kb-key {
-  min-width: 32px;
-  height: 44px;
-  font-size: 12px;
+  min-width: 0;
+  height: 52px;
+  font-size: 16px;
   border-radius: 8px;
 }
-.qwerty-kb .kb-row { gap: 3px; }
+.qwerty-kb .kb-row { gap: 4px; }
 .qwerty-kb .kb-key .key-sub { font-size: 8px; }
 
 /* ===== LEARN NAV ===== */
