@@ -300,6 +300,10 @@ const KEYBOARDS = {
         { key: 'V', sub: '' }, { key: 'B', sub: '' }, { key: 'N', sub: '' },
         { key: 'M', sub: '' },
       ],
+      [
+        { key: '.', sub: '' }, { key: ',', sub: '' },
+        { key: '?', sub: '' }, { key: '!', sub: '' },
+      ],
     ],
     learnSteps: [
       { keys: [[1,0],[1,1],[1,2],[1,3]], title: 'Home Row Left (ASDF)', desc: 'Place your left hand fingers here:\nA = pinky, S = ring, D = middle, F = index' },
