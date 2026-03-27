@@ -1457,7 +1457,7 @@ function imeInputConsonant(c) {
 
 function imeBackspace() {
   if (cjState !== 'empty') {
-    const prev = { dot2:'dot1', dot1:'empty', ho_dot:'ho', i_dot:'i_pend' };
+    const prev = { dot2:'dot1', dot1:'empty', ho_dot:'ho', ho_dot2:'ho_dot', i_dot:'i_pend' };
     cjState = prev[cjState] || 'empty';
     return;
   }
@@ -1484,7 +1484,7 @@ let cjState = 'empty';
 
 function cjFlush() {
   // ㅏ = ㅣ+·, ㅓ = ·+ㅣ (점의 방향: 오른쪽→ㅏ, 왼쪽→ㅓ)
-  const map = { ho:'ㅡ', ho_dot:'ㅜ', i_pend:'ㅣ', i_dot:'ㅏ' };
+  const map = { ho:'ㅡ', ho_dot:'ㅜ', ho_dot2:'ㅠ', i_pend:'ㅣ', i_dot:'ㅏ' };
   const v = map[cjState] || null;
   cjState = 'empty';
   return v;
@@ -1495,9 +1495,10 @@ function cjPendingChar() {
   switch(cjState) {
     case 'dot1':   return '·';
     case 'dot2':   return '··';
-    case 'ho':     return 'ㅡ';
-    case 'ho_dot': return 'ㅜ';
-    case 'i_pend': return 'ㅣ';
+    case 'ho':      return 'ㅡ';
+    case 'ho_dot':  return 'ㅜ';
+    case 'ho_dot2': return 'ㅠ';
+    case 'i_pend':  return 'ㅣ';
     case 'i_dot':  return 'ㅏ';
     default:       return '';
   }
@@ -1508,9 +1509,10 @@ function cjTap(key) {
     if      (cjState==='empty')  cjState = 'dot1';
     else if (cjState==='dot1')   cjState = 'dot2';
     else if (cjState==='dot2')   cjState = 'dot1';
-    else if (cjState==='ho')     cjState = 'ho_dot';
-    else if (cjState==='ho_dot') { imeInputVowel('ㅠ'); cjState='empty'; }
-    else if (cjState==='i_pend') cjState = 'i_dot';
+    else if (cjState==='ho')      cjState = 'ho_dot';
+    else if (cjState==='ho_dot')  cjState = 'ho_dot2';          // ㅡ+·+· = 아직 대기 (ㅠ or ㅜ+ㅓ)
+    else if (cjState==='ho_dot2') { imeInputVowel('ㅠ'); cjState='empty'; }  // ㅡ+···=ㅠ 확정
+    else if (cjState==='i_pend')  cjState = 'i_dot';
     else if (cjState==='i_dot')  { imeInputVowel('ㅑ'); cjState='empty'; }  // ㅣ+··=ㅑ
     return;
   }
@@ -1522,18 +1524,13 @@ function cjTap(key) {
     return;
   }
   if (key === 'ㅣ') {
-    if      (cjState==='dot1')   { imeInputVowel('ㅓ'); cjState='empty'; return; }  // ·+ㅣ=ㅓ
-    if      (cjState==='dot2')   { imeInputVowel('ㅕ'); cjState='empty'; return; }  // ··+ㅣ=ㅕ
-    if      (cjState==='i_pend') { imeInputVowel('ㅣ'); cjState='i_pend'; return; }
-    // 그 외 상태: 먼저 pending flush
+    if (cjState==='dot1')    { imeInputVowel('ㅓ'); cjState='empty'; return; }   // ·+ㅣ=ㅓ
+    if (cjState==='dot2')    { imeInputVowel('ㅕ'); cjState='empty'; return; }   // ··+ㅣ=ㅕ
+    if (cjState==='i_pend')  { imeInputVowel('ㅣ'); cjState='i_pend'; return; } // ㅣ+ㅣ=ㅣㅣ
+    if (cjState==='ho_dot2') { imeInputVowel('ㅜ'); imeInputVowel('ㅓ'); cjState='empty'; return; } // ㅡ+·+·+ㅣ=ㅝ
+    // 그 외 상태: pending flush 후 lazy i_pend 진입 (조합은 다음 키에서 결정)
     const v = cjFlush(); if (v) imeInputVowel(v);
-    // flush가 없었을 때만 (= 자음+모음 조합 중) jung+ㅣ 합성 시도
-    // v가 있으면 flush로 새 음절 시작한 것 → 합성 안 함 (아이→얘 버그 방지)
-    if (!v && ime.cho && ime.jung && !ime.jong && VOWEL_COMBINE[ime.jung + '+ㅣ']) {
-      imeInputVowel('ㅣ'); cjState = 'empty';
-    } else {
-      cjState = 'i_pend';
-    }
+    cjState = 'i_pend';
     return;
   }
   // 자음: 먼저 대기 중인 모음 flush
@@ -1680,34 +1677,49 @@ function virtualKeyTap(key) {
   else playSound('tap');
 }
 
-// 천지인 display용: ㅇ+순수모음 음절 → raw 모음 자모로, pending 모음은 초성과 조합해서 표시
+// 천지인 display용: pending 모음을 초성/중성과 조합해서 미리보기
 function cjDisplayText() {
-  const pendingVowelMap = { ho:'ㅡ', ho_dot:'ㅜ', i_pend:'ㅣ', i_dot:'ㅏ' };
-  const pv = pendingVowelMap[cjState];
+  // 기본 pending 모음 (조합 전 원본)
+  const rawPvMap = { ho:'ㅡ', ho_dot:'ㅜ', ho_dot2:'ㅠ', i_pend:'ㅣ', i_dot:'ㅏ' };
+  const rawPv = rawPvMap[cjState] || null;
 
   let cur;
-  if (pv) {
+  if (rawPv) {
     if (ime.jong) {
-      // 종성 있음 → pending 모음 오면 종성 분리 미리보기 (넥+pending ㅏ → 네가)
+      // 종성 있음 → 종성 분리 미리보기 (넥+pending ㅏ → 네가)
       const split = JONG_SPLIT[ime.jong];
       if (split) {
-        cur = makeSyllable(ime.cho, ime.jung, split[0]) + makeSyllable(split[1], pv, null);
+        cur = makeSyllable(ime.cho, ime.jung, split[0]) + makeSyllable(split[1], rawPv, null);
       } else {
-        cur = makeSyllable(ime.cho, ime.jung, null) + makeSyllable(ime.jong, pv, null);
+        cur = makeSyllable(ime.cho, ime.jung, null) + makeSyllable(ime.jong, rawPv, null);
       }
-    } else if (ime.cho && !ime.jung) {
-      // 초성만 있음 → 조합 표시 (ㄱ+pending ㅏ → 가)
-      cur = makeSyllable(ime.cho, pv, null);
-    } else if (ime.cho && ime.jung) {
-      // 초성+중성 → 음절 표시 + pending 모음 (auto-ㅇ면 raw 모음 표시)
-      const base = (ime.autoO && ime.cho === 'ㅇ') ? ime.jung : imeCurrent();
-      cur = base + pv;
     } else {
-      // 초성 없음 → raw 모음만 (ㅇ 안 붙임)
-      cur = pv;
+      // 종성 없음 → i_pend/i_dot일 때 jung과 미리 조합 시도 (ㅓ+ㅣ=ㅔ, ㅗ+ㅏ=ㅘ 등)
+      let dispPv = rawPv;
+      if ((cjState === 'i_pend' || cjState === 'i_dot') && ime.jung) {
+        const combined = VOWEL_COMBINE[ime.jung + '+' + rawPv];
+        if (combined) dispPv = combined;
+      }
+      const isCombined = dispPv !== rawPv; // jung이 dispPv에 흡수됨
+
+      if (isCombined) {
+        // dispPv가 이미 jung 포함 → cho만 붙이면 됨
+        if (ime.cho && !ime.autoO) {
+          cur = makeSyllable(ime.cho, dispPv, null);
+        } else {
+          cur = dispPv; // standalone 모음 (auto-ㅇ 또는 초성 없음)
+        }
+      } else if (ime.cho && !ime.jung) {
+        cur = makeSyllable(ime.cho, dispPv, null); // 초성+pending (가, 기 등)
+      } else if (ime.cho && ime.jung) {
+        const base = (ime.autoO && ime.cho === 'ㅇ') ? ime.jung : imeCurrent();
+        cur = base + dispPv;
+      } else {
+        cur = dispPv; // 단독 모음
+      }
     }
   } else {
-    // dot1/dot2/empty: 현재 음절 + dot 기호
+    // dot1/dot2/empty: 현재 음절 + dot 표시
     const base = (ime.autoO && ime.cho === 'ㅇ' && ime.jung && !ime.jong) ? ime.jung : imeCurrent();
     cur = base + cjPendingChar();
   }
