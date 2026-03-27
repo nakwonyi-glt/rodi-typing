@@ -1745,7 +1745,6 @@ function refreshInputDisplay() {
   const text = state.selectedKeyboard === 'cheonjiin' ? cjDisplayText() : imeText();
   const displayEl = document.getElementById('ime-display');
   if (displayEl) displayEl.textContent = text || '';
-
   if (state.screen === 'practice') {
     updatePracticeDisplay(text);
   } else if (state.screen === 'test') {

@@ -398,9 +398,11 @@ html, body {
   font-size: 24px;
   font-weight: 700;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: transform 0.06s ease, box-shadow 0.06s ease;
   box-shadow: 0 2px 0 rgba(0,0,0,0.4);
   font-family: inherit;
+  -webkit-tap-highlight-color: transparent;
+  will-change: transform;
 }
 
 .kb-key:active {
@@ -715,8 +717,10 @@ html, body {
   cursor: pointer;
   font-family: inherit;
   font-weight: 600;
-  transition: background 0.1s;
+  transition: transform 0.06s ease, box-shadow 0.06s ease;
   box-shadow: 0 2px 0 rgba(0,0,0,0.3);
+  -webkit-tap-highlight-color: transparent;
+  will-change: transform;
 }
 
 .vkb-action-key:active {
