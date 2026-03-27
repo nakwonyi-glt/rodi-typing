@@ -39,7 +39,9 @@ const KEYBOARDS = {
         { key: 'ㅈ', sub: 'ㅊ' },
       ],
       [
+        { key: '__empty__' },
         { key: 'ㅇ', sub: 'ㅁ' },
+        { key: '__space__' },
       ],
     ],
     learnSteps: [
@@ -56,7 +58,7 @@ const KEYBOARDS = {
       { keys: [[2,0]], title: 'ㅂ / ㅍ', desc: '한 번 → ㅂ\n두 번 빠르게 → ㅍ\n예: 바다, 파도' },
       { keys: [[2,1]], title: 'ㅅ / ㅎ', desc: '한 번 → ㅅ\n두 번 빠르게 → ㅎ\n예: 사랑, 하늘' },
       { keys: [[2,2]], title: 'ㅈ / ㅊ', desc: '한 번 → ㅈ\n두 번 빠르게 → ㅊ\n예: 자연, 차도' },
-      { keys: [[3,0]], title: 'ㅇ / ㅁ', desc: '한 번 → ㅇ (이응)\n두 번 빠르게 → ㅁ (미음)\n예: 아이, 마음' },
+      { keys: [[3,1]], title: 'ㅇ / ㅁ', desc: '한 번 → ㅇ (이응)\n두 번 빠르게 → ㅁ (미음)\n예: 아이, 마음' },
     ],
     learnSteps_en: [
       { keys: [[0,0]], title: 'ㅣ (Human)', desc: 'Basic vowel key! Represents "human" 🙋\nPress ㅣ alone → makes "ee" sound (이)' },
@@ -72,7 +74,7 @@ const KEYBOARDS = {
       { keys: [[2,0]], title: 'ㅂ / ㅍ', desc: 'Tap once → ㅂ (b/p sound)\nDouble-tap fast → ㅍ (p sound)\nExample: 바다 (sea), 파도 (wave)' },
       { keys: [[2,1]], title: 'ㅅ / ㅎ', desc: 'Tap once → ㅅ (s sound)\nDouble-tap fast → ㅎ (h sound)\nExample: 사랑 (love), 하늘 (sky)' },
       { keys: [[2,2]], title: 'ㅈ / ㅊ', desc: 'Tap once → ㅈ (j sound)\nDouble-tap fast → ㅊ (ch sound)\nExample: 자연 (nature), 차도 (road)' },
-      { keys: [[3,0]], title: 'ㅇ / ㅁ', desc: 'Tap once → ㅇ (silent/ng)\nDouble-tap fast → ㅁ (m sound)\nExample: 아이 (child), 마음 (heart)' },
+      { keys: [[3,1]], title: 'ㅇ / ㅁ', desc: 'Tap once → ㅇ (silent/ng)\nDouble-tap fast → ㅁ (m sound)\nExample: 아이 (child), 마음 (heart)' },
     ],
     combos: [
       { result: 'ㅏ', how: 'ㅣ+·' },
@@ -1245,6 +1247,14 @@ function renderKeyboard(kb, highlightKeys, mode) {
         const hlStyle = isHighlighted
           ? `style="background: linear-gradient(135deg, ${kb.color}EE, ${kb.color}99); --kb-color: ${kb.color}88; border-color: transparent;"`
           : '';
+        if (key.key === '__empty__') {
+          return `<div class="kb-key" style="visibility:hidden;pointer-events:none"></div>`;
+        }
+        if (key.key === '__space__') {
+          const spaceLabel = (T[state.lang]||T.ko).space;
+          const spaceAttr = mode === 'input' ? `data-vkey=" "` : '';
+          return `<button class="kb-key" style="font-size:13px;color:rgba(255,255,255,0.7)" ${spaceAttr}>${spaceLabel}</button>`;
+        }
         const attr = mode === 'input'
           ? `data-vkey="${key.key}"`
           : `data-row="${ri}" data-col="${ci}"`;
@@ -1812,7 +1822,7 @@ function renderPractice() {
         ${renderKeyboard(kb, null, 'input')}
         <div class="vkb-action-row">
           <button class="vkb-action-key vkb-bs" data-vkey="⌫">⌫</button>
-          <button class="vkb-action-key vkb-space" data-vkey=" ">${L.space}</button>
+          ${kb.id !== 'cheonjiin' ? `<button class="vkb-action-key vkb-space" data-vkey=" ">${L.space}</button>` : ''}
           ${kb.id !== 'naratgeul' && kb.id !== 'english' ? `<button class="vkb-action-key vkb-ssang" data-vkey="쌍자음">ㄲ쌍</button>` : ''}
         </div>
       </div>
@@ -1962,7 +1972,7 @@ function renderTest() {
         ${renderKeyboard(kb, null, 'input')}
         <div class="vkb-action-row">
           <button class="vkb-action-key vkb-bs" data-vkey="⌫">⌫</button>
-          <button class="vkb-action-key vkb-space" data-vkey=" ">${L.space}</button>
+          ${kb.id !== 'cheonjiin' ? `<button class="vkb-action-key vkb-space" data-vkey=" ">${L.space}</button>` : ''}
           ${kb.id !== 'naratgeul' && kb.id !== 'english' ? `<button class="vkb-action-key vkb-ssang" data-vkey="쌍자음">ㄲ쌍</button>` : ''}
         </div>
       </div>
@@ -2095,7 +2105,7 @@ function renderGame() {
         ${renderKeyboard(kb, null, 'input')}
         <div class="vkb-action-row">
           <button class="vkb-action-key vkb-bs" data-vkey="⌫">⌫</button>
-          <button class="vkb-action-key vkb-space" data-vkey=" ">${tl().space}</button>
+          ${kb.id !== 'cheonjiin' ? `<button class="vkb-action-key vkb-space" data-vkey=" ">${tl().space}</button>` : ''}
           ${kb.id !== 'naratgeul' && kb.id !== 'english' ? `<button class="vkb-action-key vkb-ssang" data-vkey="쌍자음">ㄲ쌍</button>` : ''}
         </div>
       </div>
