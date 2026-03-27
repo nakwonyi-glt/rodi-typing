@@ -375,9 +375,9 @@ html, body {
 
 .kb-row {
   display: flex;
-  justify-content: center;
-  gap: 6px;
-  margin-bottom: 6px;
+  justify-content: stretch;
+  gap: 5px;
+  margin-bottom: 5px;
 }
 .kb-row:last-child { margin-bottom: 0; }
 
@@ -388,7 +388,8 @@ html, body {
   border-radius: 11px;
   touch-action: manipulation;
   -webkit-user-select: none;
-  min-width: 64px;
+  flex: 1;
+  min-width: 0;
   height: 56px;
   display: flex;
   flex-direction: column;
@@ -436,20 +437,20 @@ html, body {
   align-items: center;
   justify-content: center;
   gap: 0;
-  font-size: 15px;
-  padding: 0 4px;
+  font-size: 17px;
+  padding: 0 2px;
 }
 .kb-key.key-side .key-main {
-  font-size: 15px;
+  font-size: 17px;
   line-height: 1;
 }
 .kb-key.key-side .key-sep {
   font-size: 9px;
   opacity: 0.3;
-  margin: 0 3px;
+  margin: 0 2px;
 }
 .kb-key.key-side .key-sub-side {
-  font-size: 15px;
+  font-size: 17px;
   opacity: 0.55;
   line-height: 1;
 }
@@ -690,7 +691,7 @@ html, body {
 
 /* ===== VIRTUAL KEYBOARD ===== */
 .vkb-wrap {
-  margin: 0 14px 8px;
+  margin: 0 6px 8px;
   padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
